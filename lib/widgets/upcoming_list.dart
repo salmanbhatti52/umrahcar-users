@@ -139,7 +139,7 @@ Widget upComingList(BuildContext context,GetBookingListModel getBookingUpcomingR
                   ),
                 ],
               ),
-              SizedBox(width: size.width * 0.15),
+              // SizedBox(width: size.width * 0.1),
               GestureDetector(
                 onTap: () {
                   Navigator.push(
