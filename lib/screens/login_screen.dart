@@ -1,12 +1,16 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:umrahcar_user/utils/colors.dart';
 import 'package:umrahcar_user/widgets/button.dart';
 import 'package:umrahcar_user/widgets/navbar.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
+
+import '../service/rest_api_service.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({super.key});
@@ -60,137 +64,175 @@ class _LogInPageState extends State<LogInPage> {
           body: Center(
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  SvgPicture.asset('assets/images/umrah-car-logo-big.svg'),
-                  SizedBox(height: size.height * 0.04),
-                  const Text(
-                    'Login to Your Account',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'Montserrat-Regular',
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(height: size.height * 0.08),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 1,
-                          color: const Color(0xFF000000).withOpacity(0.15),
-                        ),
-                        borderRadius: BorderRadius.circular(16),
+              child: Form(
+                key: logInFormKey,
+                child: Column(
+                  children: [
+                    SvgPicture.asset('assets/images/umrah-car-logo-big.svg'),
+                    SizedBox(height: size.height * 0.04),
+                    const Text(
+                      'Login to Your Account',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'Montserrat-Regular',
+                        fontWeight: FontWeight.w600,
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          GestureDetector(
+                    ),
+                    SizedBox(height: size.height * 0.08),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: TextFormField(
+                        controller: contactNumberController,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Contact Number field is required!';
+                          }
+                          return null;
+                        },
+
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'Montserrat-Regular',
+                          fontSize: 16,
+                          color: Color(0xFF6B7280),
+                        ),
+                        decoration: InputDecoration(
+                          filled: false,
+                          errorStyle: const TextStyle(
+                            color: Colors.red,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            wordSpacing: 2,
+                          ),
+
+                          border: OutlineInputBorder(
+                            borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                            borderSide: BorderSide(
+                              color: const Color(0xFF000000).withOpacity(0.15),
+                              width: 1,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                            const BorderRadius.all(Radius.circular(14)),
+                            borderSide: BorderSide(
+                              color: const Color(0xFF000000).withOpacity(0.15),
+                              width: 1,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
+                            borderSide: BorderSide(
+                              color: const Color(0xFF000000).withOpacity(0.15),
+                              width: 1,
+                            ),
+                          ),
+                          errorBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(16)),
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                              width: 1,
+                            ),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 25, vertical: 20),
+                          hintText: "Contact Number",
+                          hintStyle: const TextStyle(
+                            color: Color(0xFF929292),
+                            fontSize: 12,
+                            fontFamily: 'Montserrat-Regular',
+                            fontWeight: FontWeight.w500,
+                          ),
+                          prefixIcon: GestureDetector(
                             onTap: () async {
-                              final code = await countryPicker.showPicker(
-                                  context: context);
+                              final code =
+                              await countryPicker.showPicker(context: context);
                               setState(() {
                                 countryCode = code;
                               });
-                              print('countryCode: $countryCode');
+                              print('countryCode: ${countryCode!.dialCode}');
+                              print('countryName: ${countryCode!.name}');
                             },
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 10),
-                              child: Text(
-                                countryCode?.dialCode ?? "+966",
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  color: Color(0xFF929292),
-                                  fontSize: 14,
-                                  fontFamily: 'Montserrat-Regular',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const Text(
-                            '|',
-                            style: TextStyle(
-                              color: Color(0xFF929292),
-                              fontSize: 20,
-                              fontFamily: 'Montserrat-Regular',
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 240,
-                            child: TextFormField(
-                              controller: contactNumberController,
-                              keyboardType: TextInputType.number,
-                              // validator: (value) {
-                              //   if (value == null || value.isEmpty) {
-                              //     return 'Contact Number field is required!';
-                              //   }
-                              //   return null;
-                              // },
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Montserrat-Regular',
-                                fontSize: 16,
-                                color: Color(0xFF6B7280),
-                              ),
-                              decoration: InputDecoration(
-                                filled: false,
-                                errorStyle: const TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  wordSpacing: 2,
-                                ),
-                                border: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                errorBorder: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(16)),
-                                  borderSide: BorderSide(
-                                    color: Colors.red,
-                                    width: 1,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: Text(
+                                    countryCode?.dialCode ?? "+234",
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      color: Colors.black54,
+                                      fontSize: 12,
+                                      fontFamily: 'Inter-Light',
+                                    ),
                                   ),
                                 ),
-                                hintText: "Contact Number",
-                                hintStyle: const TextStyle(
-                                  color: Color(0xFF929292),
-                                  fontSize: 12,
-                                  fontFamily: 'Montserrat-Regular',
-                                  fontWeight: FontWeight.w500,
+                                SizedBox(width: size.width * 0.03),
+                                const Text(
+                                  '|',
+                                  style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 25,
+                                    fontFamily: 'Inter-SemiBold',
+                                  ),
                                 ),
-                                prefixIcon: SvgPicture.asset(
+                                SizedBox(width: size.width * 0.03),
+                                SvgPicture.asset(
                                   'assets/images/contact-icon.svg',
                                   width: 25,
                                   height: 25,
                                   fit: BoxFit.scaleDown,
                                 ),
-                              ),
+
+                              ],
                             ),
                           ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: size.height * 0.08),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const NavBar(),
-                          ));
-                      // Navigator.of(context).pushAndRemoveUntil(
-                      //     MaterialPageRoute(
-                      //         builder: (context) => const HomePage()),
-                      //     (Route<dynamic> route) => false);
-                    },
-                    child: button('Login', context),
-                  ),
-                  SizedBox(height: size.height * 0.02),
-                ],
+                    SizedBox(height: size.height * 0.08),
+                    GestureDetector(
+                      onTap: ()async {
+                        if(logInFormKey.currentState!.validate()) {
+                          if(countryCode !=null){
+                            var mapData={
+                              "contact":"${countryCode!.dialCode}${contactNumberController.text}"
+                            };
+                            var response = await DioClient().login(
+                                mapData,context
+                            );
+                            if(response !=null){
+                              SharedPreferences prefs = await SharedPreferences.getInstance();
+                              await prefs.setString("contact", "${countryCode!.dialCode}${contactNumberController.text}");
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>NavBar()));
+
+                            }
+
+                          }
+                          else{
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Country Code not selected")));
+
+                          }
+
+
+                        }
+
+
+                        // Navigator.of(context).pushAndRemoveUntil(
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const HomePage()),
+                        //     (Route<dynamic> route) => false);
+                      },
+                      child: button('Login', context),
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                  ],
+                ),
               ),
             ),
           ),

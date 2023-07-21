@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:umrahcar_user/utils/colors.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:umrahcar_user/widgets/home_list.dart';
 import 'package:umrahcar_user/screens/notification_screen.dart';
 import 'package:umrahcar_user/screens/tracking_process/tarcking/pickup_screen.dart';
+
+
+var phoneNmbr;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,6 +18,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  getLocalData()async{
+    final _sharedPref = await SharedPreferences.getInstance();
+    var contact=_sharedPref.getString('contact');
+    print("contact nmbr: $contact");
+    phoneNmbr=contact;
+
+  }
+
+  @override
+  void initState() {
+    getLocalData();
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
