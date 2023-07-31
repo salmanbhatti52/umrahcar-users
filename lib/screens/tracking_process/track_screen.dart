@@ -369,7 +369,7 @@ class _TrackPageState extends State<TrackPage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const PickUpPage(),
+                                  builder: (context) =>  PickUpPage(getBookingData: widget.getBookingData),
                                 ));
                           },
                           child: button('Track', context),

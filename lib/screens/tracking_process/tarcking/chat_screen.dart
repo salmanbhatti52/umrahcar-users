@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:umrahcar_user/models/get_chat_model.dart';
 import 'package:umrahcar_user/utils/colors.dart';
 
+import '../../../service/rest_api_service.dart';
+
 class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
+  String? bookingId;
+  String? usersDriverId;
+   ChatPage({super.key,this.bookingId,this.usersDriverId});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -12,6 +17,31 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   TextEditingController messageController = TextEditingController();
   final GlobalKey<FormState> chatFormKey = GlobalKey<FormState>();
+
+
+  GetChatModel getChatModel=GetChatModel();
+
+  getChatData()async{
+    print("bookingId ${widget.bookingId}");
+    var mapData={
+      "bookings_id": widget.bookingId
+    };
+    getChatModel= await DioClient().getChat(mapData, context);
+    print("response id: ${getChatModel.data!.message}");
+    setState(() {
+
+    });
+
+  }
+  @override
+  void initState() {
+    getChatData();
+    // TODO: implement initState
+    super.initState();
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -102,162 +132,60 @@ class _ChatPageState extends State<ChatPage> {
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
-                SizedBox(height: size.height * 0.06),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFF79BF42),
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(5),
-                        topLeft: Radius.circular(5),
-                        bottomLeft: Radius.circular(5),
-                      ),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(15),
-                      child: Text(
-                        'Hi , Where are you Now?',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontFamily: 'Montserrat-Regular',
-                          fontWeight: FontWeight.w600,
+                getChatModel.data !=null ?
+                Container(
+                  height:MediaQuery.of(context).size.height/1.9,
+
+                  child: ListView.builder(
+                      itemCount: getChatModel.data!.message!.length,
+                      itemBuilder: (BuildContext context,i){
+                    return Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              color: Color(0xFF79BF42),
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(5),
+                                topLeft: Radius.circular(5),
+                                bottomLeft: Radius.circular(5),
+                              ),
+                            ),
+                            child:  Padding(
+                              padding: const EdgeInsets.all(15),
+                              child: Text(
+                                '${getChatModel.data!.message![i].message}',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                  fontFamily: 'Montserrat-Regular',
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: size.height * 0.005),
-                const Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    '02:09',
-                    style: TextStyle(
-                      color: Color(0xFF79BF42),
-                      fontSize: 8,
-                      fontFamily: 'Montserrat-Regular',
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-                SizedBox(height: size.height * 0.04),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFF2F2F2),
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(5),
-                        topLeft: Radius.circular(5),
-                        bottomRight: Radius.circular(5),
-                      ),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(15),
-                      child: Text(
-                        'Hello , i am on the way will reach you\nsoon.',
-                        style: TextStyle(
-                          color: Color(0xFF565656),
-                          fontSize: 10,
-                          fontFamily: 'Montserrat-Regular',
-                          fontWeight: FontWeight.w600,
+                        SizedBox(height: size.height * 0.005),
+                        const Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            '02:09',
+                            style: TextStyle(
+                              color: Color(0xFF79BF42),
+                              fontSize: 8,
+                              fontFamily: 'Montserrat-Regular',
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: size.height * 0.005),
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    '02:09',
-                    style: TextStyle(
-                      color: Color(0xFF565656),
-                      fontSize: 8,
-                      fontFamily: 'Montserrat-Regular',
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-                SizedBox(height: size.height * 0.04),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFF79BF42),
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(5),
-                        topLeft: Radius.circular(5),
-                        bottomLeft: Radius.circular(5),
-                      ),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(15),
-                      child: Text(
-                        'Lorem ipsum dolor sit amet, consectetur\nadipiscing elit, sed do eiusmod tempor\nincididunt ut labore ',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontFamily: 'Montserrat-Regular',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: size.height * 0.005),
-                const Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    '02:09',
-                    style: TextStyle(
-                      color: Color(0xFF79BF42),
-                      fontSize: 8,
-                      fontFamily: 'Montserrat-Regular',
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-                SizedBox(height: size.height * 0.04),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFF2F2F2),
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(5),
-                        topLeft: Radius.circular(5),
-                        bottomRight: Radius.circular(5),
-                      ),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(15),
-                      child: Text(
-                        'Lorem ipsum dolor sit amet, consectetur\nadipiscing elit, sed do eiusmod tempor\nincididunt ut labore ',
-                        style: TextStyle(
-                          color: Color(0xFF565656),
-                          fontSize: 10,
-                          fontFamily: 'Montserrat-Regular',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: size.height * 0.005),
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    '02:09',
-                    style: TextStyle(
-                      color: Color(0xFF565656),
-                      fontSize: 8,
-                      fontFamily: 'Montserrat-Regular',
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
+                      ],
+                    );
+                  }),
+                )
+                    : const Text("No Chat Found"),
+
+
                 SizedBox(height: size.height * 0.25),
                 TextFormField(
                   controller: messageController,

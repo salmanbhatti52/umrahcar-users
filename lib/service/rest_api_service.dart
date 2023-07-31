@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:umrahcar_user/models/get_chat_model.dart';
 
 import '../models/get_booking_list_model.dart';
 import '../models/login_model.dart';
@@ -92,6 +93,25 @@ class DioClient {
         throw 'SomeThing Missing';
       }
     } catch (e) {
+      rethrow;
+    }
+  }
+  Future<GetChatModel> getChat(Map<String,dynamic> model,BuildContext context) async {
+    try {
+      final response =
+      await _dio.post('$baseUrl/get_messages', data: model);
+      if (response.statusCode == 200) {
+        print("hiiii ${response.data}");
+        var res= GetChatModel.fromJson(response.data);
+        return res;
+      }
+      else  {
+         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No Chat Found")));
+        throw 'SomeThing Missing';
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No Chat Found")));
+
       rethrow;
     }
   }

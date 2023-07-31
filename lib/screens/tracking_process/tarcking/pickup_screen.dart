@@ -5,8 +5,11 @@ import 'package:umrahcar_user/widgets/button.dart';
 import 'package:umrahcar_user/screens/tracking_process/tarcking/chat_screen.dart';
 import 'package:umrahcar_user/screens/tracking_process/tarcking/dropoff_screen.dart';
 
+import '../../../models/get_booking_list_model.dart';
+
 class PickUpPage extends StatefulWidget {
-  const PickUpPage({super.key});
+  GetBookingData? getBookingData;
+   PickUpPage({super.key,this.getBookingData});
 
   @override
   State<PickUpPage> createState() => _PickUpPageState();
@@ -106,9 +109,9 @@ class _PickUpPageState extends State<PickUpPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        const Text(
-                                          'Cameron William',
-                                          style: TextStyle(
+                                         Text(
+                                          '${widget.getBookingData!.name}',
+                                          style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 16,
                                             fontFamily: 'Montserrat-Regular',
@@ -116,9 +119,9 @@ class _PickUpPageState extends State<PickUpPage> {
                                           ),
                                         ),
                                         SizedBox(height: size.height * 0.003),
-                                        const Text(
-                                          '0901344934849',
-                                          style: TextStyle(
+                                         Text(
+                                           '${widget.getBookingData!.contact}',
+                                          style: const TextStyle(
                                             color: Color(0xFF929292),
                                             fontSize: 12,
                                             fontFamily: 'Montserrat-Regular',
@@ -136,12 +139,16 @@ class _PickUpPageState extends State<PickUpPage> {
                                   children: [
                                     GestureDetector(
                                       onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const ChatPage(),
-                                            ));
+                                        print("iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ChatPage(bookingId: widget.getBookingData!.bookingsId,usersDriverId: widget.getBookingData!.vehicles![0].usersDriversId),
+                                              ));
+
+
+
                                       },
                                       child: SvgPicture.asset(
                                         'assets/images/chat-icon.svg',
@@ -167,9 +174,9 @@ class _PickUpPageState extends State<PickUpPage> {
                                     height: 20,
                                   ),
                                   SizedBox(width: size.width * 0.032),
-                                  const Text(
-                                    '2 Jun 2022',
-                                    style: TextStyle(
+                                   Text(
+                                     '${widget.getBookingData!.pickupTime}',
+                                    style: const TextStyle(
                                       color: Color(0xFF565656),
                                       fontSize: 12,
                                       fontFamily: 'Montserrat-Regular',
@@ -187,9 +194,9 @@ class _PickUpPageState extends State<PickUpPage> {
                                     height: 20,
                                   ),
                                   SizedBox(width: size.width * 0.032),
-                                  const Text(
-                                    '12:00 AM',
-                                    style: TextStyle(
+                                   Text(
+                                     '${widget.getBookingData!.pickupTime}',
+                                    style: const TextStyle(
                                       color: Color(0xFF565656),
                                       fontSize: 12,
                                       fontFamily: 'Montserrat-Regular',
@@ -209,9 +216,9 @@ class _PickUpPageState extends State<PickUpPage> {
                                 height: 20,
                               ),
                               SizedBox(width: size.width * 0.032),
-                              const Text(
-                                '12:01 AM',
-                                style: TextStyle(
+                               Text(
+                                 '${widget.getBookingData!.flightTime}',
+                                style: const TextStyle(
                                   color: Color(0xFF565656),
                                   fontSize: 12,
                                   fontFamily: 'Montserrat-Regular',
@@ -316,10 +323,12 @@ class _PickUpPageState extends State<PickUpPage> {
               SizedBox(height: size.height * 0.08),
               GestureDetector(
                   onTap: () {
+                    print("iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const ChatPage(),
+                          builder: (context) =>
+                              ChatPage(bookingId: widget.getBookingData!.bookingsId,usersDriverId: widget.getBookingData!.vehicles![0].usersDriversId),
                         ));
                   },
                   child: dialogButtonTransparent('Contact', context)),
