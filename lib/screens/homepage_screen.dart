@@ -216,6 +216,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
+          getBookingOngoingResponse.data!=null ?
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20, top: 150),
             child: GestureDetector(
@@ -326,7 +327,15 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-          ),
+          ): const Padding(
+            padding: EdgeInsets.only(left: 160, right: 20, top: 150),
+            child: Column(
+              children: [
+                SizedBox(height: 130,),
+                CircularProgressIndicator(),
+              ],
+            ),
+          )
         ],
       ),
     );
