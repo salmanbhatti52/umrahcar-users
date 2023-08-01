@@ -241,8 +241,8 @@ class GetBookingData {
 }
 class DriverTripStatus {
   String? bookingsDriversStatusId;
-  Status? name;
-  Status? status;
+  String? name;
+  String? status;
 
   DriverTripStatus({
     this.bookingsDriversStatusId,
@@ -252,14 +252,14 @@ class DriverTripStatus {
 
   factory DriverTripStatus.fromJson(Map<String, dynamic> json) => DriverTripStatus(
     bookingsDriversStatusId: json["bookings_drivers_status_id"],
-    name: statusValues.map[json["name"]],
-    status: statusValues.map[json["status"]],
+    name: json["name"],
+    status: json["status"],
   );
 
   Map<String, dynamic> toJson() => {
     "bookings_drivers_status_id": bookingsDriversStatusId,
-    "name": statusValues.reverse[name],
-    "status": statusValues.reverse[status],
+    "name": name,
+    "status": status,
   };
 }
 

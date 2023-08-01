@@ -63,12 +63,12 @@ class _PickUpPageState extends State<PickUpPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(height: size.height * 0.03),
-                          const Row(
+                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'On the Way',
-                                style: TextStyle(
+                                '${widget.getBookingData!.driverTripStatus!.name}',
+                                style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
                                   fontFamily: 'Montserrat-Regular',
@@ -110,7 +110,7 @@ class _PickUpPageState extends State<PickUpPage> {
                                           CrossAxisAlignment.start,
                                       children: [
                                          Text(
-                                          '${widget.getBookingData!.name}',
+                                          '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.name}',
                                           style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 16,
@@ -120,7 +120,7 @@ class _PickUpPageState extends State<PickUpPage> {
                                         ),
                                         SizedBox(height: size.height * 0.003),
                                          Text(
-                                           '${widget.getBookingData!.contact}',
+                                           '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.contact}',
                                           style: const TextStyle(
                                             color: Color(0xFF929292),
                                             fontSize: 12,
@@ -144,7 +144,7 @@ class _PickUpPageState extends State<PickUpPage> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    ChatPage(bookingId: widget.getBookingData!.bookingsId,usersDriverId: widget.getBookingData!.vehicles![0].usersDriversId),
+                                                    ChatPage(bookingId: widget.getBookingData!.bookingsId,usersDriverId: widget.getBookingData!.vehicles![0].usersDriversId,guestName: widget.getBookingData!.name,driverName: widget.getBookingData!.vehicles![0].vehiclesDrivers!.name),
                                               ));
 
 
@@ -175,7 +175,7 @@ class _PickUpPageState extends State<PickUpPage> {
                                   ),
                                   SizedBox(width: size.width * 0.032),
                                    Text(
-                                     '${widget.getBookingData!.pickupTime}',
+                                     '${widget.getBookingData!.pickupDate}',
                                     style: const TextStyle(
                                       color: Color(0xFF565656),
                                       fontSize: 12,
@@ -328,7 +328,7 @@ class _PickUpPageState extends State<PickUpPage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              ChatPage(bookingId: widget.getBookingData!.bookingsId,usersDriverId: widget.getBookingData!.vehicles![0].usersDriversId),
+                              ChatPage(bookingId: widget.getBookingData!.bookingsId,usersDriverId: widget.getBookingData!.vehicles![0].usersDriversId,guestName: widget.getBookingData!.name,driverName: widget.getBookingData!.vehicles![0].vehiclesDrivers!.name),
                         ));
                   },
                   child: dialogButtonTransparent('Contact', context)),

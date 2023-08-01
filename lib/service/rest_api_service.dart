@@ -7,6 +7,7 @@ import 'package:umrahcar_user/models/get_chat_model.dart';
 
 import '../models/get_booking_list_model.dart';
 import '../models/login_model.dart';
+import '../models/send_message_model.dart';
 import '../utils/const.dart';
 
 
@@ -107,6 +108,27 @@ class DioClient {
       }
       else  {
          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No Chat Found")));
+        throw 'SomeThing Missing';
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No Chat Found")));
+
+      rethrow;
+    }
+  }
+
+
+  Future<SendMessageModel> sendMessage(Map<String,dynamic> model,BuildContext context) async {
+    try {
+      final response =
+      await _dio.post('$baseUrl/send_messages', data: model);
+      if (response.statusCode == 200) {
+        print("hiiii ${response.data}");
+        var res= SendMessageModel.fromJson(response.data);
+        return res;
+      }
+      else  {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No Chat Found")));
         throw 'SomeThing Missing';
       }
     } catch (e) {
