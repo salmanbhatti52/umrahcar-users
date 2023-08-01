@@ -49,6 +49,7 @@ dependencies:
   shared_preferences: ^2.2.0
   json_annotation: ^4.8.1
   intl: ^0.18.1
+  url_launcher: ^6.1.12
 
 dev_dependencies:
   flutter_test:

@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:umrahcar_user/utils/colors.dart';
 import 'package:umrahcar_user/widgets/button.dart';
 import 'package:umrahcar_user/screens/tracking_process/tarcking/pickup_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../models/get_booking_list_model.dart';
 
@@ -15,6 +16,19 @@ class TrackPage extends StatefulWidget {
 }
 
 class _TrackPageState extends State<TrackPage> {
+
+
+  void _launchURL(_url) async => await canLaunch(_url)
+      ? await launch(_url)
+      : throw 'Could not launch $_url';
+
+  showSnackbar({error, context}) {
+    final snackBar = SnackBar(
+      content: Text(error),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -255,24 +269,33 @@ class _TrackPageState extends State<TrackPage> {
                               ],
                             ),
                             SizedBox(width: size.width * 0.14),
-                            Row(
-                              children: [
-                                SvgPicture.asset(
-                                    'assets/images/whatsapp-icon.svg'),
-                                SizedBox(width: size.width * 0.032),
-                                SizedBox(
-                                  width: size.width * 0.275,
-                                  child:  Text(
-                                    '${widget.getBookingData!.whatsapp}',
-                                    style: const TextStyle(
-                                      color: Color(0xFF565656),
-                                      fontSize: 12,
-                                      fontFamily: 'Montserrat-Regular',
-                                      fontWeight: FontWeight.w500,
+                            InkWell(
+                              onTap: (){
+                                _launchURL(
+                                    'https://wa.me/${widget.getBookingData!.whatsapp}/?text=hello');
+                                setState(() {
+
+                                });
+                              },
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                      'assets/images/whatsapp-icon.svg'),
+                                  SizedBox(width: size.width * 0.032),
+                                  SizedBox(
+                                    width: size.width * 0.275,
+                                    child:  Text(
+                                      '${widget.getBookingData!.whatsapp}',
+                                      style: const TextStyle(
+                                        color: Color(0xFF565656),
+                                        fontSize: 12,
+                                        fontFamily: 'Montserrat-Regular',
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ],
                         ),
