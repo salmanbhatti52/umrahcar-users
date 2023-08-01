@@ -7,6 +7,9 @@ import 'package:umrahcar_user/widgets/home_list.dart';
 import 'package:umrahcar_user/screens/notification_screen.dart';
 import 'package:umrahcar_user/screens/tracking_process/tarcking/pickup_screen.dart';
 
+import '../models/get_booking_list_model.dart';
+import '../service/rest_api_service.dart';
+
 
 var phoneNmbr;
 
@@ -24,6 +27,23 @@ class _HomePageState extends State<HomePage> {
     var contact=_sharedPref.getString('contact');
     print("contact nmbr: $contact");
     phoneNmbr=contact;
+    if(phoneNmbr !=null){
+      getBookingListOngoing();
+    }
+
+  }
+  GetBookingListModel getBookingOngoingResponse=GetBookingListModel();
+
+  getBookingListOngoing()async{
+    print("phoneNmbr $phoneNmbr");
+    var mapData={
+      "contact": phoneNmbr.toString()
+    };
+    getBookingOngoingResponse= await DioClient().getBookingOngoing(mapData, context);
+    print("response id: ${getBookingOngoingResponse.data}");
+    setState(() {
+
+    });
 
   }
 
@@ -200,11 +220,16 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.only(left: 20, right: 20, top: 150),
             child: GestureDetector(
               onTap: () {
-                Navigator.push(
+                if( getBookingOngoingResponse.data!=null) {
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>  PickUpPage(),
+                      builder: (context) =>  PickUpPage(getBookingData: getBookingOngoingResponse.data![0]),
                     ));
+                  setState(() {
+
+                  });
+                }
               },
               child: Container(
                 width: size.width,
@@ -259,9 +284,9 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               SizedBox(width: size.width * 0.02),
-                              const Text(
-                                'Camiron Williosm',
-                                style: TextStyle(
+                               Text(
+                                '${getBookingOngoingResponse.data![0].vehicles![0].vehiclesDrivers!.name}',
+                                style: const TextStyle(
                                   color: Colors.black,
                                   fontFamily: 'Montserrat-Regular',
                                   fontWeight: FontWeight.w500,
@@ -278,9 +303,9 @@ class _HomePageState extends State<HomePage> {
                               Container(
                                 color: Colors.transparent,
                                 width: size.width * 0.25,
-                                child: const AutoSizeText(
-                                  '6391 Elgin St. Celina,',
-                                  style: TextStyle(
+                                child:  AutoSizeText(
+                                  '${getBookingOngoingResponse.data![0].name}',
+                                  style: const TextStyle(
                                     color: Color(0xFF565656),
                                     fontFamily: 'Montserrat-Regular',
                                     fontWeight: FontWeight.w500,
