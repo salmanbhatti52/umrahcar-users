@@ -328,11 +328,20 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ): const Padding(
-            padding: EdgeInsets.only(left: 160, right: 20, top: 150),
+            padding: EdgeInsets.only(left: 120, right: 20, top: 180),
             child: Column(
               children: [
                 SizedBox(height: 130,),
-                CircularProgressIndicator(),
+                Text(
+                  'No Current Booking',
+                  style: TextStyle(
+                    color: Colors.black,
+
+                    fontFamily: 'Montserrat-Regular',
+                    fontWeight: FontWeight.w900,
+                    fontSize: 15,
+                  ),
+                ),
               ],
             ),
           )
