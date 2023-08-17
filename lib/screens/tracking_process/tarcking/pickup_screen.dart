@@ -1,35 +1,128 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:umrahcar_user/utils/colors.dart';
 import 'package:umrahcar_user/widgets/button.dart';
 import 'package:umrahcar_user/screens/tracking_process/tarcking/chat_screen.dart';
 import 'package:umrahcar_user/screens/tracking_process/tarcking/dropoff_screen.dart';
 
 import '../../../models/get_booking_list_model.dart';
+import 'dart:ui' as ui;
 
+import '../../../models/get_driver_profile.dart';
+import '../../../service/rest_api_service.dart';
 class PickUpPage extends StatefulWidget {
   GetBookingData? getBookingData;
-   PickUpPage({super.key,this.getBookingData});
+  PickUpPage({super.key, this.getBookingData});
 
   @override
   State<PickUpPage> createState() => _PickUpPageState();
 }
 
 class _PickUpPageState extends State<PickUpPage> {
+  LatLng _initialcameraposition = LatLng(20.5937, 78.9629);
+  GoogleMapController? _controller;
+  Location _location = Location();
+
+  void _onMapCreated(GoogleMapController _cntlr) {
+    _controller = _cntlr;
+    _location.onLocationChanged.listen((l) {
+      _controller!.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(target: LatLng(lat!, long!), zoom: 17),
+        ),
+      );
+    });
+  }
+
+  double? lat;
+  double? long;
+  @override
+  var icon;
+  BitmapDescriptor? markerIcon;
+  void addCustomIcon() async {
+    icon = await getBitmapDescriptorFromAssetBytes("assets/images/location.png", 50);
+    setState(() {
+
+    });
+  }
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
+  }
+
+  Future<BitmapDescriptor> getBitmapDescriptorFromAssetBytes(String path, int width) async {
+    final Uint8List imageData = await getBytesFromAsset(path, width);
+    return BitmapDescriptor.fromBytes(imageData);
+  }
+  Timer? timer;
+  void initState() {
+    getProfile();
+    timer=Timer.periodic(const Duration(minutes: 2), (timer)=>getProfile()) ;
+    addCustomIcon();
+    print(
+        "lat: ${widget.getBookingData!.vehicles![0].vehiclesDrivers!.lattitude}");
+    print(
+        "log: ${widget.getBookingData!.vehicles![0].vehiclesDrivers!.longitude}");
+    // TODO: implement initState
+    super.initState();
+  }
+  @override
+  void dispose() {
+    timer!.cancel();
+    // TODO: implement dispose
+    super.dispose();
+  }
+  GetDriverProfile getProfileResponse=GetDriverProfile();
+  getProfile()async{
+    print("userIdId ${widget.getBookingData!.vehicles![0].usersDriversId}");
+
+    getProfileResponse= await DioClient().getProfile(widget.getBookingData!.vehicles![0].usersDriversId, context);
+    if(getProfileResponse.data !=null ) {
+      print("getProfileResponse name: ${getProfileResponse.data!.userData!.name}");
+      long= double.parse(getProfileResponse.data!.userData!.longitude!);
+      lat=double.parse(getProfileResponse.data!.userData!.lattitude!);
+
+    }
+    setState(() {
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    print("markerIcon: ${markerIcon}");
     return Scaffold(
       backgroundColor: mainColor,
-      body: Container(
+      body: getProfileResponse.data !=null ?
+      Container(
         color: Colors.transparent,
         width: size.width,
         height: size.height,
         child: Stack(
           children: [
-            Image.asset(
-              'assets/images/pickup-map.png',
-              fit: BoxFit.cover,
+
+            GoogleMap(
+              initialCameraPosition:
+                  CameraPosition(target: _initialcameraposition),
+              mapType: MapType.normal,
+              onMapCreated: _onMapCreated,
+              myLocationEnabled: false,
+              markers: {
+                Marker(
+                    markerId: MarkerId('Pakistan'),
+                    position: LatLng(lat!, long!),
+                    draggable: true,
+
+                    icon: icon!=null ?  icon!: BitmapDescriptor.defaultMarker)
+              },
             ),
             Positioned(
               bottom: 0,
@@ -63,11 +156,13 @@ class _PickUpPageState extends State<PickUpPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(height: size.height * 0.03),
-                           Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                '${widget.getBookingData!.driverTripStatus!.name}',
+                                widget.getBookingData!.driverTripStatus != null
+                                    ? '${widget.getBookingData!.driverTripStatus!.name}'
+                                    : "",
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
@@ -109,7 +204,7 @@ class _PickUpPageState extends State<PickUpPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                         Text(
+                                        Text(
                                           '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.name}',
                                           style: const TextStyle(
                                             color: Colors.black,
@@ -119,8 +214,8 @@ class _PickUpPageState extends State<PickUpPage> {
                                           ),
                                         ),
                                         SizedBox(height: size.height * 0.003),
-                                         Text(
-                                           '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.contact}',
+                                        Text(
+                                          '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.contact}',
                                           style: const TextStyle(
                                             color: Color(0xFF929292),
                                             fontSize: 12,
@@ -139,16 +234,27 @@ class _PickUpPageState extends State<PickUpPage> {
                                   children: [
                                     GestureDetector(
                                       onTap: () {
-                                        print("iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ChatPage(bookingId: widget.getBookingData!.bookingsId,usersDriverId: widget.getBookingData!.vehicles![0].usersDriversId,guestName: widget.getBookingData!.name,driverName: widget.getBookingData!.vehicles![0].vehiclesDrivers!.name),
-                                              ));
-
-
-
+                                        print(
+                                            "iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => ChatPage(
+                                                  bookingId: widget
+                                                      .getBookingData!
+                                                      .bookingsId,
+                                                  usersDriverId: widget
+                                                      .getBookingData!
+                                                      .vehicles![0]
+                                                      .usersDriversId,
+                                                  guestName: widget
+                                                      .getBookingData!.name,
+                                                  driverName: widget
+                                                      .getBookingData!
+                                                      .vehicles![0]
+                                                      .vehiclesDrivers!
+                                                      .name),
+                                            ));
                                       },
                                       child: SvgPicture.asset(
                                         'assets/images/chat-icon.svg',
@@ -174,8 +280,8 @@ class _PickUpPageState extends State<PickUpPage> {
                                     height: 20,
                                   ),
                                   SizedBox(width: size.width * 0.032),
-                                   Text(
-                                     '${widget.getBookingData!.pickupDate}',
+                                  Text(
+                                    '${widget.getBookingData!.pickupDate}',
                                     style: const TextStyle(
                                       color: Color(0xFF565656),
                                       fontSize: 12,
@@ -194,8 +300,8 @@ class _PickUpPageState extends State<PickUpPage> {
                                     height: 20,
                                   ),
                                   SizedBox(width: size.width * 0.032),
-                                   Text(
-                                     '${widget.getBookingData!.pickupTime}',
+                                  Text(
+                                    '${widget.getBookingData!.pickupTime}',
                                     style: const TextStyle(
                                       color: Color(0xFF565656),
                                       fontSize: 12,
@@ -216,8 +322,8 @@ class _PickUpPageState extends State<PickUpPage> {
                                 height: 20,
                               ),
                               SizedBox(width: size.width * 0.032),
-                               Text(
-                                 '${widget.getBookingData!.flightTime}',
+                              Text(
+                                '${widget.getBookingData!.flightTime}',
                                 style: const TextStyle(
                                   color: Color(0xFF565656),
                                   fontSize: 12,
@@ -255,6 +361,15 @@ class _PickUpPageState extends State<PickUpPage> {
             ),
           ],
         ),
+      ): const Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(left: 175),
+            child: CircularProgressIndicator(),
+          )
+        ],
       ),
     );
   }
@@ -323,12 +438,18 @@ class _PickUpPageState extends State<PickUpPage> {
               SizedBox(height: size.height * 0.08),
               GestureDetector(
                   onTap: () {
-                    print("iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
+                    print(
+                        "iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              ChatPage(bookingId: widget.getBookingData!.bookingsId,usersDriverId: widget.getBookingData!.vehicles![0].usersDriversId,guestName: widget.getBookingData!.name,driverName: widget.getBookingData!.vehicles![0].vehiclesDrivers!.name),
+                          builder: (context) => ChatPage(
+                              bookingId: widget.getBookingData!.bookingsId,
+                              usersDriverId: widget
+                                  .getBookingData!.vehicles![0].usersDriversId,
+                              guestName: widget.getBookingData!.name,
+                              driverName: widget.getBookingData!.vehicles![0]
+                                  .vehiclesDrivers!.name),
                         ));
                   },
                   child: dialogButtonTransparent('Contact', context)),

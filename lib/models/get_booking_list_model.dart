@@ -597,6 +597,9 @@ class Vehicle {
 class VehiclesDrivers {
   String? usersDriversId;
   String? parentId;
+  String? onesignalId;
+  String? longitude;
+  String? lattitude;
   String? walletAmount;
   String? driversType;
   String? companyName;
@@ -609,12 +612,17 @@ class VehiclesDrivers {
   String? rating;
   String? image;
   Status? status;
+  String? resetOtp;
+  String? notificationSwitch;
   DateTime? dateAdded;
   DateTime? dateModified;
 
   VehiclesDrivers({
     this.usersDriversId,
     this.parentId,
+    this.onesignalId,
+    this.longitude,
+    this.lattitude,
     this.walletAmount,
     this.driversType,
     this.companyName,
@@ -627,6 +635,8 @@ class VehiclesDrivers {
     this.rating,
     this.image,
     this.status,
+    this.resetOtp,
+    this.notificationSwitch,
     this.dateAdded,
     this.dateModified,
   });
@@ -634,6 +644,9 @@ class VehiclesDrivers {
   factory VehiclesDrivers.fromJson(Map<String, dynamic> json) => VehiclesDrivers(
     usersDriversId: json["users_drivers_id"],
     parentId: json["parent_id"],
+    onesignalId: json["onesignal_id"],
+    longitude: json["longitude"],
+    lattitude: json["lattitude"],
     walletAmount: json["wallet_amount"],
     driversType: json["drivers_type"],
     companyName: json["company_name"],
@@ -646,6 +659,8 @@ class VehiclesDrivers {
     rating: json["rating"],
     image: json["image"],
     status: statusValues.map[json["status"]],
+    resetOtp: json["reset_otp"],
+    notificationSwitch: json["notification_switch"],
     dateAdded: DateTime.parse(json["date_added"]),
     dateModified: DateTime.parse(json["date_modified"]),
   );
@@ -665,6 +680,8 @@ class VehiclesDrivers {
     "rating": rating,
     "image": image,
     "status": statusValues.reverse[status],
+    "reset_otp": resetOtp,
+    "notification_switch": notificationSwitch,
     "date_added": dateAdded!.toIso8601String(),
     "date_modified": dateModified!.toIso8601String(),
   };

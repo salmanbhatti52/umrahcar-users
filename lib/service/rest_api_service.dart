@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:umrahcar_user/models/get_chat_model.dart';
 
 import '../models/get_booking_list_model.dart';
+import '../models/get_driver_profile.dart';
 import '../models/login_model.dart';
 import '../models/send_message_model.dart';
 import '../utils/const.dart';
@@ -137,7 +138,28 @@ class DioClient {
       rethrow;
     }
   }
+  Future<GetDriverProfile> getProfile(String? uid,BuildContext context) async {
+    print("mapData: ${uid}");
+    String url= "$baseUrl/get_details_drivers/$uid";
+    print("url: ${url}");
 
+    try {
+      final response =
+      await _dio.post(url);
+      if (response.statusCode == 200) {
+        print("hiiii ${response.data}");
+        var res= GetDriverProfile.fromJson(response.data);
+        return res;
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No Data Found")));
+        throw 'SomeThing Missing';
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No Data Found")));
+
+      rethrow;
+    }
+  }
 
 
 
