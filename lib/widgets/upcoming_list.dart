@@ -166,6 +166,7 @@ Widget upComingList(BuildContext context,GetBookingListModel getBookingUpcomingR
       );
     },
   ):Container(
+    margin: EdgeInsets.only(left: 30),
     height: 300,
     width: 300,
     child: Center(child: const Text("No upcoming Booking")),

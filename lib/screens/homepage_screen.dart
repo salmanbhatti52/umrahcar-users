@@ -6,6 +6,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:umrahcar_user/widgets/home_list.dart';
 import 'package:umrahcar_user/screens/notification_screen.dart';
 import 'package:umrahcar_user/screens/tracking_process/tarcking/pickup_screen.dart';
+import 'package:umrahcar_user/widgets/upcoming_list.dart';
 
 import '../models/get_booking_list_model.dart';
 import '../service/rest_api_service.dart';
@@ -46,10 +47,24 @@ class _HomePageState extends State<HomePage> {
     });
 
   }
+  GetBookingListModel getBookingUpcomingResponse=GetBookingListModel();
+  getBookingListUpcoming()async{
+    print("phoneNmbr $phoneNmbr");
+    var mapData={
+      "contact": phoneNmbr.toString()
+    };
+    getBookingUpcomingResponse= await DioClient().getBookingupcoming(mapData, context);
+    print("response id: ${getBookingUpcomingResponse.data}");
+    setState(() {
+
+    });
+
+  }
 
   @override
   void initState() {
     getLocalData();
+    getBookingListUpcoming();
     // TODO: implement initState
     super.initState();
   }
@@ -73,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   color: Colors.transparent,
                   width: size.width,
-                  height: size.height * 0.25,
+                  height: size.height * 0.259,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -179,25 +194,7 @@ class _HomePageState extends State<HomePage> {
                                 fontSize: 16,
                               ),
                             ),
-                            // GestureDetector(
-                            //   onTap: () {
-                            //     Navigator.push(
-                            //         context,
-                            //         MaterialPageRoute(
-                            //           builder: (context) => const BookingsPage(),
-                            //         ));
-                            //   },
-                            //   child: const Text(
-                            //     'See all',
-                            //     textAlign: TextAlign.right,
-                            //     style: TextStyle(
-                            //       color: Color(0xFF79BF42),
-                            //       fontFamily: 'Montserrat-Regular',
-                            //       fontWeight: FontWeight.w500,
-                            //       fontSize: 12,
-                            //     ),
-                            //   ),
-                            // ),
+
                           ],
                         ),
                       ),
@@ -207,7 +204,7 @@ class _HomePageState extends State<HomePage> {
                         height: size.height * 0.389,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: homeList(context),
+                          child: upComingList(context,getBookingUpcomingResponse),
                         ),
                       ),
                     ],
