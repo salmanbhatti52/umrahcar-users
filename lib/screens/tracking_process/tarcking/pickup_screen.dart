@@ -9,6 +9,7 @@ import 'package:umrahcar_user/utils/colors.dart';
 import 'package:umrahcar_user/widgets/button.dart';
 import 'package:umrahcar_user/screens/tracking_process/tarcking/chat_screen.dart';
 import 'package:umrahcar_user/screens/tracking_process/tarcking/dropoff_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../models/get_all_system_data_model.dart';
 import '../../../models/get_booking_list_model.dart';
@@ -453,10 +454,10 @@ class _PickUpPageState extends State<PickUpPage> {
                 ),
               ),
               SizedBox(height: size.height * 0.02),
-              const Text(
-                'Mohammad Irfan',
+               Text(
+                '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.name}',
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(0xFF565656),
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -469,9 +470,9 @@ class _PickUpPageState extends State<PickUpPage> {
                 children: [
                   SvgPicture.asset('assets/images/green-fast-car-icon.svg'),
                   SizedBox(width: size.width * 0.02),
-                  const Text(
-                    'Tesla S45 , Model 2022',
-                    style: TextStyle(
+                   Text(
+                    '${widget.getBookingData!.vehicles![0].vehiclesName!.name}',
+                    style: const TextStyle(
                       color: Color(0xFF79BF42),
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
@@ -493,33 +494,19 @@ class _PickUpPageState extends State<PickUpPage> {
               ),
               SizedBox(height: size.height * 0.08),
               GestureDetector(
-                  onTap: () {
+                  onTap: () async {
+                      Uri phoneno = Uri.parse('tel: ${widget.getBookingData!.vehicles![0].vehiclesDrivers!.contact}');
+                      if (await launchUrl(phoneno)) {
+                        //dialer opened
+                      }else{
+                        //dailer is not opened
+                      }
                     print(
                         "iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ChatPage(
-                              bookingId: widget.getBookingData!.bookingsId,
-                              usersDriverId: widget
-                                  .getBookingData!.vehicles![0].usersDriversId,
-                              guestName: widget.getBookingData!.name,
-                              driverName: widget.getBookingData!.vehicles![0]
-                                  .vehiclesDrivers!.name),
-                        ));
+
                   },
                   child: dialogButtonTransparent('Contact', context)),
-              SizedBox(height: size.height * 0.02),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const DropOffPage(),
-                      ));
-                },
-                child: dialogButton('Go a head', context),
-              ),
+
             ],
           ),
         ),

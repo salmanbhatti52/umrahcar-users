@@ -52,6 +52,7 @@ dependencies:
   url_launcher: ^6.1.12
   google_maps_flutter:
   location:
+  rename:
 
 dev_dependencies:
   flutter_test:

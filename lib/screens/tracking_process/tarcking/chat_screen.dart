@@ -63,6 +63,9 @@ class _ChatPageState extends State<ChatPage> {
           leading: GestureDetector(
             onTap: () {
               Navigator.pop(context);
+              setState(() {
+
+              });
             },
             child: SvgPicture.asset(
               'assets/images/back-icon.svg',
@@ -119,17 +122,17 @@ class _ChatPageState extends State<ChatPage> {
             ),
           ),
           centerTitle: true,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 20),
-              child: SvgPicture.asset(
-                'assets/images/contact-icon.svg',
-                width: 22,
-                height: 22,
-                fit: BoxFit.scaleDown,
-              ),
-            ),
-          ],
+          // actions: [
+          //   Padding(
+          //     padding: const EdgeInsets.only(right: 20),
+          //     child: SvgPicture.asset(
+          //       'assets/images/contact-icon.svg',
+          //       width: 22,
+          //       height: 22,
+          //       fit: BoxFit.scaleDown,
+          //     ),
+          //   ),
+          // ],
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),

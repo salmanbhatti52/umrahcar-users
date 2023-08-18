@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:umrahcar_user/utils/colors.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:umrahcar_user/widgets/button.dart';
+
+import '../models/get_booking_list_model.dart';
+import '../service/rest_api_service.dart';
+import 'homepage_screen.dart';
+import 'login_screen.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -12,6 +18,30 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
+  GetBookingListModel getBookingOngoingResponse=GetBookingListModel();
+
+  getBookingListOngoing()async{
+    print("phoneNmbr $phoneNmbr");
+    var mapData={
+      "contact": phoneNmbr.toString()
+    };
+    getBookingOngoingResponse= await DioClient().getBookingOngoing(mapData, context);
+    print("response id: ${getBookingOngoingResponse.data}");
+    setState(() {
+
+    });
+
+  }
+
+  @override
+  void initState() {
+    getBookingListOngoing();
+    // TODO: implement initState
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -35,7 +65,8 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           centerTitle: true,
         ),
-        body: SingleChildScrollView(
+        body: getBookingOngoingResponse.data!=null?
+        SingleChildScrollView(
           child: Column(
             children: [
               Padding(
@@ -64,9 +95,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: Container(
                             color: Colors.transparent,
                             width: size.width * 0.4,
-                            child: const AutoSizeText(
-                              'Mohammad Irfan',
-                              style: TextStyle(
+                            child:  AutoSizeText(
+                              '${getBookingOngoingResponse.data![0].name}',
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
                                 fontFamily: 'Montserrat-Regular',
@@ -95,9 +126,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       height: 25,
                     ),
                     SizedBox(width: size.width * 0.04),
-                    const Text(
-                      'Mohammad Irfan',
-                      style: TextStyle(
+                     Text(
+                      '${getBookingOngoingResponse.data![0].name}',
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 14,
                         fontFamily: 'Montserrat-Regular',
@@ -118,9 +149,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       height: 20,
                     ),
                     SizedBox(width: size.width * 0.04),
-                    const Text(
-                      'Mohammad1234@gmail.com',
-                      style: TextStyle(
+                     Text(
+                      '${getBookingOngoingResponse.data![0].usersAgentsData!.email}',
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 14,
                         fontFamily: 'Montserrat-Regular',
@@ -141,9 +172,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       height: 25,
                     ),
                     SizedBox(width: size.width * 0.04),
-                    const Text(
-                      '+9660359875631',
-                      style: TextStyle(
+                     Text(
+                      '${getBookingOngoingResponse.data![0].usersAgentsData!.contact}',
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 14,
                         fontFamily: 'Montserrat-Regular',
@@ -153,22 +184,39 @@ class _ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
               ),
-              SizedBox(height: size.height * 0.1),
-              GestureDetector(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (context) => deleteAccount(),
-                  );
-                },
-                child: buttonTransparent('Delete my Account', context),
-              ),
-              SizedBox(height: size.height * 0.02),
-              button('Logout', context),
+              // SizedBox(height: size.height * 0.1),
+              // GestureDetector(
+              //   onTap: () {
+              //     showDialog(
+              //       context: context,
+              //       barrierDismissible: false,
+              //       builder: (context) => deleteAccount(),
+              //     );
+              //   },
+              //   child: buttonTransparent('Delete my Account', context),
+              // ),
+              SizedBox(height: size.height * 0.10),
+              InkWell(
+                  onTap: ()async {
+                    SharedPreferences preferences = await SharedPreferences.getInstance();
+                    await preferences.clear();
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LogInPage()));
+                  },
+                  child: button('Logout', context)),
             ],
           ),
-        ),
+        ):
+         const Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 175),
+              child: CircularProgressIndicator(),
+            )
+          ],
+        )
+        ,
       ),
     );
   }

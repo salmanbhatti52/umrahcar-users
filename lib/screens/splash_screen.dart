@@ -53,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
       child: Scaffold(
           backgroundColor: mainColor,
           body: Center(
-            child: SvgPicture.asset("assets/images/splash-icon.svg"),
+            child: SvgPicture.asset("assets/images/splash-icon.svg",fit: BoxFit.fill),
           )),
     );
   }

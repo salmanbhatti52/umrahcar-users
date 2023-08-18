@@ -105,52 +105,60 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       SizedBox(width: size.width * 0.02),
-                      Padding(
+                      if(getBookingOngoingResponse.data!=null )
+                        Padding(
                         padding: const EdgeInsets.only(bottom: 12),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              'Mohammad Irfan',
-                              style: TextStyle(
+                             Text(
+                              '${getBookingOngoingResponse.data![0].name}',
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
                                 fontFamily: 'Montserrat-Regular',
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            SizedBox(height: size.height * 0.002),
+
+                            SizedBox(height: size.height * 0.003),
                             Row(
+
                               children: [
                                 SvgPicture.asset(
                                     'assets/images/white-location-icon.svg'),
-                                SizedBox(width: size.width * 0.01),
-                                const Text(
-                                  '6391 Elgin St. Celina, ',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    fontFamily: 'Montserrat-Regular',
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                SizedBox(width: size.width * 0.02),
+
+                                 Container(
+                                   width: 120,
+                                   child: Text(
+                                    '${getBookingOngoingResponse.data![0].routes!.pickup!.name}',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontFamily: 'Montserrat-Regular',
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                     overflow: TextOverflow.ellipsis,
                                 ),
+                                 ),
                               ],
                             ),
                           ],
                         ),
                       ),
+                      Spacer(),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 6, left: 50),
+                        padding: const EdgeInsets.only(bottom: 6, right: 25),
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const NotificationPage(),
-                                ));
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //       builder: (context) =>
+                            //           const NotificationPage(),
+                            //     ));
                           },
                           child: Container(
                             decoration: BoxDecoration(

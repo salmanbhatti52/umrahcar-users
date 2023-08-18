@@ -109,11 +109,11 @@ class DioClient {
         return res;
       }
       else  {
-         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No Chat Found")));
+         // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No Chat Found")));
         throw 'SomeThing Missing';
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No Chat Found")));
+      // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No Chat Found")));
 
       rethrow;
     }
@@ -130,11 +130,11 @@ class DioClient {
         return res;
       }
       else  {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No Chat Found")));
+        // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No Chat Found")));
         throw 'SomeThing Missing';
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No Chat Found")));
+      // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No Chat Found")));
 
       rethrow;
     }

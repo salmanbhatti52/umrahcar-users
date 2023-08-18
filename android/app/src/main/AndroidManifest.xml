@@ -8,7 +8,7 @@
             android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
-        android:label="Umrah Car\nUser"
+        android:label="UmrahCar Pax"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
