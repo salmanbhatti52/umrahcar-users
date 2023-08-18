@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:umrahcar_user/models/get_chat_model.dart';
 
+import '../models/get_all_system_data_model.dart';
 import '../models/get_booking_list_model.dart';
 import '../models/get_driver_profile.dart';
 import '../models/login_model.dart';
@@ -164,5 +165,22 @@ class DioClient {
 
 
 
+  Future<GetAllSystemData> getSystemAllData(BuildContext context) async {
+    try {
+      final response =
+      await _dio.post('$baseUrl/get_all_system_data',);
+      if (response.statusCode == 200) {
+        print("hiiii ${response.data}");
+        var res= GetAllSystemData.fromJson(response.data);
+        return res;
+      }
+      else  {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No data received")));
+        throw 'SomeThing Missing';
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 
 }

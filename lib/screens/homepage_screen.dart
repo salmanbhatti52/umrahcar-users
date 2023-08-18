@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:umrahcar_user/screens/tracking_process/track_screen.dart';
 import 'package:umrahcar_user/utils/colors.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:umrahcar_user/widgets/home_list.dart';
@@ -30,6 +31,7 @@ class _HomePageState extends State<HomePage> {
     phoneNmbr=contact;
     if(phoneNmbr !=null){
       getBookingListOngoing();
+      getBookingListUpcoming();
     }
 
   }
@@ -64,7 +66,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     getLocalData();
-    getBookingListUpcoming();
     // TODO: implement initState
     super.initState();
   }
@@ -222,7 +223,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>  PickUpPage(getBookingData: getBookingOngoingResponse.data![0]),
+                      builder: (context) =>  TrackPage(getBookingData: getBookingOngoingResponse.data![0]),
                     ));
                   setState(() {
 
@@ -283,7 +284,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                               SizedBox(width: size.width * 0.02),
                                Text(
-                                '${getBookingOngoingResponse.data![0].vehicles![0].vehiclesDrivers!.name}',
+                                 getBookingOngoingResponse.data![0].vehicles![0].vehiclesDrivers!=null?    '${getBookingOngoingResponse.data![0].vehicles![0].vehiclesDrivers!.name}':"",
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontFamily: 'Montserrat-Regular',
@@ -302,7 +303,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.transparent,
                                 width: size.width * 0.25,
                                 child:  AutoSizeText(
-                                  '${getBookingOngoingResponse.data![0].name}',
+                                  '${getBookingOngoingResponse.data![0].routes!.pickup!.name}',
                                   style: const TextStyle(
                                     color: Color(0xFF565656),
                                     fontFamily: 'Montserrat-Regular',
