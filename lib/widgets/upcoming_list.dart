@@ -64,11 +64,8 @@ Widget upComingList(BuildContext context,GetBookingListModel getBookingUpcomingR
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SvgPicture.asset(
-                              'assets/images/small-black-location-icon.svg'),
-                          SizedBox(width: size.width * 0.01),
                           Text(
-                            "${getData.routes!.pickup!.name}",
+                            "booking id: ${getData.bookingsId}",
                             style: const TextStyle(
                               color: Color(0xFF565656),
                               fontSize: 8,
@@ -76,9 +73,13 @@ Widget upComingList(BuildContext context,GetBookingListModel getBookingUpcomingR
                               fontWeight: FontWeight.w500,
                             ),
                           ),
+
                           SizedBox(width: size.width * 0.05),
+                          SvgPicture.asset(
+                              'assets/images/small-black-location-icon.svg'),
+                          SizedBox(width: size.width * 0.01),
                           Text(
-                            "booking id: ${getData.bookingsId}",
+                            "${getData.routes!.pickup!.name}",
                             style: const TextStyle(
                               color: Color(0xFF565656),
                               fontSize: 8,
