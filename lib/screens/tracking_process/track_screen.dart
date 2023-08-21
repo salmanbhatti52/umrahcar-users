@@ -107,7 +107,7 @@ class _TrackPageState extends State<TrackPage> {
             print("timer refresh: ${timerCount}");
             getProfile();
             timer =
-                Timer.periodic( Duration(minutes: timerCount), (timer) => getProfile());
+                Timer.periodic( Duration(seconds: timerCount*60), (timer) => getProfile());
             setState(() {});
 
           }
@@ -217,14 +217,28 @@ class _TrackPageState extends State<TrackPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(height: size.height * 0.03),
-                              const Text(
-                                'Bookings Details',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  fontFamily: 'Montserrat-Regular',
-                                  fontWeight: FontWeight.w600,
-                                ),
+                              Row(
+                                children: [
+                                  const Text(
+                                    'Bookings Details',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      fontFamily: 'Montserrat-Regular',
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 20,),
+                                  Text(
+                                    '(Booking Id ${widget.getBookingData!.bookingsId})',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 12,
+                                      fontFamily: 'Montserrat-Regular',
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ),
+                                ],
                               ),
                               SizedBox(height: size.height * 0.02),
                               const Text(
@@ -424,24 +438,36 @@ class _TrackPageState extends State<TrackPage> {
 
                                 Row(
                                 children: [
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                          'assets/images/contact-icon.svg'),
-                                      SizedBox(width: size.width * 0.032),
-                                      SizedBox(
-                                        width: size.width * 0.275,
-                                        child: Text(
-                                          '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.contact}',
-                                          style: const TextStyle(
-                                            color: Color(0xFF565656),
-                                            fontSize: 12,
-                                            fontFamily: 'Montserrat-Regular',
-                                            fontWeight: FontWeight.w500,
+                                  InkWell(
+                                    onTap: ()async {
+                                      Uri phoneno = Uri.parse('tel: ${widget.getBookingData!.vehicles![0].vehiclesDrivers!.contact}');
+                                      if (await launchUrl(phoneno)) {
+                                        //dialer opened
+                                      }else{
+                                        //dailer is not opened
+                                      }
+                                      print(
+                                          "iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
+                                    },
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                            'assets/images/contact-icon.svg'),
+                                        SizedBox(width: size.width * 0.032),
+                                        SizedBox(
+                                          width: size.width * 0.275,
+                                          child: Text(
+                                            '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.contact}',
+                                            style: const TextStyle(
+                                              color: Color(0xFF565656),
+                                              fontSize: 12,
+                                              fontFamily: 'Montserrat-Regular',
+                                              fontWeight: FontWeight.w500,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(width: size.width * 0.14),
                                   InkWell(

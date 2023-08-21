@@ -17,6 +17,7 @@ import 'dart:ui' as ui;
 
 import '../../../models/get_driver_profile.dart';
 import '../../../service/rest_api_service.dart';
+import '../../homepage_screen.dart';
 class PickUpPage extends StatefulWidget {
   GetBookingData? getBookingData;
   PickUpPage({super.key, this.getBookingData});
@@ -92,15 +93,17 @@ class _PickUpPageState extends State<PickUpPage> {
 
       for (int i = 0; i < pickSettingsData.length; i++) {
         if (pickSettingsData[i].type == "map_refresh_time") {
+
           timerCount = int.parse(pickSettingsData[i].description!);
           if (widget.getBookingData!.vehicles![0].vehiclesDrivers != null) {
             print("timer refresh: ${timerCount}");
             getProfile();
             timer =
-                Timer.periodic( Duration(minutes: timerCount), (timer) => getProfile());
-            setState(() {});
-          }
+                Timer.periodic( Duration(seconds: timerCount*60), (timer) => getProfile());
 
+            setState(() {});
+
+          }
         } else if (pickSettingsData[i].type == "lattitude" && widget.getBookingData!.vehicles![0].vehiclesDrivers == null) {
           lat = double.parse(pickSettingsData[i].description!);
           print("timer lat: ${timerCount}");
@@ -111,15 +114,36 @@ class _PickUpPageState extends State<PickUpPage> {
       }
     }
   }
+  GetBookingListModel getBookingOngoingResponse=GetBookingListModel();
+   String statuses="Assigned";
+  getBookingListOngoing()async{
+    print("phoneNmbr $phoneNmbr");
+    var mapData={
+      "contact": phoneNmbr.toString()
+    };
+    getBookingOngoingResponse= await DioClient().getBookingOngoing(mapData, context);
+    print("response id: ${getBookingOngoingResponse.data}");
+    for(int i=0;i<getBookingOngoingResponse.data!.length;i++){
+      if(getBookingOngoingResponse.data![i].bookingsId==widget.getBookingData!.bookingsId){
+        print("Driver Status: ${getBookingOngoingResponse.data![i].driverTripStatus!.name!}");
 
+        statuses=getBookingOngoingResponse.data![i].driverTripStatus!.name!;
+        setState(() {
+
+        });
+      }
+    }
+    setState(() {
+
+    });
+
+  }
   void initState() {
     getSystemAllData();
 
     addCustomIcon();
     if (widget.getBookingData!.vehicles![0].vehiclesDrivers != null) {
-      getProfile();
-      timer =
-          Timer.periodic(const Duration(minutes: 2), (timer) => getProfile());
+
       print(
           "lat: ${widget.getBookingData!.vehicles![0].vehiclesDrivers!.lattitude}");
       print(
@@ -147,6 +171,7 @@ class _PickUpPageState extends State<PickUpPage> {
           "getProfileResponse name: ${getProfileResponse.data!.userData!.name}");
       long = double.parse(getProfileResponse.data!.userData!.longitude!);
       lat = double.parse(getProfileResponse.data!.userData!.lattitude!);
+      getBookingListOngoing();
       setState(() {});
     }
     setState(() {});
@@ -217,9 +242,7 @@ class _PickUpPageState extends State<PickUpPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                widget.getBookingData!.driverTripStatus != null
-                                    ? '${widget.getBookingData!.driverTripStatus!.name}'
-                                    : "",
+                                statuses,
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
@@ -227,7 +250,7 @@ class _PickUpPageState extends State<PickUpPage> {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              Text(
+                              const Text(
                                 '12 Km Away',
                                 style: TextStyle(
                                   color: Color(0xFF79BF42),
