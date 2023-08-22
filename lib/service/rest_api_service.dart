@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:umrahcar_user/models/get_chat_model.dart';
+import 'package:umrahcar_user/models/update_user_location.dart';
 
 import '../models/get_all_system_data_model.dart';
 import '../models/get_booking_list_model.dart';
@@ -157,6 +158,27 @@ class DioClient {
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No Data Found")));
+
+      rethrow;
+    }
+  }
+  Future<UpdateUserLocation> updateUserLocation(Map<String,dynamic> model,BuildContext context) async {
+    String url= "$baseUrl/update_guest_location";
+    print("url: ${url}");
+
+    try {
+      final response =
+      await _dio.post(url,data: model);
+      if (response.statusCode == 200) {
+        print("hiiii ${response.data}");
+        var res= UpdateUserLocation.fromJson(response.data);
+        return res;
+      } else {
+        // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No ")));
+        throw 'SomeThing Missing';
+      }
+    } catch (e) {
+      // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No Data Found")));
 
       rethrow;
     }

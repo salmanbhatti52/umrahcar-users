@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:umrahcar_user/utils/colors.dart';
@@ -13,6 +14,7 @@ import 'dart:ui' as ui;
 import '../../models/get_all_system_data_model.dart';
 import '../../models/get_booking_list_model.dart';
 import '../../models/get_driver_profile.dart';
+import '../../models/update_user_location.dart';
 import '../../service/rest_api_service.dart';
 
 class TrackPage extends StatefulWidget {
@@ -106,8 +108,12 @@ class _TrackPageState extends State<TrackPage> {
           if (widget.getBookingData!.vehicles![0].vehiclesDrivers != null) {
             print("timer refresh: ${timerCount}");
             getProfile();
+            _getCurrentLocation();
+
             timer =
                 Timer.periodic( Duration(seconds: timerCount*60), (timer) => getProfile());
+            timer =
+                Timer.periodic( Duration(seconds: timerCount*60), (timer) => _getCurrentLocation());
             setState(() {});
 
           }
@@ -124,7 +130,6 @@ class _TrackPageState extends State<TrackPage> {
 
   void initState() {
     getSystemAllData();
-
     addCustomIcon();
     if (widget.getBookingData!.vehicles![0].vehiclesDrivers != null) {
 
@@ -159,6 +164,55 @@ class _TrackPageState extends State<TrackPage> {
     }
     setState(() {});
   }
+
+  Future<Position> getUserCurrentLocation() async {
+    await Geolocator.requestPermission().then((value){
+    }).onError((error, stackTrace) async {
+      await Geolocator.requestPermission();
+      print("ERROR"+error.toString());
+
+    });
+    return await Geolocator.getCurrentPosition();
+  }
+
+  Location location = Location();
+  LatLng initialPosition = LatLng(0, 0);
+  void _getCurrentLocation() async {
+    bool serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
+        return;
+      }
+    }
+
+    PermissionStatus permissionStatus = await location.hasPermission();
+    if (permissionStatus == PermissionStatus.denied) {
+      permissionStatus = await location.requestPermission();
+      if (permissionStatus != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    LocationData currentLocation = await location.getLocation();
+    initialPosition = LatLng(currentLocation.latitude!, currentLocation.longitude!);
+    print("latitude1: ${currentLocation.latitude}");
+    print("longitude1: ${currentLocation.longitude}");
+    var jsonData={
+      "bookings_id":"${widget.getBookingData!.bookingsId}",
+      "guest_lattitude":"${currentLocation.latitude}",
+      "guest_longitude":"${currentLocation.longitude}"
+    };
+    print("jsonData: ${jsonData}");
+    UpdateUserLocation response= await DioClient().updateUserLocation(jsonData, context);
+    if(response!=null){
+      print("message: ${response.message}");
+    }
+    setState(() {
+
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
