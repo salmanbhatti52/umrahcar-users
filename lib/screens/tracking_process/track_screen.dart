@@ -666,12 +666,12 @@ class _TrackPageState extends State<TrackPage> {
                 ],
               ),
             )
-          : Column(
+          : const Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 175, top: 30),
+                  padding: EdgeInsets.only(left: 175, top: 30),
                   child: CircularProgressIndicator(),
                 ),
               ],
