@@ -666,7 +666,7 @@ class _TrackPageState extends State<TrackPage> {
                 ],
               ),
             )
-          : const Column(
+          :   const Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
