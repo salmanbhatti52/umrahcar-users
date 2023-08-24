@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:umrahcar_user/utils/colors.dart';
 import 'package:umrahcar_user/widgets/button.dart';
@@ -201,9 +202,15 @@ class _LogInPageState extends State<LogInPage> {
                     SizedBox(height: size.height * 0.08),
                     GestureDetector(
                       onTap: ()async {
+                        final status =
+                        await OneSignal.shared.getDeviceState();
+                        String? onesignalId = status?.userId;
+
+                        print("onesignalId: ${onesignalId}");
                         if(logInFormKey.currentState!.validate()) {
                           if(countryCode !=null){
                             var mapData={
+                              "onesignal_id": "${onesignalId}",
                               "contact":"${countryCode!.dialCode}${contactNumberController.text}"
                             };
                             var response = await DioClient().login(
@@ -212,6 +219,7 @@ class _LogInPageState extends State<LogInPage> {
                             if(response !=null){
                               SharedPreferences prefs = await SharedPreferences.getInstance();
                               await prefs.setString("contact", "${countryCode!.dialCode}${contactNumberController.text}");
+                              await prefs.setString("name", "${response.data!.guestData!.name}");
                               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>NavBar()));
 
                             }

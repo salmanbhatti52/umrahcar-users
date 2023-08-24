@@ -19,24 +19,10 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
 
-  GetBookingListModel getBookingOngoingResponse=GetBookingListModel();
 
-  getBookingListOngoing()async{
-    print("phoneNmbr $phoneNmbr");
-    var mapData={
-      "contact": phoneNmbr.toString()
-    };
-    getBookingOngoingResponse= await DioClient().getBookingOngoing(mapData, context);
-    print("response id: ${getBookingOngoingResponse.data}");
-    setState(() {
-
-    });
-
-  }
 
   @override
   void initState() {
-    getBookingListOngoing();
     // TODO: implement initState
     super.initState();
   }
@@ -65,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           centerTitle: true,
         ),
-        body: getBookingOngoingResponse.data!=null?
+        body:
         SingleChildScrollView(
           child: Column(
             children: [
@@ -96,7 +82,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             color: Colors.transparent,
                             width: size.width * 0.4,
                             child:  AutoSizeText(
-                              '${getBookingOngoingResponse.data![0].name}',
+                              '${guestName}',
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
@@ -127,7 +113,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     SizedBox(width: size.width * 0.04),
                      Text(
-                      '${getBookingOngoingResponse.data![0].name}',
+                      '${guestName}',
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 14,
@@ -138,29 +124,29 @@ class _ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
               ),
-              SizedBox(height: size.height * 0.05),
-              Padding(
-                padding: const EdgeInsets.only(left: 40),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/images/email-icon.svg',
-                      width: 20,
-                      height: 20,
-                    ),
-                    SizedBox(width: size.width * 0.04),
-                     Text(
-                      '${getBookingOngoingResponse.data![0].usersAgentsData!.email}',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // SizedBox(height: size.height * 0.05),
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 40),
+              //   child: Row(
+              //     children: [
+              //       SvgPicture.asset(
+              //         'assets/images/email-icon.svg',
+              //         width: 20,
+              //         height: 20,
+              //       ),
+              //       SizedBox(width: size.width * 0.04),
+              //        Text(
+              //         '${getBookingOngoingResponse.data![0].usersAgentsData!.email}',
+              //         style: const TextStyle(
+              //           color: Colors.black,
+              //           fontSize: 14,
+              //           fontFamily: 'Montserrat-Regular',
+              //           fontWeight: FontWeight.w500,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               SizedBox(height: size.height * 0.05),
               Padding(
                 padding: const EdgeInsets.only(left: 40),
@@ -173,7 +159,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     SizedBox(width: size.width * 0.04),
                      Text(
-                      '${getBookingOngoingResponse.data![0].usersAgentsData!.contact}',
+                      '${phoneNmbr}',
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 14,
@@ -195,7 +181,7 @@ class _ProfilePageState extends State<ProfilePage> {
               //   },
               //   child: buttonTransparent('Delete my Account', context),
               // ),
-              SizedBox(height: size.height * 0.10),
+              SizedBox(height: size.height * 0.20),
               InkWell(
                   onTap: ()async {
                     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -205,17 +191,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: button('Logout', context)),
             ],
           ),
-        ):
-         const Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: 175),
-              child: CircularProgressIndicator(),
-            )
-          ],
         )
+
         ,
       ),
     );

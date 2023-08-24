@@ -14,6 +14,7 @@ import '../service/rest_api_service.dart';
 
 
 var phoneNmbr;
+var guestName;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -27,8 +28,11 @@ class _HomePageState extends State<HomePage> {
   getLocalData()async{
     final _sharedPref = await SharedPreferences.getInstance();
     var contact=_sharedPref.getString('contact');
+    var name=_sharedPref.getString('name');
     print("contact nmbr: $contact");
+    print("name: $name");
     phoneNmbr=contact;
+    guestName=name;
     if(phoneNmbr !=null){
       getBookingListOngoing();
       getBookingListUpcoming();
@@ -105,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       SizedBox(width: size.width * 0.02),
-                      if(getBookingOngoingResponse.data!=null )
+
                         Padding(
                         padding: const EdgeInsets.only(bottom: 12),
                         child: Column(
@@ -113,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                              Text(
-                              '${getBookingOngoingResponse.data![0].name}',
+                              '${guestName}',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
@@ -122,29 +126,6 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
 
-                            SizedBox(height: size.height * 0.003),
-                            Row(
-
-                              children: [
-                                SvgPicture.asset(
-                                    'assets/images/white-location-icon.svg'),
-                                SizedBox(width: size.width * 0.02),
-
-                                 Container(
-                                   width: 120,
-                                   child: Text(
-                                    '${getBookingOngoingResponse.data![0].routes!.pickup!.name}',
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                      fontFamily: 'Montserrat-Regular',
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                     overflow: TextOverflow.ellipsis,
-                                ),
-                                 ),
-                              ],
-                            ),
                           ],
                         ),
                       ),
