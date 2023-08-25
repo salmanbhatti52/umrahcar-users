@@ -132,6 +132,16 @@ class _PickUpPageState extends State<PickUpPage> {
         print("Driver Status: ${getBookingOngoingResponse.data![i].driverTripStatus!.name!}");
 
         statuses=getBookingOngoingResponse.data![i].driverTripStatus!.name!;
+        if(statuses=="Ride Start"){
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => driverReached(),
+          );
+          setState(() {
+
+          });
+        }
         setState(() {
 
         });
@@ -254,11 +264,7 @@ class _PickUpPageState extends State<PickUpPage> {
               bottom: 0,
               child: GestureDetector(
                 onTap: () {
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (context) => driverReached(),
-                  );
+
                 },
                 child: Container(
                   width: size.width,
@@ -509,9 +515,18 @@ class _PickUpPageState extends State<PickUpPage> {
       child: SizedBox(
         height: size.height * 0.65,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           child: Column(
             children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 250),
+                child: IconButton(onPressed: (){
+                  Navigator.pop(context);
+                  setState(() {
+
+                  });
+                }, icon: Icon(Icons.cancel, size: 30),),
+              ),
               SizedBox(height: size.height * 0.02),
               CircleAvatar(
                 radius: 45,
