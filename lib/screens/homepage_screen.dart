@@ -195,7 +195,11 @@ class _HomePageState extends State<HomePage> {
                         height: size.height * 0.389,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: onGoingList(context,getBookingOngoingResponse),
+                          child: RefreshIndicator(
+                              onRefresh: ()async{
+                                getBookingListOngoing();
+                              },
+                              child: onGoingList(context,getBookingOngoingResponse)),
                         ),
                       ),
                     ],
