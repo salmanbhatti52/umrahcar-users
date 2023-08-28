@@ -634,14 +634,21 @@ class _TrackPageState extends State<TrackPage> {
                               if (widget.getBookingData!.vehicles![0]
                                       .vehiclesDrivers !=
                                   null)
-                                GestureDetector(
+                                widget.getBookingData!.driverTripStatus!.name=="Ride End"? GestureDetector(
+                                  onTap: () {
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //       builder: (context) =>  PickUpPage(getBookingData: widget.getBookingData),
+                                    //     ));
+                                  },
+                                  child: button('Completed', context),
+                                ):GestureDetector(
                                   onTap: () {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => PickUpPage(
-                                              getBookingData:
-                                                  widget.getBookingData),
+                                          builder: (context) =>  PickUpPage(getBookingData: widget.getBookingData),
                                         ));
                                   },
                                   child: button('Track', context),

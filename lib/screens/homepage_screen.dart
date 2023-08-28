@@ -7,6 +7,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:umrahcar_user/widgets/home_list.dart';
 import 'package:umrahcar_user/screens/notification_screen.dart';
 import 'package:umrahcar_user/screens/tracking_process/tarcking/pickup_screen.dart';
+import 'package:umrahcar_user/widgets/ongoing_list.dart';
 import 'package:umrahcar_user/widgets/upcoming_list.dart';
 
 import '../models/get_booking_list_model.dart';
@@ -194,7 +195,7 @@ class _HomePageState extends State<HomePage> {
                         height: size.height * 0.389,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: upComingList(context,getBookingUpcomingResponse),
+                          child: onGoingList(context,getBookingOngoingResponse),
                         ),
                       ),
                     ],

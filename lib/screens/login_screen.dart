@@ -74,23 +74,27 @@ class _LogInPageState extends State<LogInPage> {
                       child: SvgPicture.asset('assets/images/umrah-car-logo-big.svg'),
                     ),
                     SizedBox(height: size.height * 0.04),
-                    const Text(
-                      'Login to Your Account',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w600,
+                    Container(
+                      margin: const EdgeInsets.only(left: 20,right: 20),
+                      child: const Text(
+                        'Welcome to UmrahCar Passenger App',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: 'Montserrat-Regular',
+                          fontWeight: FontWeight.w600,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                    SizedBox(height: size.height * 0.02),
-                    const Text(
-                      '(For Passengers)',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontFamily: 'Montserrat-Regular',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                    // SizedBox(height: size.height * 0.02),
+                    // const Text(
+                    //   '(For Passengers)',
+                    //   style: TextStyle(
+                    //     fontSize: 18,
+                    //     fontFamily: 'Montserrat-Regular',
+                    //     fontWeight: FontWeight.w500,
+                    //   ),
+                    // ),
                     SizedBox(height: size.height * 0.08),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),

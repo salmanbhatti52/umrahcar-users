@@ -11,6 +11,7 @@ import 'package:umrahcar_user/screens/tracking_process/tarcking/chat_screen.dart
 import 'package:umrahcar_user/screens/tracking_process/tarcking/dropoff_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../models/distance_calculate_model.dart';
 import '../../../models/get_all_system_data_model.dart';
 import '../../../models/get_booking_list_model.dart';
 import 'dart:ui' as ui;
@@ -113,6 +114,7 @@ class _PickUpPageState extends State<PickUpPage> {
           print("timer lat: ${timerCount}");
         } else if (pickSettingsData[i].type == "longitude"  && widget.getBookingData!.vehicles![0].vehiclesDrivers == null) {
           long = double.parse(pickSettingsData[i].description!);
+          calculateDistance(widget.getBookingData!.vehicles![0].vehiclesDrivers!.longitude,widget.getBookingData!.vehicles![0].vehiclesDrivers!.lattitude);
           print("timer long: ${timerCount}");
         }
       }
@@ -130,9 +132,13 @@ class _PickUpPageState extends State<PickUpPage> {
     for(int i=0;i<getBookingOngoingResponse.data!.length;i++){
       if(getBookingOngoingResponse.data![i].bookingsId==widget.getBookingData!.bookingsId){
         print("Driver Status: ${getBookingOngoingResponse.data![i].driverTripStatus!.name!}");
-
+        String? latt=getBookingOngoingResponse.data![i].vehicles![0].vehiclesDrivers!.lattitude;
+        String? longg=getBookingOngoingResponse.data![i].vehicles![0].vehiclesDrivers!.longitude;
         statuses=getBookingOngoingResponse.data![i].driverTripStatus!.name!;
-        if(statuses=="Ride Start"){
+        print("statusessss: ${statuses}");
+        calculateDistance(longg,latt);
+
+        if(statuses=="Reached"){
           showDialog(
             context: context,
             barrierDismissible: false,
@@ -151,6 +157,26 @@ class _PickUpPageState extends State<PickUpPage> {
 
     });
 
+  }
+  DistanceCalculatorModel distanceCalculatorModel=DistanceCalculatorModel();
+
+  String? distance="";
+  calculateDistance(String? longg,String? latt)async{
+    var jsonData={
+      "from_lat":"${latt}",
+      "from_long":"${longg}",
+      "to_lat":"${lat}",
+      "to_long":"${long}"
+    };
+    print("jsonjsonData: ${jsonData}");
+    distanceCalculatorModel=await DioClient().distanceCalculate(jsonData, context);
+    if(distanceCalculatorModel.data !=null){
+      print("distanceeee: ${distanceCalculatorModel.data!.distance}");
+      distance=distanceCalculatorModel.data!.distance;
+      setState(() {
+
+      });
+    }
   }
   void initState() {
     getSystemAllData();
@@ -300,9 +326,9 @@ class _PickUpPageState extends State<PickUpPage> {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              const Text(
-                                '12 Km Away',
-                                style: TextStyle(
+                               Text(
+                                '${distance} Away',
+                                style: const TextStyle(
                                   color: Color(0xFF79BF42),
                                   fontSize: 16,
                                   fontFamily: 'Montserrat-Regular',
@@ -461,16 +487,16 @@ class _PickUpPageState extends State<PickUpPage> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              SizedBox(width: size.width * 0.05),
-                              const Text(
-                                'Waiting',
-                                style: TextStyle(
-                                  color: Color(0xFF79BF42),
-                                  fontSize: 12,
-                                  fontFamily: 'Montserrat-Regular',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
+                              // SizedBox(width: size.width * 0.05),
+                              // const Text(
+                              //   'Waiting',
+                              //   style: TextStyle(
+                              //     color: Color(0xFF79BF42),
+                              //     fontSize: 12,
+                              //     fontFamily: 'Montserrat-Regular',
+                              //     fontWeight: FontWeight.w500,
+                              //   ),
+                              // ),
                             ],
                           ),
                         ],

@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:umrahcar_user/models/get_chat_model.dart';
 import 'package:umrahcar_user/models/update_user_location.dart';
 
+import '../models/distance_calculate_model.dart';
 import '../models/get_all_system_data_model.dart';
 import '../models/get_booking_list_model.dart';
 import '../models/get_driver_profile.dart';
@@ -201,6 +202,30 @@ class DioClient {
         throw 'SomeThing Missing';
       }
     } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<DistanceCalculatorModel> distanceCalculate(Map<String?,dynamic?> model,BuildContext context) async {
+    print("data: ${model}");
+    try {
+      final response =
+      await _dio.post('$baseUrl/calculate_distance',data: model);
+      if (response.statusCode == 200) {
+        print("hiiii ${response.data}");
+        var res= DistanceCalculatorModel.fromJson(response.data);
+        return res;
+      }
+      else  {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Unable To Delete Transaction. Only Pending transactions can be deleted")));
+        throw 'SomeThing Missing';
+      }
+    } catch (e) {
+      Navigator.pop(context);
+
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Unable To Delete Transaction. Only Pending transactions can be deleted")));
+
       rethrow;
     }
   }
