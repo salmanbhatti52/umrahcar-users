@@ -42,6 +42,24 @@ class _UpcomingPageState extends State<UpcomingPage> {
     });
 
   }
+
+
+  GetBookingListModel getBookingUpcomingResponseForSearch=GetBookingListModel();
+  getBookingListOngoingSearch(String? searchText)async{
+    print("phoneNmbr $phoneNmbr");
+    getBookingUpcomingResponseForSearch.data=[];
+    var mapData={
+      "contact": phoneNmbr.toString(),
+      "bookings_id": searchText
+    };
+    getBookingUpcomingResponseForSearch= await DioClient().getBookingupcoming(mapData, context);
+    print("response id: ${getBookingUpcomingResponseForSearch.data}");
+    setState(() {
+      getBookingUpcomingResponse.data=[];
+    });
+
+  }
+
   @override
   void initState() {
     getBookingListUpcoming();
@@ -143,6 +161,11 @@ class _UpcomingPageState extends State<UpcomingPage> {
                   onSearchTextChanged: (value) {
                     setState(() {
                       isFocused = true;
+                      if(value.isNotEmpty){
+                        getBookingListOngoingSearch(value);}
+                      else{
+                        getBookingListUpcoming();
+                      }
                     });
                     return null;
                   },
@@ -173,12 +196,20 @@ class _UpcomingPageState extends State<UpcomingPage> {
               ),
             ),
             SizedBox(height: size.height * 0.03),
+            getBookingUpcomingResponseForSearch.data ==null && searchController.text.isEmpty || searchController.text==""?
             Container(
               color: Colors.transparent,
               height: size.height * 0.6,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child:upComingList(context,getBookingUpcomingResponse),
+              ),
+            ): Container(
+              color: Colors.transparent,
+              height: size.height * 0.6,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child:upComingList(context,getBookingUpcomingResponseForSearch),
               ),
             ),
           ],

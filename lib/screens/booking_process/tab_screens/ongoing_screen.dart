@@ -56,6 +56,23 @@ class _OnGoingPageState extends State<OnGoingPage> {
     super.initState();
   }
 
+
+  GetBookingListModel getBookingOngoingResponseForSearch=GetBookingListModel();
+  getBookingListOngoingSearch(String? searchText)async{
+    print("phoneNmbr $phoneNmbr");
+    getBookingOngoingResponseForSearch.data=[];
+    var mapData={
+      "contact": phoneNmbr.toString(),
+      "bookings_id": searchText
+    };
+    getBookingOngoingResponseForSearch= await DioClient().getBookingOngoing(mapData, context);
+    print("response id: ${getBookingOngoingResponseForSearch.data}");
+    setState(() {
+      getBookingOngoingResponse.data=[];
+    });
+
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -150,6 +167,11 @@ class _OnGoingPageState extends State<OnGoingPage> {
                   onSearchTextChanged: (value) {
                     setState(() {
                       isFocused = true;
+                      if(value.isNotEmpty){
+                        getBookingListOngoingSearch(value);}
+                      else{
+                        getBookingListOngoing();
+                      }
                     });
                     return null;
                   },
@@ -180,6 +202,7 @@ class _OnGoingPageState extends State<OnGoingPage> {
               ),
             ),
             SizedBox(height: size.height * 0.03),
+            getBookingOngoingResponseForSearch.data ==null && searchController.text.isEmpty || searchController.text==""?
             Container(
               color: Colors.transparent,
               height: size.height * 0.6,
@@ -187,7 +210,15 @@ class _OnGoingPageState extends State<OnGoingPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: onGoingList(context,getBookingOngoingResponse),
               ),
-            ),
+            ):
+            Container(
+              color: Colors.transparent,
+              height: size.height * 0.6,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: onGoingList(context,getBookingOngoingResponseForSearch),
+              ),
+            )
           ],
         ),
       ),
