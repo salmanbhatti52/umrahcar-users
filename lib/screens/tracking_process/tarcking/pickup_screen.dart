@@ -510,10 +510,19 @@ class _PickUpPageState extends State<PickUpPage> {
               top: 40,
               left: 20,
               child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: SvgPicture.asset('assets/images/back-icon.svg')),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                    height: 40,
+                    width: 40,
+                    child: Column(
+                      children: [
+                        SizedBox(height: 10,),
+                        SvgPicture.asset('assets/images/back-icon.svg'),
+                      ],
+                    )),
+              ),
             ),
           ],
         ),

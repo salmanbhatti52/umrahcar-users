@@ -667,7 +667,15 @@ class _TrackPageState extends State<TrackPage> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: SvgPicture.asset('assets/images/back-icon.svg'),
+                      child: Container(
+                          height: 40,
+                          width: 40,
+                          child: Column(
+                            children: [
+                              SizedBox(height: 10,),
+                              SvgPicture.asset('assets/images/back-icon.svg'),
+                            ],
+                          )),
                     ),
                   ),
                 ],
