@@ -198,9 +198,17 @@ class _CompletedPageState extends State<CompletedPage> {
             Container(
               color: Colors.transparent,
               height: size.height * 0.6,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: completedList(context,getBookingCompletedResponse),
+              child: RefreshIndicator(
+                onRefresh: ()async{
+                  getBookingListUpcoming();
+                  setState(() {
+
+                  });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: completedList(context,getBookingCompletedResponse),
+                ),
               ),
             ):
             Container(
