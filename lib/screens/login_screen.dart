@@ -12,6 +12,7 @@ import 'package:umrahcar_user/widgets/navbar.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 
 import '../service/rest_api_service.dart';
+import '../utils/const.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({super.key});
@@ -46,6 +47,18 @@ class _LogInPageState extends State<LogInPage> {
     }
     return Future.value(true);
   }
+
+  void configOneSignel()
+  {
+    OneSignal.shared.setAppId(onesignalAppId);
+  }
+  @override
+  void initState() {
+    configOneSignel();
+    // TODO: implement initState
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {

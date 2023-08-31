@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:umrahcar_user/models/get_chat_model.dart';
@@ -38,16 +40,29 @@ class _ChatPageState extends State<ChatPage> {
     });
 
   }
+  Timer? timer;
+
   @override
   void initState() {
     getChatData();
+    timer =
+        Timer.periodic( const Duration(seconds: 8), (timer) => getChatData());
+    setState(() {
+
+    });
     // TODO: implement initState
     super.initState();
   }
 
+
    GlobalKey<RefreshIndicatorState>? refreshKey;
 
-
+@override
+  void dispose() {
+  timer!.cancel();
+    // TODO: implement dispose
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;

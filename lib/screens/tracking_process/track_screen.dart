@@ -634,7 +634,7 @@ class _TrackPageState extends State<TrackPage> {
                               if (widget.getBookingData!.vehicles![0]
                                       .vehiclesDrivers !=
                                   null)
-                                widget.getBookingData!.driverTripStatus!.name=="Ride End"? GestureDetector(
+                                widget.getBookingData!.driverTripStatus !=null &&  widget.getBookingData!.driverTripStatus!.name=="Ride End"? GestureDetector(
                                   onTap: () {
                                     // Navigator.push(
                                     //     context,
