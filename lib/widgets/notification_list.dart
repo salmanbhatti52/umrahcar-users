@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:umrahcar_user/utils/colors.dart';
 
 Widget notificationList(BuildContext context) {
   var size = MediaQuery.of(context).size;
@@ -36,7 +37,7 @@ Widget notificationList(BuildContext context) {
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 16,
-                        fontFamily: 'Montserrat-Regular',
+                     fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                       minFontSize: 16,
@@ -51,10 +52,10 @@ Widget notificationList(BuildContext context) {
                     width: size.width * 0.45,
                     child: AutoSizeText(
                       myList[index].message,
-                      style: const TextStyle(
-                        color: Color(0xFF79BF42),
+                      style:  TextStyle(
+                        color: secondaryColor,
                         fontSize: 10,
-                        fontFamily: 'Montserrat-Regular',
+                     fontFamily: 'Poppins',
                         fontWeight: FontWeight.w600,
                       ),
                       minFontSize: 10,
@@ -76,7 +77,7 @@ Widget notificationList(BuildContext context) {
                     style: const TextStyle(
                       color: Color(0xFF565656),
                       fontSize: 12,
-                      fontFamily: 'Montserrat-Regular',
+                    fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -101,7 +102,7 @@ Widget notificationList(BuildContext context) {
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12,
-                            fontFamily: 'Montserrat-Regular',
+                            fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
                           ),
                         ),

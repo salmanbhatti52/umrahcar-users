@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:umrahcar_user/screens/tracking_process/track_upcoming_screen.dart';
 import 'package:umrahcar_user/screens/tracking_process/track_completed_screen.dart';
+import 'package:umrahcar_user/utils/colors.dart';
 
 Widget homeList(BuildContext context) {
   var size = MediaQuery.of(context).size;
@@ -39,7 +40,7 @@ Widget homeList(BuildContext context) {
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 16,
-                        fontFamily: 'Montserrat-Regular',
+                       fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                       minFontSize: 16,
@@ -61,7 +62,7 @@ Widget homeList(BuildContext context) {
                         style: TextStyle(
                           color: Color(0xFF565656),
                           fontSize: 8,
-                          fontFamily: 'Montserrat-Regular',
+                        fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -80,7 +81,7 @@ Widget homeList(BuildContext context) {
                         style: TextStyle(
                           color: Color(0xFF565656),
                           fontSize: 8,
-                          fontFamily: 'Montserrat-Regular',
+                        fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -107,7 +108,7 @@ Widget homeList(BuildContext context) {
                       style: const TextStyle(
                         color: Color(0xFFCAAA00),
                         fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
+                       fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -129,10 +130,10 @@ Widget homeList(BuildContext context) {
                     child: Text(
                       myList[index].status,
                       textAlign: TextAlign.end,
-                      style: const TextStyle(
-                        color: Color(0xFF79BF42),
+                      style:  TextStyle(
+                        color: secondaryColor,
                         fontSize: 12,
-                        fontFamily: 'Montserrat-Regular',
+                        fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                     ),

@@ -14,7 +14,7 @@ class GetBookingListModel {
   factory GetBookingListModel.fromJson(Map<String, dynamic> json) => GetBookingListModel(
     status: json["status"],
 
-    data: List<GetBookingData>.from(json["data"].map((x) => GetBookingData.fromJson(x))),
+    data: json["data"] != null ? List<GetBookingData>.from(json["data"].map((x) => GetBookingData.fromJson(x))) : null,
   );
 
   Map<String, dynamic> toJson() => {

@@ -20,17 +20,17 @@ class DioClient {
   final Dio _dio = Dio()
     ..interceptors.add(
       InterceptorsWrapper(onRequest: (options, handler) async {
-        final _sharedPref = await SharedPreferences.getInstance();
-        if (_sharedPref.containsKey('userId')) {
+        final sharedPref = await SharedPreferences.getInstance();
+        if (sharedPref.containsKey('userId')) {
           options.headers["Authorization"] =
-          "Bearer ${_sharedPref.getString('userId')}";
+          "Bearer ${sharedPref.getString('userId')}";
         }
         return handler.next(options);
       }),
     );
 
   Future<LoginModel> login(Map<String,dynamic> model,BuildContext context) async {
-    print("mapData: ${model}");
+    print("mapData: $model");
     try {
       final response =
       await _dio.post('$baseUrl/get_users_verify', data: model);
@@ -94,7 +94,8 @@ class DioClient {
         return res;
       }
       else  {
-        // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No data received")));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No data received")));
+        
         throw 'SomeThing Missing';
       }
     } catch (e) {
@@ -142,9 +143,9 @@ class DioClient {
     }
   }
   Future<GetDriverProfile> getProfile(String? uid,BuildContext context) async {
-    print("mapData: ${uid}");
+    print("mapData: $uid");
     String url= "$baseUrl/get_details_drivers/$uid";
-    print("url: ${url}");
+    print("url: $url");
 
     try {
       final response =
@@ -165,7 +166,7 @@ class DioClient {
   }
   Future<UpdateUserLocation> updateUserLocation(Map<String,dynamic> model,BuildContext context) async {
     String url= "$baseUrl/update_guest_location";
-    print("url: ${url}");
+    print("url: $url");
 
     try {
       final response =
@@ -206,8 +207,8 @@ class DioClient {
     }
   }
 
-  Future<DistanceCalculatorModel> distanceCalculate(Map<String?,dynamic?> model,BuildContext context) async {
-    print("data: ${model}");
+  Future<DistanceCalculatorModel> distanceCalculate(Map<String?,dynamic> model,BuildContext context) async {
+    print("data: $model");
     try {
       final response =
       await _dio.post('$baseUrl/calculate_distance',data: model);

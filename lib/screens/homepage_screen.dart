@@ -27,9 +27,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   getLocalData()async{
-    final _sharedPref = await SharedPreferences.getInstance();
-    var contact=_sharedPref.getString('contact');
-    var name=_sharedPref.getString('name');
+    final sharedPref = await SharedPreferences.getInstance();
+    var contact=sharedPref.getString('contact');
+    var name=sharedPref.getString('name');
     print("contact nmbr: $contact");
     print("name: $name");
     phoneNmbr=contact;
@@ -83,12 +83,13 @@ class _HomePageState extends State<HomePage> {
       body: Stack(
         children: [
           Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/background.png'),
-                fit: BoxFit.cover,
-              ),
-            ),
+              color: const Color(0xFFF8B73F),
+            // decoration: const BoxDecoration(
+            //   image: DecorationImage(
+            //     image: AssetImage('assets/images/background.png'),
+            //     fit: BoxFit.cover,
+            //   ),
+            // ),
             child: Column(
               children: [
                 Container(
@@ -118,11 +119,11 @@ class _HomePageState extends State<HomePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                              Text(
-                              '${guestName}',
+                              '$guestName',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
-                                fontFamily: 'Montserrat-Regular',
+                              fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -130,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 6, right: 25),
                         child: GestureDetector(
@@ -150,8 +151,14 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.black.withOpacity(0.15),
                               ),
                             ),
-                            child: SvgPicture.asset(
-                                'assets/images/green-notification-icon.svg'),
+                            child:  Container(
+                               decoration: const ShapeDecoration(
+                                  color: Color(0xFFDD9519),
+                                  shape: OvalBorder(),
+                                ),
+                              child: SvgPicture.asset(
+                                  'assets/images/green-notification-icon.svg'),
+                            ),
                           ),
                         ),
                       ),
@@ -180,7 +187,7 @@ class _HomePageState extends State<HomePage> {
                               'Bookings',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontFamily: 'Montserrat-Regular',
+                              fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16,
                               ),
@@ -192,10 +199,13 @@ class _HomePageState extends State<HomePage> {
                       SizedBox(height: size.height * 0.02),
                       Container(
                         color: Colors.transparent,
-                        height: size.height * 0.389,
+                        // height: size.height * 0.3806,
+                      
+                        height: size.height * 0.3635,    
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: RefreshIndicator(
+                            color: Colors.amber,
                               onRefresh: ()async{
                                 getBookingListOngoing();
                               },
@@ -245,7 +255,7 @@ class _HomePageState extends State<HomePage> {
                         'On Going Booking',
                         style: TextStyle(
                           color: Colors.black,
-                          fontFamily: 'Montserrat-Regular',
+                         fontFamily: 'Poppins',
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
                         ),
@@ -281,7 +291,7 @@ class _HomePageState extends State<HomePage> {
                                  getBookingOngoingResponse.data![0].vehicles![0].vehiclesDrivers!=null?    '${getBookingOngoingResponse.data![0].vehicles![0].vehiclesDrivers!.name}':"",
                                 style: const TextStyle(
                                   color: Colors.black,
-                                  fontFamily: 'Montserrat-Regular',
+                                  fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w500,
                                   fontSize: 12,
                                 ),
@@ -300,7 +310,7 @@ class _HomePageState extends State<HomePage> {
                                   '${getBookingOngoingResponse.data![0].routes!.pickup!.name}',
                                   style: const TextStyle(
                                     color: Color(0xFF565656),
-                                    fontFamily: 'Montserrat-Regular',
+                                  fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w500,
                                     fontSize: 8,
                                   ),
@@ -329,7 +339,7 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(
                     color: Colors.black,
 
-                    fontFamily: 'Montserrat-Regular',
+                  fontFamily: 'Poppins',
                     fontWeight: FontWeight.w900,
                     fontSize: 15,
                   ),

@@ -39,7 +39,7 @@ class _NotificationPageState extends State<NotificationPage> {
             style: TextStyle(
               color: Colors.black,
               fontSize: 26,
-              fontFamily: 'Montserrat-Regular',
+            fontFamily: 'Poppins',
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -58,7 +58,7 @@ class _NotificationPageState extends State<NotificationPage> {
                   style: TextStyle(
                     color: Color(0xFF1E1E1E),
                     fontSize: 16,
-                    fontFamily: 'Montserrat-Regular',
+                   fontFamily: 'Poppins',
                     fontWeight: FontWeight.w600,
                   ),
                 ),

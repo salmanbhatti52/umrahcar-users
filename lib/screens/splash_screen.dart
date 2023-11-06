@@ -14,6 +14,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  String backImage = "assets/images/custom-car.png";
   @override
   Widget build(BuildContext context) {
     return initScreen(context);
@@ -21,8 +22,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   var contact;
   getLocalData()async{
-    final _sharedPref = await SharedPreferences.getInstance();
-     contact=_sharedPref.getString('contact');
+    final sharedPref = await SharedPreferences.getInstance();
+     contact=sharedPref.getString('contact');
     print("contact nmbr: $contact");
   }
 
@@ -51,10 +52,24 @@ class _SplashScreenState extends State<SplashScreen> {
         return Future.value(false);
       },
       child: Scaffold(
-          backgroundColor: mainColor,
-          body: Center(
-            child: SvgPicture.asset("assets/images/splash-icon.svg",fit: BoxFit.fill),
-          )),
+      backgroundColor: secondaryColor,
+        body: Container(
+            decoration: BoxDecoration(
+              // color: secondaryColor,
+              image: DecorationImage(
+                image: AssetImage(backImage),
+                fit: BoxFit.fill,
+                
+              ),
+            ),
+            child: SvgPicture.asset(
+              'assets/images/umrah-logo.svg',
+             height: double.infinity,
+             width: double.infinity,
+             fit: BoxFit.scaleDown,
+            //   colorBlendMode: BlendMode.darken,
+            )),
+      ),
     );
   }
 }

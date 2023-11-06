@@ -42,7 +42,7 @@ class _OnGoingPageState extends State<OnGoingPage> {
     getBookingOngoingResponse= await DioClient().getBookingOngoing(mapData, context);
     print("response id: ${getBookingOngoingResponse.data}");
     setState(() {
-
+print('updatesetstate');
     });
 
   }
@@ -143,7 +143,7 @@ class _OnGoingPageState extends State<OnGoingPage> {
                     hintStyle: const TextStyle(
                       color: Color(0xFF929292),
                       fontSize: 12,
-                      fontFamily: 'Montserrat-Regular',
+                    fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
                     ),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 20),
@@ -189,13 +189,13 @@ class _OnGoingPageState extends State<OnGoingPage> {
                   suggestionStyle: const TextStyle(
                     color: Color(0xFF929292),
                     fontSize: 14,
-                    fontFamily: 'Montserrat-Regular',
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
                   ),
                   searchStyle: const TextStyle(
                     color: Color(0xFF929292),
                     fontSize: 16,
-                    fontFamily: 'Montserrat-Regular',
+                   fontFamily: 'Poppins',
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -207,6 +207,7 @@ class _OnGoingPageState extends State<OnGoingPage> {
               color: Colors.transparent,
               height: size.height * 0.6,
               child: RefreshIndicator(
+                color: Colors.amber,
                 onRefresh: ()async{
                   getBookingListOngoing();
                   setState(() {

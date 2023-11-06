@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:umrahcar_user/screens/booking_process/tab_screens/ongoing_screen.dart';
 import 'package:umrahcar_user/screens/booking_process/tab_screens/upcoming_screen.dart';
 import 'package:umrahcar_user/screens/booking_process/tab_screens/completed_screen.dart';
+import 'package:umrahcar_user/utils/colors.dart';
 
 class TabbarBookings extends StatefulWidget {
   const TabbarBookings({super.key});
@@ -35,28 +36,31 @@ class _TabbarBookingsState extends State<TabbarBookings>
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
                 child: TabBar(
                   controller: tabController,
                   indicator: BoxDecoration(
-                    color: const Color(0xFF79BF42),
+                    color: buttonColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  indicatorColor: const Color(0xFF79BF42),
-                  isScrollable: true,
+                  indicatorColor: buttonColor,
+                  isScrollable: false,
+                  indicatorSize: TabBarIndicatorSize.tab,
                   labelColor: Colors.white,
+                  dividerColor: Colors.transparent,
                   labelPadding: const EdgeInsets.symmetric(horizontal: 25),
                   labelStyle: const TextStyle(
                     color: Colors.white,
-                    fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
+                    
+                    fontSize: 10,
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
                   ),
                   unselectedLabelColor: const Color(0xFF929292),
                   unselectedLabelStyle: const TextStyle(
                     color: Color(0xFF929292),
-                    fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
+                    fontSize: 10,
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
                   ),
                   tabs: const [

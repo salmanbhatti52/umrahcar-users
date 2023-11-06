@@ -26,7 +26,7 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    namespace "com.umrahcar_user.apps"
+    namespace "com.umrahpassenger.users"
     compileSdkVersion 33
     ndkVersion flutter.ndkVersion
 

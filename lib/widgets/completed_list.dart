@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:umrahcar_user/screens/tracking_process/track_completed_screen.dart';
+import 'package:umrahcar_user/utils/colors.dart';
 
 import '../models/get_booking_list_model.dart';
 import '../utils/const.dart';
@@ -41,7 +42,7 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                     style: const TextStyle(
                       color: Colors.black,
                       fontSize: 16,
-                      fontFamily: 'Montserrat-Regular',
+                     fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -55,7 +56,7 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                         style: const TextStyle(
                           color: Color(0xFF565656),
                           fontSize: 8,
-                          fontFamily: 'Montserrat-Regular',
+                         fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -69,7 +70,7 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                         style: const TextStyle(
                           color: Color(0xFF565656),
                           fontSize: 8,
-                          fontFamily: 'Montserrat-Regular',
+                          fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -97,7 +98,7 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                                   style: const TextStyle(
                                     color: Color(0xFF565656),
                                     fontSize: 7,
-                                    fontFamily: 'Montserrat-Regular',
+                                  fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -117,7 +118,7 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                                     style: const TextStyle(
                                       color: Color(0xFF565656),
                                       fontSize: 7,
-                                      fontFamily: 'Montserrat-Regular',
+                                     fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -140,7 +141,7 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                         '${getData.pickupTime} ${getData.pickupDate}',                        style: const TextStyle(
                           color: Color(0xFF565656),
                           fontSize: 8,
-                          fontFamily: 'Montserrat-Regular',
+                        fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -157,13 +158,13 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                   //       builder: (context) =>  TrackPage(getBookingData: getData),
                   //     ));
                 },
-                child: const Text(
+                child: Text(
                   'Completed',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Color(0xFF0066FF),
+                    color: secondaryColor,
                     fontSize: 12,
-                    fontFamily: 'Montserrat-Regular',
+                  fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
                   ),
                 ),
