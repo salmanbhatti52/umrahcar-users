@@ -29,29 +29,24 @@ class _CompletedPageState extends State<CompletedPage> {
   ];
 
   bool isFocused = false;
-  GetBookingListModel getBookingCompletedResponse=GetBookingListModel();
-  getBookingListUpcoming()async{
+  GetBookingListModel getBookingCompletedResponse = GetBookingListModel();
+  getBookingListUpcoming() async {
     print("phoneNmbr $phoneNmbr");
-    var mapData={
-      "contact": phoneNmbr.toString()
-    };
-    getBookingCompletedResponse= await DioClient().getBookingCompleted(mapData, context);
+    var mapData = {"contact": phoneNmbr.toString()};
+    getBookingCompletedResponse =
+        await DioClient().getBookingCompleted(mapData, context);
     print("response id: ${getBookingCompletedResponse.data}");
-    setState(() {
-
-    });
-
+    setState(() {});
   }
-  GetBookingListModel getBookingCompletedResponseForSearch=GetBookingListModel();
-  getBookingListOngoingSearch(String? searchText)async {
+
+  GetBookingListModel getBookingCompletedResponseForSearch =
+      GetBookingListModel();
+  getBookingListOngoingSearch(String? searchText) async {
     print("phoneNmbr $phoneNmbr");
     getBookingCompletedResponseForSearch.data = [];
-    var mapData = {
-      "contact": phoneNmbr.toString(),
-      "bookings_id": searchText
-    };
+    var mapData = {"contact": phoneNmbr.toString(), "bookings_id": searchText};
     getBookingCompletedResponseForSearch =
-    await DioClient().getBookingCompleted(mapData, context);
+        await DioClient().getBookingCompleted(mapData, context);
     print("response id: ${getBookingCompletedResponseForSearch.data}");
     setState(() {
       getBookingCompletedResponse.data = [];
@@ -64,6 +59,7 @@ class _CompletedPageState extends State<CompletedPage> {
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -158,9 +154,9 @@ class _CompletedPageState extends State<CompletedPage> {
                   onSearchTextChanged: (value) {
                     setState(() {
                       isFocused = true;
-                      if(value.isNotEmpty){
-                        getBookingListOngoingSearch(value);}
-                      else{
+                      if (value.isNotEmpty) {
+                        getBookingListOngoingSearch(value);
+                      } else {
                         getBookingListUpcoming();
                       }
                     });
@@ -172,7 +168,10 @@ class _CompletedPageState extends State<CompletedPage> {
                   //   }
                   //   return null;
                   // },
-                  scrollbarAlwaysVisible: false,
+                  // scrollbarAlwaysVisible: false,
+                  scrollbarDecoration: ScrollbarDecoration(
+                    thumbVisibility: false,
+                  ),
                   suggestionState: Suggestion.hidden,
                   suggestions: suggestions
                       .map((e) => SearchFieldListItem<String>(e))
@@ -180,47 +179,47 @@ class _CompletedPageState extends State<CompletedPage> {
                   suggestionStyle: const TextStyle(
                     color: Color(0xFF929292),
                     fontSize: 14,
-                  fontFamily: 'Poppins',
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
                   ),
                   searchStyle: const TextStyle(
                     color: Color(0xFF929292),
                     fontSize: 16,
-                  fontFamily: 'Poppins',
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
             ),
             SizedBox(height: size.height * 0.03),
-            getBookingCompletedResponseForSearch.data ==null && searchController.text.isEmpty || searchController.text==""?
-
-            Container(
-              color: Colors.transparent,
-              height: size.height * 0.6,
-              child: RefreshIndicator(
-                color: Colors.amber,
-                onRefresh: ()async{
-                  getBookingListUpcoming();
-                  setState(() {
-
-                  });
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: completedList(context,getBookingCompletedResponse),
-                ),
-              ),
-            ):
-            Container(
-              color: Colors.transparent,
-              height: size.height * 0.6,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: completedList(context,getBookingCompletedResponseForSearch),
-              ),
-            )
-            ,
+            getBookingCompletedResponseForSearch.data == null &&
+                        searchController.text.isEmpty ||
+                    searchController.text == ""
+                ? Container(
+                    color: Colors.transparent,
+                    height: size.height * 0.6,
+                    child: RefreshIndicator(
+                      color: Colors.amber,
+                      onRefresh: () async {
+                        getBookingListUpcoming();
+                        setState(() {});
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child:
+                            completedList(context, getBookingCompletedResponse),
+                      ),
+                    ),
+                  )
+                : Container(
+                    color: Colors.transparent,
+                    height: size.height * 0.6,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: completedList(
+                          context, getBookingCompletedResponseForSearch),
+                    ),
+                  ),
           ],
         ),
       ),
