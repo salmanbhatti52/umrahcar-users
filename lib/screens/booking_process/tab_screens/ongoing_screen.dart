@@ -32,22 +32,18 @@ class _OnGoingPageState extends State<OnGoingPage> {
   ];
 
   bool isFocused = false;
-  GetBookingListModel getBookingOngoingResponse=GetBookingListModel();
+  GetBookingListModel getBookingOngoingResponse = GetBookingListModel();
 
-  getBookingListOngoing()async{
+  getBookingListOngoing() async {
     print("phoneNmbr $phoneNmbr");
-    var mapData={
-      "contact": phoneNmbr.toString()
-    };
-    getBookingOngoingResponse= await DioClient().getBookingOngoing(mapData, context);
+    var mapData = {"contact": phoneNmbr.toString()};
+    getBookingOngoingResponse =
+        await DioClient().getBookingOngoing(mapData, context);
     print("response id: ${getBookingOngoingResponse.data}");
     setState(() {
-print('updatesetstate');
+      print('updatesetstate');
     });
-
   }
-
-
 
   @override
   void initState() {
@@ -56,21 +52,18 @@ print('updatesetstate');
     super.initState();
   }
 
-
-  GetBookingListModel getBookingOngoingResponseForSearch=GetBookingListModel();
-  getBookingListOngoingSearch(String? searchText)async{
+  GetBookingListModel getBookingOngoingResponseForSearch =
+      GetBookingListModel();
+  getBookingListOngoingSearch(String? searchText) async {
     print("phoneNmbr $phoneNmbr");
-    getBookingOngoingResponseForSearch.data=[];
-    var mapData={
-      "contact": phoneNmbr.toString(),
-      "bookings_id": searchText
-    };
-    getBookingOngoingResponseForSearch= await DioClient().getBookingOngoing(mapData, context);
+    getBookingOngoingResponseForSearch.data = [];
+    var mapData = {"contact": phoneNmbr.toString(), "bookings_id": searchText};
+    getBookingOngoingResponseForSearch =
+        await DioClient().getBookingOngoing(mapData, context);
     print("response id: ${getBookingOngoingResponseForSearch.data}");
     setState(() {
-      getBookingOngoingResponse.data=[];
+      getBookingOngoingResponse.data = [];
     });
-
   }
 
   @override
@@ -143,7 +136,7 @@ print('updatesetstate');
                     hintStyle: const TextStyle(
                       color: Color(0xFF929292),
                       fontSize: 12,
-                    fontFamily: 'Poppins',
+                      fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
                     ),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 20),
@@ -167,9 +160,9 @@ print('updatesetstate');
                   onSearchTextChanged: (value) {
                     setState(() {
                       isFocused = true;
-                      if(value.isNotEmpty){
-                        getBookingListOngoingSearch(value);}
-                      else{
+                      if (value.isNotEmpty) {
+                        getBookingListOngoingSearch(value);
+                      } else {
                         getBookingListOngoing();
                       }
                     });
@@ -181,7 +174,10 @@ print('updatesetstate');
                   //   }
                   //   return null;
                   // },
-                  scrollbarAlwaysVisible: false,
+                  // scrollbarAlwaysVisible: false,
+                  scrollbarDecoration: ScrollbarDecoration(
+                    thumbVisibility: false,
+                  ),
                   suggestionState: Suggestion.hidden,
                   suggestions: suggestions
                       .map((e) => SearchFieldListItem<String>(e))
@@ -195,39 +191,40 @@ print('updatesetstate');
                   searchStyle: const TextStyle(
                     color: Color(0xFF929292),
                     fontSize: 16,
-                   fontFamily: 'Poppins',
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
             ),
             SizedBox(height: size.height * 0.03),
-            getBookingOngoingResponseForSearch.data ==null && searchController.text.isEmpty || searchController.text==""?
-            Container(
-              color: Colors.transparent,
-              height: size.height * 0.6,
-              child: RefreshIndicator(
-                color: Colors.amber,
-                onRefresh: ()async{
-                  getBookingListOngoing();
-                  setState(() {
-
-                  });
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: onGoingList(context,getBookingOngoingResponse),
-                ),
-              ),
-            ):
-            Container(
-              color: Colors.transparent,
-              height: size.height * 0.6,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: onGoingList(context,getBookingOngoingResponseForSearch),
-              ),
-            )
+            getBookingOngoingResponseForSearch.data == null &&
+                        searchController.text.isEmpty ||
+                    searchController.text == ""
+                ? Container(
+                    color: Colors.transparent,
+                    height: size.height * 0.6,
+                    child: RefreshIndicator(
+                      color: Colors.amber,
+                      onRefresh: () async {
+                        getBookingListOngoing();
+                        setState(() {});
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: onGoingList(context, getBookingOngoingResponse),
+                      ),
+                    ),
+                  )
+                : Container(
+                    color: Colors.transparent,
+                    height: size.height * 0.6,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: onGoingList(
+                          context, getBookingOngoingResponseForSearch),
+                    ),
+                  )
           ],
         ),
       ),
