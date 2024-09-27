@@ -26,37 +26,41 @@ class TrackPage extends StatefulWidget {
 }
 
 class _TrackPageState extends State<TrackPage> {
-  void _launchURL(_url) async => await canLaunch(_url)
-      ? await launch(_url)
-      : throw 'Could not launch $_url';
+  void _launchURL(url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
-  showSnackbar({error, context}) {
-    final snackBar = SnackBar(
-      content: Text(error),
-    );
+  void showSnackbar({required String error, required BuildContext context}) {
+    final snackBar = SnackBar(content: Text(error));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  LatLng _initialcameraposition = LatLng(20.5937, 78.9629);
+  LatLng _initialCameraPosition = const LatLng(20.5937, 78.9629);
   GoogleMapController? _controller;
-  Location _location = Location();
+  final Location _location = Location();
 
-  void _onMapCreated(GoogleMapController _cntlr) {
-    _controller = _cntlr;
+  void _onMapCreated(GoogleMapController cntlr) {
+    _controller = cntlr;
     _location.onLocationChanged.listen((l) {
-      _controller!.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(target: LatLng(lat!, long!), zoom: 17),
-        ),
-      );
+      if (l.latitude != null && l.longitude != null) {
+        _controller?.animateCamera(
+          CameraUpdate.newCameraPosition(
+            CameraPosition(target: LatLng(lat!, long!), zoom: 17),
+          ),
+        );
+      }
     });
   }
 
   double? lat;
   double? long;
-  @override
   var icon;
   BitmapDescriptor? markerIcon;
+
   void addCustomIcon() async {
     icon = await getBitmapDescriptorFromAssetBytes(
         "assets/images/location.png", 50);
@@ -82,169 +86,162 @@ class _TrackPageState extends State<TrackPage> {
   Timer? timer;
   GetAllSystemData getAllSystemData = GetAllSystemData();
 
-  getSystemAllData() async {
+  Future<void> getSystemAllData() async {
     getAllSystemData = await DioClient().getSystemAllData(context);
-    if (getAllSystemData != null) {
-      print("GETSystemAllData: ${getAllSystemData.data}");
-      setState(() {
-        getSettingsData();
-      });
-    }
+    print("GETSystemAllData: ${getAllSystemData.data}");
+    setState(() {
+      getSettingsData();
+    });
   }
 
   late List<Setting> pickSettingsData = [];
-  int timerCount=3;
-  getSettingsData() {
-    if (getAllSystemData!.data! != null) {
-      for (int i = 0; i < getAllSystemData!.data!.settings!.length; i++) {
-        pickSettingsData.add(getAllSystemData!.data!.settings![i]);
-        print("Setting time= $pickSettingsData");
-      }
+  int timerCount = 3;
 
-      for (int i = 0; i < pickSettingsData.length; i++) {
-        if (pickSettingsData[i].type == "map_refresh_time") {
-
-          timerCount = int.parse(pickSettingsData[i].description!);
-          if (widget.getBookingData!.vehicles![0].vehiclesDrivers != null) {
-            print("timer refresh: ${timerCount}");
-            getProfile();
-            _getCurrentLocation();
-
-            timer =
-                Timer.periodic( Duration(seconds: timerCount*60), (timer) => getProfile());
-            timer =
-                Timer.periodic( Duration(seconds: timerCount*60), (timer) => _getCurrentLocation());
-            setState(() {});
-
-          }
-        } else if (pickSettingsData[i].type == "lattitude" && widget.getBookingData!.vehicles![0].vehiclesDrivers == null) {
-          lat = double.parse(pickSettingsData[i].description!);
-          print("timer lat: ${timerCount}");
-        } else if (pickSettingsData[i].type == "longitude"  && widget.getBookingData!.vehicles![0].vehiclesDrivers == null) {
-          long = double.parse(pickSettingsData[i].description!);
-          print("timer long: ${timerCount}");
+  void getSettingsData() {
+    if (getAllSystemData.data != null) {
+      pickSettingsData.addAll(getAllSystemData.data!.settings!);
+      for (var setting in pickSettingsData) {
+        switch (setting.type) {
+          case "map_refresh_time":
+            timerCount = int.parse(setting.description!);
+            if (widget.getBookingData!.vehicles![0].vehiclesDrivers != null) {
+              print("timer refresh: $timerCount");
+              _startTimers();
+            }
+            break;
+          case "lattitude":
+            if (widget.getBookingData!.vehicles![0].vehiclesDrivers == null) {
+              lat = double.parse(setting.description!);
+              print("timer lat: $timerCount");
+            }
+            break;
+          case "longitude":
+            if (widget.getBookingData!.vehicles![0].vehiclesDrivers == null) {
+              long = double.parse(setting.description!);
+              print("timer long: $timerCount");
+            }
+            break;
         }
       }
     }
   }
 
+  void _startTimers() {
+    getProfile();
+    _getCurrentLocation();
+    timer = Timer.periodic(Duration(minutes: timerCount), (timer) {
+      getProfile();
+      _getCurrentLocation();
+    });
+  }
+
+  @override
   void initState() {
+    super.initState();
     getSystemAllData();
+    _initialCameraPosition = const LatLng(20.5937, 78.9629);
     addCustomIcon();
     if (widget.getBookingData!.vehicles![0].vehiclesDrivers != null) {
-
       print(
           "lat: ${widget.getBookingData!.vehicles![0].vehiclesDrivers!.lattitude}");
       print(
           "log: ${widget.getBookingData!.vehicles![0].vehiclesDrivers!.longitude}");
     }
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    timer!.cancel();
-    // TODO: implement dispose
-    super.dispose();
   }
 
   GetDriverProfile getProfileResponse = GetDriverProfile();
-  getProfile() async {
-    print("userIdId ${widget.getBookingData!.vehicles![0].usersDriversId}");
 
+  Future<void> getProfile() async {
+    print("userIdId ${widget.getBookingData!.vehicles![0].usersDriversId}");
     getProfileResponse = await DioClient().getProfile(
         widget.getBookingData!.vehicles![0].usersDriversId, context);
     if (getProfileResponse.data != null) {
-      print(
-          "getProfileResponse name: ${getProfileResponse.data!.userData!.name}");
-      long = double.parse(getProfileResponse.data!.userData!.longitude!);
       lat = double.parse(getProfileResponse.data!.userData!.lattitude!);
+      long = double.parse(getProfileResponse.data!.userData!.longitude!);
       setState(() {});
     }
-    setState(() {});
   }
 
   Future<Position> getUserCurrentLocation() async {
-    await Geolocator.requestPermission().then((value){
-    }).onError((error, stackTrace) async {
+    try {
       await Geolocator.requestPermission();
-      print("ERROR"+error.toString());
-
-    });
+    } catch (e) {
+      print("ERROR: $e");
+      await Geolocator.requestPermission();
+    }
     return await Geolocator.getCurrentPosition();
   }
 
   Location location = Location();
-  LatLng initialPosition = LatLng(0, 0);
-  void _getCurrentLocation() async {
-    bool serviceEnabled = await location.serviceEnabled();
-    if (!serviceEnabled) {
-      serviceEnabled = await location.requestService();
-      if (!serviceEnabled) {
-        return;
-      }
-    }
+  LatLng initialPosition = const LatLng(0, 0);
 
-    PermissionStatus permissionStatus = await location.hasPermission();
-    if (permissionStatus == PermissionStatus.denied) {
-      permissionStatus = await location.requestPermission();
-      if (permissionStatus != PermissionStatus.granted) {
-        return;
-      }
+  Future<void> _getCurrentLocation() async {
+    if (!await location.serviceEnabled() && !await location.requestService()) {
+      return;
     }
+    if (await location.hasPermission() == PermissionStatus.denied &&
+        await location.requestPermission() != PermissionStatus.granted) return;
 
     LocationData currentLocation = await location.getLocation();
-    initialPosition = LatLng(currentLocation.latitude!, currentLocation.longitude!);
-    print("latitude1: ${currentLocation.latitude}");
-    print("longitude1: ${currentLocation.longitude}");
-    var jsonData={
-      "bookings_id":"${widget.getBookingData!.bookingsId}",
-      "guest_lattitude":"${currentLocation.latitude}",
-      "guest_longitude":"${currentLocation.longitude}"
-    };
-    print("jsonData: ${jsonData}");
-    UpdateUserLocation response= await DioClient().updateUserLocation(jsonData, context);
-    if(response!=null){
-      print("message: ${response.message}");
-    }
-    setState(() {
+    initialPosition =
+        LatLng(currentLocation.latitude!, currentLocation.longitude!);
+    print(
+        "latitude1: ${currentLocation.latitude}, longitude1: ${currentLocation.longitude}");
 
-    });
+    var jsonData = {
+      "bookings_id": "${widget.getBookingData!.bookingsId}",
+      "guest_lattitude": "${currentLocation.latitude}",
+      "guest_longitude": "${currentLocation.longitude}"
+    };
+
+    UpdateUserLocation response =
+        await DioClient().updateUserLocation(jsonData, context);
+    print("message: ${response.message}");
+    setState(() {});
   }
 
+  Set<Marker> _buildMarkers() {
+    return {
+      Marker(
+        markerId: const MarkerId('Pakistan'),
+        position:
+            LatLng(lat ?? 0.0, long ?? 0.0), // Default values to prevent null
+        draggable: true,
+        icon: icon ?? BitmapDescriptor.defaultMarker,
+      ),
+    };
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    print("latlat: ${lat}");
-    print("long: ${long}");
+    print("latlat: $lat");
+    print("long: $long");
     return Scaffold(
       backgroundColor: mainColor,
-      body: getProfileResponse.data != null || long != null
+      body: (getProfileResponse.data != null || (lat != null && long != null))
           ? Container(
               color: Colors.transparent,
               width: size.width,
               height: size.height,
               child: Stack(
                 children: [
-                  Container(
-                    height: MediaQuery.sizeOf(context).height / 2.28,
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 2.28,
                     child: GoogleMap(
                       initialCameraPosition:
-                          CameraPosition(target: _initialcameraposition),
-                      mapType: MapType.normal,
+                          CameraPosition(target: _initialCameraPosition),
+                      mapType: MapType.satellite,
                       onMapCreated: _onMapCreated,
                       myLocationEnabled: false,
-                      markers: {
-                        Marker(
-                            markerId: MarkerId('Pakistan'),
-                            position: LatLng(lat!, long!),
-                            draggable: true,
-                            icon: icon != null
-                                ? icon!
-                                : BitmapDescriptor.defaultMarker)
-                      },
+                      markers: _buildMarkers(),
                     ),
                   ),
                   Positioned(
@@ -278,17 +275,19 @@ class _TrackPageState extends State<TrackPage> {
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,
-                                     fontFamily: 'Poppins',
+                                      fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                  const SizedBox(width: 20,),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
                                   Text(
                                     '(Booking Id ${widget.getBookingData!.bookingsId})',
                                     style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 12,
-                                     fontFamily: 'Poppins',
+                                      fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w300,
                                     ),
                                   ),
@@ -300,7 +299,7 @@ class _TrackPageState extends State<TrackPage> {
                                 style: TextStyle(
                                   color: Color(0xFF929292),
                                   fontSize: 12,
-                                 fontFamily: 'Poppins',
+                                  fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
@@ -310,7 +309,7 @@ class _TrackPageState extends State<TrackPage> {
                                 style: const TextStyle(
                                   color: Color(0xFF565656),
                                   fontSize: 12,
-                                 fontFamily: 'Poppins',
+                                  fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -330,7 +329,7 @@ class _TrackPageState extends State<TrackPage> {
                                 style: const TextStyle(
                                   color: Color(0xFF565656),
                                   fontSize: 12,
-                                 fontFamily: 'Poppins',
+                                  fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -353,11 +352,11 @@ class _TrackPageState extends State<TrackPage> {
                                           ),
                                           SizedBox(width: size.width * 0.01),
                                           Text(
-                                            '${widget.getBookingData!.vehicles![i]!.vehiclesName!.name}',
+                                            '${widget.getBookingData!.vehicles![i].vehiclesName!.name}',
                                             style: const TextStyle(
                                               color: Color(0xFF565656),
                                               fontSize: 10,
-                                             fontFamily: 'Poppins',
+                                              fontFamily: 'Poppins',
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
@@ -382,7 +381,7 @@ class _TrackPageState extends State<TrackPage> {
                                         style: const TextStyle(
                                           color: Color(0xFF565656),
                                           fontSize: 12,
-                                        fontFamily: 'Poppins',
+                                          fontFamily: 'Poppins',
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -402,7 +401,7 @@ class _TrackPageState extends State<TrackPage> {
                                         style: const TextStyle(
                                           color: Color(0xFF565656),
                                           fontSize: 12,
-                                         fontFamily: 'Poppins',
+                                          fontFamily: 'Poppins',
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -410,149 +409,164 @@ class _TrackPageState extends State<TrackPage> {
                                   ),
                                 ],
                               ),
-                              if(widget.getBookingData!.vehicles![0].vehiclesDrivers !=null )
-
+                              if (widget.getBookingData!.vehicles![0]
+                                      .vehiclesDrivers !=
+                                  null)
                                 SizedBox(height: size.height * 0.02),
-                              if(widget.getBookingData!.vehicles![0].vehiclesDrivers !=null )
+                              if (widget.getBookingData!.vehicles![0]
+                                      .vehiclesDrivers !=
+                                  null)
                                 Divider(
-                                color: const Color(0xFF929292).withOpacity(0.3),
-                                thickness: 1,
-                              ),
-                              if(widget.getBookingData!.vehicles![0].vehiclesDrivers !=null )
-
-                                SizedBox(height: size.height * 0.01),
-                              if(widget.getBookingData!.vehicles![0].vehiclesDrivers !=null )
-                              const Text(
-                                'Driver Details',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                 fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w600,
+                                  color:
+                                      const Color(0xFF929292).withOpacity(0.3),
+                                  thickness: 1,
                                 ),
-                              ),
-                              if(widget.getBookingData!.vehicles![0].vehiclesDrivers !=null )
+                              if (widget.getBookingData!.vehicles![0]
+                                      .vehiclesDrivers !=
+                                  null)
+                                SizedBox(height: size.height * 0.01),
+                              if (widget.getBookingData!.vehicles![0]
+                                      .vehiclesDrivers !=
+                                  null)
+                                const Text(
+                                  'Driver Details',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              if (widget.getBookingData!.vehicles![0]
+                                      .vehiclesDrivers !=
+                                  null)
                                 SizedBox(height: size.height * 0.04),
-                              if(widget.getBookingData!.vehicles![0].vehiclesDrivers !=null )
+                              if (widget.getBookingData!.vehicles![0]
+                                      .vehiclesDrivers !=
+                                  null)
                                 Row(
-                                children: [
-                                  Row(
-                                    children: [
-                                      CircleAvatar(
-                                        radius: 15,
-                                        child: Image.asset(
-                                          'assets/images/user-profile.png',
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      SizedBox(width: size.width * 0.032),
-                                      SizedBox(
-                                        width: size.width * 0.275,
-                                        child: Text(
-                                          '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.name}',
-                                          style: const TextStyle(
-                                            color: Color(0xFF565656),
-                                            fontSize: 12,
-                                           fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.w500,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        CircleAvatar(
+                                          radius: 15,
+                                          child: Image.asset(
+                                            'assets/images/user-profile.png',
+                                            fit: BoxFit.cover,
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(width: size.width * 0.115),
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        'assets/images/location-icon.svg',
-                                        width: 20,
-                                        height: 20,
-                                      ),
-                                      SizedBox(width: size.width * 0.045),
-                                      SizedBox(
-                                        width: size.width * 0.275,
-                                        child: Text(
-                                          '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.city}',
-                                          style: const TextStyle(
-                                            color: Color(0xFF565656),
-                                            fontSize: 12,
-                                          fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.w500,
+                                        SizedBox(width: size.width * 0.032),
+                                        SizedBox(
+                                          width: size.width * 0.275,
+                                          child: Text(
+                                            '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.name}',
+                                            style: const TextStyle(
+                                              color: Color(0xFF565656),
+                                              fontSize: 12,
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w500,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              if(widget.getBookingData!.vehicles![0].vehiclesDrivers !=null )
-
+                                      ],
+                                    ),
+                                    SizedBox(width: size.width * 0.115),
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          'assets/images/location-icon.svg',
+                                          width: 20,
+                                          height: 20,
+                                        ),
+                                        SizedBox(width: size.width * 0.045),
+                                        SizedBox(
+                                          width: size.width * 0.275,
+                                          child: Text(
+                                            '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.city}',
+                                            style: const TextStyle(
+                                              color: Color(0xFF565656),
+                                              fontSize: 12,
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              if (widget.getBookingData!.vehicles![0]
+                                      .vehiclesDrivers !=
+                                  null)
                                 SizedBox(height: size.height * 0.02),
-                              if(widget.getBookingData!.vehicles![0].vehiclesDrivers !=null )
-
+                              if (widget.getBookingData!.vehicles![0]
+                                      .vehiclesDrivers !=
+                                  null)
                                 Row(
-                                children: [
-                                  InkWell(
-                                    onTap: ()async {
-                                      Uri phoneno = Uri.parse('tel: ${widget.getBookingData!.vehicles![0].vehiclesDrivers!.contact}');
-                                      if (await launchUrl(phoneno)) {
-                                        //dialer opened
-                                      }else{
-                                        //dailer is not opened
-                                      }
-                                      print(
-                                          "iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
-                                    },
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                            'assets/images/contact-icon.svg'),
-                                        SizedBox(width: size.width * 0.032),
-                                        SizedBox(
-                                          width: size.width * 0.275,
-                                          child: Text(
-                                            '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.contact}',
-                                            style: const TextStyle(
-                                              color: Color(0xFF565656),
-                                              fontSize: 12,
-                                             fontFamily: 'Poppins',
-                                              fontWeight: FontWeight.w500,
+                                  children: [
+                                    InkWell(
+                                      onTap: () async {
+                                        Uri phoneno = Uri.parse(
+                                            'tel: ${widget.getBookingData!.vehicles![0].vehiclesDrivers!.contact}');
+                                        if (await launchUrl(phoneno)) {
+                                          //dialer opened
+                                        } else {
+                                          //dailer is not opened
+                                        }
+                                        print(
+                                            "iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
+                                      },
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                              'assets/images/contact-icon.svg'),
+                                          SizedBox(width: size.width * 0.032),
+                                          SizedBox(
+                                            width: size.width * 0.275,
+                                            child: Text(
+                                              '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.contact}',
+                                              style: const TextStyle(
+                                                color: Color(0xFF565656),
+                                                fontSize: 12,
+                                                fontFamily: 'Poppins',
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(width: size.width * 0.14),
-                                  InkWell(
-                                    onTap: () {
-                                      print("nmbr: ${widget.getBookingData!.vehicles![0].vehiclesDrivers!.whatsapp}");
-                                      _launchURL(
-                                          'https://wa.me/${widget.getBookingData!.vehicles![0].vehiclesDrivers!.whatsapp}/?text=hello');
-                                      setState(() {});
-                                    },
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                            'assets/images/whatsapp-icon.svg'),
-                                        SizedBox(width: size.width * 0.032),
-                                        SizedBox(
-                                          width: size.width * 0.275,
-                                          child: Text(
-                                            '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.whatsapp}',
-                                            style: const TextStyle(
-                                              color: Color(0xFF565656),
-                                              fontSize: 12,
-                                             fontFamily: 'Poppins',
-                                              fontWeight: FontWeight.w500,
+                                    SizedBox(width: size.width * 0.14),
+                                    InkWell(
+                                      onTap: () {
+                                        print(
+                                            "nmbr: ${widget.getBookingData!.vehicles![0].vehiclesDrivers!.whatsapp}");
+                                        _launchURL(
+                                            'https://wa.me/${widget.getBookingData!.vehicles![0].vehiclesDrivers!.whatsapp}/?text=hello');
+                                        setState(() {});
+                                      },
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                              'assets/images/whatsapp-icon.svg'),
+                                          SizedBox(width: size.width * 0.032),
+                                          SizedBox(
+                                            width: size.width * 0.275,
+                                            child: Text(
+                                              '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.whatsapp}',
+                                              style: const TextStyle(
+                                                color: Color(0xFF565656),
+                                                fontSize: 12,
+                                                fontFamily: 'Poppins',
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
+                                  ],
+                                ),
                               SizedBox(height: size.height * 0.02),
                               Divider(
                                 color: const Color(0xFF929292).withOpacity(0.3),
@@ -570,31 +584,31 @@ class _TrackPageState extends State<TrackPage> {
                                       style: TextStyle(
                                         color: Color(0xFF929292),
                                         fontSize: 12,
-                                       fontFamily: 'Poppins',
+                                        fontFamily: 'Poppins',
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
                                     SizedBox(height: size.height * 0.03),
-                                    widget.getBookingData!.paymentType=="credit"?
-                                    const Text(
-                                      'credit',
-                                      style: TextStyle(
-                                        color: Color(0xFF565656),
-                                        fontSize: 12,
-                                       fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ):
-                                     Text(
-                                      '${widget.getBookingData!.bookedFare}',
-                                      style: const TextStyle(
-                                        color: Color(0xFF565656),
-                                        fontSize: 12,
-                                       fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    )
-
+                                    widget.getBookingData!.paymentType ==
+                                            "credit"
+                                        ? const Text(
+                                            'credit',
+                                            style: TextStyle(
+                                              color: Color(0xFF565656),
+                                              fontSize: 12,
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          )
+                                        : Text(
+                                            '${widget.getBookingData!.bookedFare}',
+                                            style: const TextStyle(
+                                              color: Color(0xFF565656),
+                                              fontSize: 12,
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          )
                                   ],
                                 ),
                               if (widget.getBookingData!
@@ -613,7 +627,7 @@ class _TrackPageState extends State<TrackPage> {
                                       style: TextStyle(
                                         color: Color(0xFF929292),
                                         fontSize: 12,
-                                      fontFamily: 'Poppins',
+                                        fontFamily: 'Poppins',
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
@@ -623,36 +637,44 @@ class _TrackPageState extends State<TrackPage> {
                                       style: const TextStyle(
                                         color: Color(0xFF565656),
                                         fontSize: 12,
-                                       fontFamily: 'Poppins',
+                                        fontFamily: 'Poppins',
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
                                   ],
                                 ),
-
                               SizedBox(height: size.height * 0.03),
                               if (widget.getBookingData!.vehicles![0]
                                       .vehiclesDrivers !=
                                   null)
-                                widget.getBookingData!.driverTripStatus !=null &&  widget.getBookingData!.driverTripStatus!.name=="Ride End"? GestureDetector(
-                                  onTap: () {
-                                    // Navigator.push(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //       builder: (context) =>  PickUpPage(getBookingData: widget.getBookingData),
-                                    //     ));
-                                  },
-                                  child: button('Completed', context),
-                                ):GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>  PickUpPage(getBookingData: widget.getBookingData),
-                                        ));
-                                  },
-                                  child: button('Track', context),
-                                ),
+                                widget.getBookingData!.driverTripStatus !=
+                                            null &&
+                                        widget.getBookingData!.driverTripStatus!
+                                                .name ==
+                                            "Ride End"
+                                    ? GestureDetector(
+                                        onTap: () {
+                                          // Navigator.push(
+                                          //     context,
+                                          //     MaterialPageRoute(
+                                          //       builder: (context) =>  PickUpPage(getBookingData: widget.getBookingData),
+                                          //     ));
+                                        },
+                                        child: button('Completed', context),
+                                      )
+                                    : GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PickUpPage(
+                                                        getBookingData: widget
+                                                            .getBookingData),
+                                              ));
+                                        },
+                                        child: button('Track', context),
+                                      ),
                               SizedBox(height: size.height * 0.02),
                             ],
                           ),
@@ -667,12 +689,14 @@ class _TrackPageState extends State<TrackPage> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: Container(
+                      child: SizedBox(
                           height: 40,
                           width: 40,
                           child: Column(
                             children: [
-                              SizedBox(height: 10,),
+                              const SizedBox(
+                                height: 10,
+                              ),
                               SvgPicture.asset('assets/images/back-icon.svg'),
                             ],
                           )),
@@ -681,7 +705,7 @@ class _TrackPageState extends State<TrackPage> {
                 ],
               ),
             )
-          :   const Column(
+          : const Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

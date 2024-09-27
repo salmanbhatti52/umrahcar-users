@@ -4,7 +4,6 @@ import 'package:umrahcar_user/screens/splash_screen.dart';
 import 'package:umrahcar_user/utils/const.dart';
 
 void main() {
-
   runApp(const MyApp());
 }
 
@@ -15,14 +14,11 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-
-
 class _MyAppState extends State<MyApp> {
-
-  void configOneSignel()
-  {
+  void configOneSignel() {
     OneSignal.shared.setAppId(onesignalAppId);
   }
+
   @override
   void initState() {
     configOneSignel();

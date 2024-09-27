@@ -16,9 +16,11 @@ class UpcomingPage extends StatefulWidget {
 }
 
 class _UpcomingPageState extends State<UpcomingPage> {
+// Controllers and Form Key
   TextEditingController searchController = TextEditingController();
   final GlobalKey<FormState> searchFormKey = GlobalKey<FormState>();
 
+// List of suggestions (you can uncomment or add more items as needed)
   List<String> suggestions = [
     // 'apple',
     // 'apple red',
@@ -28,36 +30,84 @@ class _UpcomingPageState extends State<UpcomingPage> {
     // 'cat blue',
   ];
 
+// Variables for managing state
+// Variables for managing state
   bool isFocused = false;
-  GetBookingListModel getBookingUpcomingResponse = GetBookingListModel();
+  GetBookingListModel?
+      getBookingUpcomingResponse; // Allow null for initial state
+  GetBookingListModel?
+      getBookingUpcomingResponseForSearch; // Allow null for initial state
+
+// Fetch upcoming bookings (general)
   getBookingListUpcoming() async {
     print("phoneNmbr $phoneNmbr");
+
+    setState(() {
+      isFocused = true; // Set loading state
+    });
+
     var mapData = {"contact": phoneNmbr.toString()};
-    getBookingUpcomingResponse =
-        await DioClient().getBookingupcoming(mapData, context);
-    print("response id: ${getBookingUpcomingResponse.data}");
-    setState(() {});
+
+    try {
+      getBookingUpcomingResponse =
+          await DioClient().getBookingupcoming(mapData, context);
+
+      // Check if the response is valid
+      if (getBookingUpcomingResponse != null) {
+        print("Response data: ${getBookingUpcomingResponse!.data}");
+      } else {
+        print("No valid response received.");
+      }
+    } catch (e) {
+      print("Error fetching upcoming bookings: $e");
+    } finally {
+      setState(() {
+        isFocused = false; // Unset loading state
+      });
+    }
   }
 
-  GetBookingListModel getBookingUpcomingResponseForSearch =
-      GetBookingListModel();
+// Fetch bookings based on search text (filtered search)
   getBookingListOngoingSearch(String? searchText) async {
     print("phoneNmbr $phoneNmbr");
-    getBookingUpcomingResponseForSearch.data = [];
+
+    // Clear previous search results
+    getBookingUpcomingResponseForSearch = null;
+
     var mapData = {"contact": phoneNmbr.toString(), "bookings_id": searchText};
-    getBookingUpcomingResponseForSearch =
-        await DioClient().getBookingupcoming(mapData, context);
-    print("response id: ${getBookingUpcomingResponseForSearch.data}");
+
     setState(() {
-      getBookingUpcomingResponse.data = [];
+      isFocused = true; // Set loading state
     });
+
+    try {
+      getBookingUpcomingResponseForSearch =
+          await DioClient().getBookingupcoming(mapData, context);
+
+      // Check if the response is valid
+      if (getBookingUpcomingResponseForSearch != null) {
+        print(
+            "Search response data: ${getBookingUpcomingResponseForSearch!.data}");
+
+        // Update main response with search results
+        getBookingUpcomingResponse = getBookingUpcomingResponseForSearch;
+      } else {
+        print("No valid search response received.");
+      }
+    } catch (e) {
+      print("Error during search: $e");
+    } finally {
+      setState(() {
+        isFocused = false; // Unset loading state
+      });
+    }
   }
 
+// Initialize the state, fetch the upcoming bookings on load
   @override
   void initState() {
-    getBookingListUpcoming();
-    // TODO: implement initState
     super.initState();
+    getBookingListUpcoming(); // Fetch bookings initially
   }
 
   @override
@@ -83,7 +133,11 @@ class _UpcomingPageState extends State<UpcomingPage> {
                   suggestionsDecoration: SuggestionDecoration(
                     color: mainColor,
                     padding: const EdgeInsets.only(
-                        left: 20, right: 20, top: 5, bottom: 5),
+                      left: 20,
+                      right: 20,
+                      top: 5,
+                      bottom: 5,
+                    ),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                       width: 1,
@@ -106,24 +160,19 @@ class _UpcomingPageState extends State<UpcomingPage> {
                       height: 25,
                       fit: BoxFit.scaleDown,
                     ),
-                    suffixIcon: isFocused == true
+                    suffixIcon: isFocused
                         ? GestureDetector(
                             onTap: () {
-                              isFocused = false;
-                              searchController.clear();
-                              setState(() {});
+                              setState(() {
+                                isFocused = false;
+                                searchController.clear();
+                              });
                             },
                             child: const Icon(
                               Icons.close,
                               size: 20,
                               color: Color(0xFF565656),
                             ),
-                            // SvgPicture.asset(
-                            //   'assets/images/close-icon.svg',
-                            //   width: 10,
-                            //   height: 10,
-                            //   fit: BoxFit.scaleDown,
-                            // ),
                           )
                         : null,
                     hintText: "Search",
@@ -162,13 +211,6 @@ class _UpcomingPageState extends State<UpcomingPage> {
                     });
                     return null;
                   },
-                  // validator: (value) {
-                  //   if (value!.isEmpty) {
-                  //     return 'Please enter a search term';
-                  //   }
-                  //   return null;
-                  // },
-                  // scrollbarAlwaysVisible: false,
                   scrollbarDecoration: ScrollbarDecoration(
                     thumbVisibility: false,
                   ),
@@ -192,9 +234,10 @@ class _UpcomingPageState extends State<UpcomingPage> {
               ),
             ),
             SizedBox(height: size.height * 0.03),
-            getBookingUpcomingResponseForSearch.data == null &&
-                        searchController.text.isEmpty ||
-                    searchController.text == ""
+            // Handling the null check and condition properly
+            (getBookingUpcomingResponseForSearch?.data == null &&
+                        searchController.text.isEmpty) ||
+                    (searchController.text.isEmpty)
                 ? Container(
                     color: Colors.transparent,
                     height: size.height * 0.6,
@@ -206,8 +249,10 @@ class _UpcomingPageState extends State<UpcomingPage> {
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child:
-                            upComingList(context, getBookingUpcomingResponse),
+                        child: upComingList(
+                            context,
+                            getBookingUpcomingResponse ??
+                                GetBookingListModel()),
                       ),
                     ),
                   )
@@ -217,7 +262,7 @@ class _UpcomingPageState extends State<UpcomingPage> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: upComingList(
-                          context, getBookingUpcomingResponseForSearch),
+                          context, getBookingUpcomingResponseForSearch!),
                     ),
                   ),
           ],
