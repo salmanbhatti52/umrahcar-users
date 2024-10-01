@@ -18,15 +18,11 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-
-
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -46,84 +42,109 @@ class _ProfilePageState extends State<ProfilePage> {
             style: TextStyle(
                 color: Colors.black,
                 fontSize: 26,
-              fontFamily: 'Poppins',
+                fontFamily: 'Poppins',
                 fontWeight: FontWeight.w700),
           ),
           centerTitle: true,
         ),
-        body:
-        SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 60, left: 20),
-                          child: CircleAvatar(
-                            radius: 35,
-                            child: Image.asset(
-                              'assets/images/profile.png',
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: size.width * 0.03),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 22),
-                          child: Container(
-                            color: Colors.transparent,
-                            width: size.width * 0.4,
-                            child:  AutoSizeText(
-                              '${guestName}',
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                              fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w600,
-                              ),
-                              minFontSize: 16,
-                              maxFontSize: 16,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+              SizedBox(height: size.height * 0.03),
+              Center(
+                child: CircleAvatar(
+                  radius: 55,
+                  child: Image.asset(
+                    'assets/images/profile.png',
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-              SizedBox(height: size.height * 0.06),
+              SizedBox(height: size.height * 0.02),
               Padding(
-                padding: const EdgeInsets.only(left: 40),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/images/name-icon.svg',
-                      width: 25,
-                      height: 25,
-                    ),
-                    SizedBox(width: size.width * 0.04),
-                     Text(
-                      '${guestName}',
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Container(
+                    color: Colors.transparent,
+                    child: AutoSizeText(
+                      '$guestName',
                       style: const TextStyle(
                         color: Colors.black,
-                        fontSize: 14,
-                       fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w600,
                       ),
+                      minFontSize: 16,
+                      maxFontSize: 16,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ],
+                  ),
                 ),
               ),
+              SizedBox(height: size.height * 0.03),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                child: TextFormField(
+                  readOnly: true,
+                  decoration: InputDecoration(
+                    hintText: '$guestName',
+                    hintStyle: TextStyle(
+                      color: Colors.black.withOpacity(0.5),
+                      fontSize: 15,
+                    ),
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.all(13.0),
+                      child: SvgPicture.asset(
+                        'assets/images/name-icon.svg',
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: const BorderSide(color: Colors.grey)),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25),
+                      borderSide: const BorderSide(
+                        color: Color.fromARGB(255, 21, 21, 22),
+                        width: 1.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                child: TextFormField(
+                  readOnly: true,
+                  decoration: InputDecoration(
+                    hintText: '$phoneNmbr',
+                    hintStyle: TextStyle(
+                      color: Colors.black.withOpacity(0.5),
+                      fontSize: 15,
+                    ),
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.all(14.0),
+                      child: SvgPicture.asset(
+                        'assets/images/contact-icon.svg',
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: const BorderSide(color: Colors.grey)),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25),
+                      borderSide: const BorderSide(
+                        color: Color.fromARGB(255, 21, 21, 22),
+                        width: 1.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: size.height * 0.02),
               // SizedBox(height: size.height * 0.05),
               // Padding(
               //   padding: const EdgeInsets.only(left: 40),
@@ -147,29 +168,7 @@ class _ProfilePageState extends State<ProfilePage> {
               //     ],
               //   ),
               // ),
-              SizedBox(height: size.height * 0.05),
-              Padding(
-                padding: const EdgeInsets.only(left: 40),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/images/contact-icon.svg',
-                      width: 25,
-                      height: 25,
-                    ),
-                    SizedBox(width: size.width * 0.04),
-                     Text(
-                      '${phoneNmbr}',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                      fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+
               // SizedBox(height: size.height * 0.1),
               // GestureDetector(
               //   onTap: () {
@@ -183,17 +182,19 @@ class _ProfilePageState extends State<ProfilePage> {
               // ),
               SizedBox(height: size.height * 0.20),
               InkWell(
-                  onTap: ()async {
-                    SharedPreferences preferences = await SharedPreferences.getInstance();
+                  onTap: () async {
+                    SharedPreferences preferences =
+                        await SharedPreferences.getInstance();
                     await preferences.clear();
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const LogInPage()));
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LogInPage()));
                   },
                   child: button('Logout', context)),
             ],
           ),
-        )
-
-        ,
+        ),
       ),
     );
   }
@@ -222,7 +223,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   color: Color(0xFF565656),
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
-                fontFamily: 'Poppins',
+                  fontFamily: 'Poppins',
                 ),
               ),
               SizedBox(height: size.height * 0.06),

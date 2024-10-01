@@ -200,7 +200,7 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: size.height * 0.17),
+                        SizedBox(height: size.height * 0.1567),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           child: Row(
@@ -218,14 +218,13 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ),
                         ),
-                        SizedBox(height: size.height * 0.02),
                         Container(
                           color: Colors.transparent,
                           // height: size.height * 0.3806,
 
                           height: size.height * 0.3635,
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: RefreshIndicator(
                                 color: Colors.amber,
                                 onRefresh: () async {
@@ -305,31 +304,35 @@ class _HomePageState extends State<HomePage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                  children: [
-                                    CircleAvatar(
-                                      radius: 15,
-                                      child: Image.asset(
-                                        'assets/images/user-profile.png',
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 12, top: 0),
+                                  child: Row(
+                                    children: [
+                                      CircleAvatar(
+                                        radius: 18,
+                                        child: Image.asset(
+                                          'assets/images/user-profile.png',
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(width: size.width * 0.02),
-                                    Text(
-                                      getBookingOngoingResponse!
-                                                  .data![0]
-                                                  .vehicles![0]
-                                                  .vehiclesDrivers !=
-                                              null
-                                          ? '${getBookingOngoingResponse!.data![0].vehicles![0].vehiclesDrivers!.name}'
-                                          : "",
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 12,
+                                      SizedBox(width: size.width * 0.02),
+                                      Text(
+                                        getBookingOngoingResponse!
+                                                    .data![0]
+                                                    .vehicles![0]
+                                                    .vehiclesDrivers !=
+                                                null
+                                            ? '${getBookingOngoingResponse!.data![0].vehicles![0].vehiclesDrivers!.name}'
+                                            : "",
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 12,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                                 Row(
                                   children: [
@@ -344,8 +347,8 @@ class _HomePageState extends State<HomePage> {
                                         style: const TextStyle(
                                           color: Color(0xFF565656),
                                           fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 8,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
                                         ),
                                         minFontSize: 8,
                                         maxFontSize: 8,

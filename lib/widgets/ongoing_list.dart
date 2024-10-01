@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:intl/intl.dart';
 import 'package:umrahcar_user/screens/tracking_process/track_screen.dart';
 import 'package:umrahcar_user/utils/colors.dart';
 
@@ -31,19 +32,24 @@ Widget onGoingList(
               child: Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                        width: 70,
-                        height: 70,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
+                      Card(
+                        elevation: 1,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 8, right: 8, bottom: 8, left: 8),
+                          child: Container(
+                            width: 60,
+                            height: 60,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                            child: Image.network(
+                                "$imageUrl${getData.routes!.vehicles!.featureImage}"),
+                          ),
                         ),
-                        child: Image.network(
-                            "$imageUrl${getData.routes!.vehicles!.featureImage}"),
                       ),
-                      SizedBox(width: size.width * 0.005),
+                      SizedBox(width: size.width * 0.003),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +60,7 @@ Widget onGoingList(
                               color: Colors.black,
                               fontSize: 16,
                               fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w900,
                             ),
                           ),
                           SizedBox(height: size.height * 0.005),
@@ -71,7 +77,7 @@ Widget onGoingList(
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              SizedBox(width: size.width * 0.05),
+                              SizedBox(width: size.width * 0.02),
                               SvgPicture.asset(
                                   'assets/images/small-black-location-icon.svg'),
                               SizedBox(width: size.width * 0.01),
@@ -155,7 +161,7 @@ Widget onGoingList(
                                   'assets/images/small-black-bookings-icon.svg'),
                               SizedBox(width: size.width * 0.01),
                               Text(
-                                '${getData.pickupTime} ${getData.pickupDate}',
+                                '${_formatDate(getData.pickupDate!)} ${_formatTime(getData.pickupTime!)}',
                                 style: const TextStyle(
                                   color: Color(0xFF565656),
                                   fontSize: 8,
@@ -201,6 +207,16 @@ Widget onGoingList(
           // width: 300,
           child: Center(child: Text("No Ongoing Booking")),
         );
+}
+
+String _formatDate(String date) {
+  final DateTime parsedDate = DateFormat('yyyy-MM-dd').parse(date);
+  return DateFormat('d MMM yyyy').format(parsedDate);
+}
+
+String _formatTime(String time) {
+  final DateTime parsedTime = DateFormat('HH:mm:ss').parse(time);
+  return DateFormat('h:mm a').format(parsedTime);
 }
 
 List myList = [
