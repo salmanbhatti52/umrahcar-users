@@ -131,10 +131,10 @@ class _PickUpPageState extends State<PickUpPage> {
     print("response id: ${getBookingOngoingResponse.data}");
     for(int i=0;i<getBookingOngoingResponse.data!.length;i++){
       if(getBookingOngoingResponse.data![i].bookingsId==widget.getBookingData!.bookingsId){
-        print("Driver Status: ${getBookingOngoingResponse.data![i].driverTripStatus!.name!}");
+        print("Driver Status: ${getBookingOngoingResponse.data![i].driverTripStatus!}");
         String? latt=getBookingOngoingResponse.data![i].vehicles![0].vehiclesDrivers!.lattitude;
         String? longg=getBookingOngoingResponse.data![i].vehicles![0].vehiclesDrivers!.longitude;
-        statuses=getBookingOngoingResponse.data![i].driverTripStatus!.name!;
+        statuses=getBookingOngoingResponse.data![i].driverTripStatus!;
         print("statusessss: ${statuses}");
         calculateDistance(longg,latt);
 
