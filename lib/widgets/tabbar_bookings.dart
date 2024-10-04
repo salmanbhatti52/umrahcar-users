@@ -25,8 +25,8 @@ class _TabbarBookingsState extends State<TabbarBookings>
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Container(
-              width: MediaQuery.of(context).size.width * 0.9,
-              height: MediaQuery.of(context).size.height * 0.055,
+              width: MediaQuery.of(context).size.width * 0.92,
+              height: MediaQuery.of(context).size.height * 0.069,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
@@ -51,17 +51,16 @@ class _TabbarBookingsState extends State<TabbarBookings>
                   labelPadding: const EdgeInsets.symmetric(horizontal: 25),
                   labelStyle: const TextStyle(
                     color: Colors.white,
-                    
-                    fontSize: 10,
+                    fontSize: 11,
                     fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.bold,
                   ),
                   unselectedLabelColor: const Color(0xFF929292),
                   unselectedLabelStyle: const TextStyle(
                     color: Color(0xFF929292),
                     fontSize: 10,
                     fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.bold,
                   ),
                   tabs: const [
                     Tab(text: "On Going"),

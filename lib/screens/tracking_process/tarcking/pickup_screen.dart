@@ -20,6 +20,7 @@ import '../../../models/get_driver_profile.dart';
 import '../../../models/update_user_location.dart';
 import '../../../service/rest_api_service.dart';
 import '../../homepage_screen.dart';
+
 class PickUpPage extends StatefulWidget {
   GetBookingData? getBookingData;
   PickUpPage({super.key, this.getBookingData});
@@ -51,7 +52,7 @@ class _PickUpPageState extends State<PickUpPage> {
   BitmapDescriptor? markerIcon;
   void addCustomIcon() async {
     icon = await getBitmapDescriptorFromAssetBytes(
-        "assets/images/location.png", 50);
+        "assets/images1/location.png", 50);
     setState(() {});
   }
 
@@ -85,7 +86,7 @@ class _PickUpPageState extends State<PickUpPage> {
   }
 
   late List<Setting> pickSettingsData = [];
-  int timerCount=3;
+  int timerCount = 3;
   getSettingsData() {
     if (getAllSystemData!.data! != null) {
       for (int i = 0; i < getAllSystemData!.data!.settings!.length; i++) {
@@ -95,95 +96,94 @@ class _PickUpPageState extends State<PickUpPage> {
 
       for (int i = 0; i < pickSettingsData.length; i++) {
         if (pickSettingsData[i].type == "map_refresh_time") {
-
           timerCount = int.parse(pickSettingsData[i].description!);
           if (widget.getBookingData!.vehicles![0].vehiclesDrivers != null) {
             print("timer refresh: ${timerCount}");
             getProfile();
             _getCurrentLocation();
-            timer =
-                Timer.periodic( Duration(seconds: timerCount*60), (timer) => getProfile());
-            timer =
-                Timer.periodic( Duration(seconds: timerCount*60), (timer) => _getCurrentLocation());
+            timer = Timer.periodic(
+                Duration(seconds: timerCount * 60), (timer) => getProfile());
+            timer = Timer.periodic(Duration(seconds: timerCount * 60),
+                (timer) => _getCurrentLocation());
 
             setState(() {});
-
           }
-        } else if (pickSettingsData[i].type == "lattitude" && widget.getBookingData!.vehicles![0].vehiclesDrivers == null) {
+        } else if (pickSettingsData[i].type == "lattitude" &&
+            widget.getBookingData!.vehicles![0].vehiclesDrivers == null) {
           lat = double.parse(pickSettingsData[i].description!);
           print("timer lat: ${timerCount}");
-        } else if (pickSettingsData[i].type == "longitude"  && widget.getBookingData!.vehicles![0].vehiclesDrivers == null) {
+        } else if (pickSettingsData[i].type == "longitude" &&
+            widget.getBookingData!.vehicles![0].vehiclesDrivers == null) {
           long = double.parse(pickSettingsData[i].description!);
-          calculateDistance(widget.getBookingData!.vehicles![0].vehiclesDrivers!.longitude,widget.getBookingData!.vehicles![0].vehiclesDrivers!.lattitude);
+          calculateDistance(
+              widget.getBookingData!.vehicles![0].vehiclesDrivers!.longitude,
+              widget.getBookingData!.vehicles![0].vehiclesDrivers!.lattitude);
           print("timer long: ${timerCount}");
         }
       }
     }
   }
-  GetBookingListModel getBookingOngoingResponse=GetBookingListModel();
-   String statuses="Assigned";
-  getBookingListOngoing()async{
-    print("phoneNmbr $phoneNmbr");
-    var mapData={
-      "contact": phoneNmbr.toString()
-    };
-    getBookingOngoingResponse= await DioClient().getBookingOngoing(mapData, context);
-    print("response id: ${getBookingOngoingResponse.data}");
-    for(int i=0;i<getBookingOngoingResponse.data!.length;i++){
-      if(getBookingOngoingResponse.data![i].bookingsId==widget.getBookingData!.bookingsId){
-        print("Driver Status: ${getBookingOngoingResponse.data![i].driverTripStatus!.name!}");
-        String? latt=getBookingOngoingResponse.data![i].vehicles![0].vehiclesDrivers!.lattitude;
-        String? longg=getBookingOngoingResponse.data![i].vehicles![0].vehiclesDrivers!.longitude;
-        statuses=getBookingOngoingResponse.data![i].driverTripStatus!.name!;
-        print("statusessss: ${statuses}");
-        calculateDistance(longg,latt);
 
-        if(statuses=="Reached"){
+  GetBookingListModel getBookingOngoingResponse = GetBookingListModel();
+  String statuses = "Assigned";
+  getBookingListOngoing() async {
+    print("phoneNmbr $phoneNmbr");
+    var mapData = {"contact": phoneNmbr.toString()};
+    getBookingOngoingResponse =
+        await DioClient().getBookingOngoing(mapData, context);
+    print("response id: ${getBookingOngoingResponse.data}");
+    for (int i = 0; i < getBookingOngoingResponse.data!.length; i++) {
+      if (getBookingOngoingResponse.data![i].bookingsId ==
+          widget.getBookingData!.bookingsId) {
+        print(
+            "Driver Status: ${getBookingOngoingResponse.data![i].driverTripStatus!.name!}");
+        String? latt = getBookingOngoingResponse
+            .data![i].vehicles![0].vehiclesDrivers!.lattitude;
+        String? longg = getBookingOngoingResponse
+            .data![i].vehicles![0].vehiclesDrivers!.longitude;
+        statuses = getBookingOngoingResponse.data![i].driverTripStatus!.name!;
+        print("statusessss: ${statuses}");
+        calculateDistance(longg, latt);
+
+        if (statuses == "Reached") {
           showDialog(
             context: context,
             barrierDismissible: false,
             builder: (context) => driverReached(),
           );
-          setState(() {
-
-          });
+          setState(() {});
         }
-        setState(() {
-
-        });
+        setState(() {});
       }
     }
-    setState(() {
-
-    });
-
+    setState(() {});
   }
-  DistanceCalculatorModel distanceCalculatorModel=DistanceCalculatorModel();
 
-  String? distance="";
-  calculateDistance(String? longg,String? latt)async{
-    var jsonData={
-      "from_lat":"${latt}",
-      "from_long":"${longg}",
-      "to_lat":"${lat}",
-      "to_long":"${long}"
+  DistanceCalculatorModel distanceCalculatorModel = DistanceCalculatorModel();
+
+  String? distance = "";
+  calculateDistance(String? longg, String? latt) async {
+    var jsonData = {
+      "from_lat": "${latt}",
+      "from_long": "${longg}",
+      "to_lat": "${lat}",
+      "to_long": "${long}"
     };
     print("jsonjsonData: ${jsonData}");
-    distanceCalculatorModel=await DioClient().distanceCalculate(jsonData, context);
-    if(distanceCalculatorModel.data !=null){
+    distanceCalculatorModel =
+        await DioClient().distanceCalculate(jsonData, context);
+    if (distanceCalculatorModel.data != null) {
       print("distanceeee: ${distanceCalculatorModel.data!.distance}");
-      distance=distanceCalculatorModel.data!.distance;
-      setState(() {
-
-      });
+      distance = distanceCalculatorModel.data!.distance;
+      setState(() {});
     }
   }
+
   void initState() {
     getSystemAllData();
 
     addCustomIcon();
     if (widget.getBookingData!.vehicles![0].vehiclesDrivers != null) {
-
       print(
           "lat: ${widget.getBookingData!.vehicles![0].vehiclesDrivers!.lattitude}");
       print(
@@ -237,25 +237,23 @@ class _PickUpPageState extends State<PickUpPage> {
     }
 
     LocationData currentLocation = await location.getLocation();
-    initialPosition = LatLng(currentLocation.latitude!, currentLocation.longitude!);
+    initialPosition =
+        LatLng(currentLocation.latitude!, currentLocation.longitude!);
     print("latitude1: ${currentLocation.latitude}");
     print("longitude1: ${currentLocation.longitude}");
-    var jsonData={
-      "bookings_id":"${widget.getBookingData!.bookingsId}",
-      "guest_lattitude":"${currentLocation.latitude}",
-      "guest_longitude":"${currentLocation.longitude}"
+    var jsonData = {
+      "bookings_id": "${widget.getBookingData!.bookingsId}",
+      "guest_lattitude": "${currentLocation.latitude}",
+      "guest_longitude": "${currentLocation.longitude}"
     };
     print("jsonData: ${jsonData}");
-    UpdateUserLocation response= await DioClient().updateUserLocation(jsonData, context);
-    if(response!=null){
+    UpdateUserLocation response =
+        await DioClient().updateUserLocation(jsonData, context);
+    if (response != null) {
       print("message: ${response.message}");
     }
-    setState(() {
-
-    });
+    setState(() {});
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -263,281 +261,290 @@ class _PickUpPageState extends State<PickUpPage> {
     print("markerIcon: ${markerIcon}");
     return Scaffold(
       backgroundColor: mainColor,
-      body: getProfileResponse.data !=null ?
-      Container(
-        color: Colors.transparent,
-        width: size.width,
-        height: size.height,
-        child: Stack(
-          children: [
-
-            GoogleMap(
-              initialCameraPosition:
-                  CameraPosition(target: _initialcameraposition),
-              mapType: MapType.normal,
-              onMapCreated: _onMapCreated,
-              myLocationEnabled: false,
-              markers: {
-                Marker(
-                    markerId: MarkerId('Pakistan'),
-                    position: LatLng(lat!, long!),
-                    draggable: true,
-
-                    icon: icon!=null ?  icon!: BitmapDescriptor.defaultMarker)
-              },
-            ),
-            Positioned(
-              bottom: 0,
-              child: GestureDetector(
-                onTap: () {
-
-                },
-                child: Container(
-                  width: size.width,
-                  height: size.height * 0.28,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                    border: Border.all(
-                      width: 1,
-                      color: const Color(0xFF000000).withOpacity(0.15),
-                    ),
+      body: getProfileResponse.data != null
+          ? Container(
+              color: Colors.transparent,
+              width: size.width,
+              height: size.height,
+              child: Stack(
+                children: [
+                  GoogleMap(
+                    initialCameraPosition:
+                        CameraPosition(target: _initialcameraposition),
+                    mapType: MapType.normal,
+                    onMapCreated: _onMapCreated,
+                    myLocationEnabled: false,
+                    markers: {
+                      Marker(
+                          markerId: MarkerId('Pakistan'),
+                          position: LatLng(lat!, long!),
+                          draggable: true,
+                          icon: icon != null
+                              ? icon!
+                              : BitmapDescriptor.defaultMarker)
+                    },
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: size.height * 0.03),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                statuses,
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                 fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                               Text(
-                                '${distance} Away',
-                                style:  TextStyle(
-                                  color: secondaryColor,
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
+                  Positioned(
+                    bottom: 0,
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        width: size.width,
+                        height: size.height * 0.28,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
                           ),
-                          SizedBox(height: size.height * 0.03),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  CircleAvatar(
-                                    radius: 30,
-                                    child: Image.asset(
-                                      'assets/images/user-profile.png',
-                                      fit: BoxFit.cover,
+                          border: Border.all(
+                            width: 1,
+                            color: const Color(0xFF000000).withOpacity(0.15),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: SingleChildScrollView(
+                            physics: const BouncingScrollPhysics(),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: size.height * 0.03),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      statuses,
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(width: size.width * 0.04),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 12),
-                                    child: Column(
+                                    Text(
+                                      '${distance} Away',
+                                      style: TextStyle(
+                                        color: secondaryColor,
+                                        fontSize: 16,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: size.height * 0.03),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          CrossAxisAlignment.end,
                                       children: [
-                                        Text(
-                                          '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.name}',
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16,
-                                           fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.w500,
+                                        CircleAvatar(
+                                          radius: 30,
+                                          child: Image.asset(
+                                            'assets/images1/user-profile.png',
+                                            fit: BoxFit.cover,
                                           ),
                                         ),
-                                        SizedBox(height: size.height * 0.003),
-                                        Text(
-                                          '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.contact}',
-                                          style: const TextStyle(
-                                            color: Color(0xFF929292),
-                                            fontSize: 12,
-                                           fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.w400,
+                                        SizedBox(width: size.width * 0.04),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 12),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.name}',
+                                                style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                  fontFamily: 'Poppins',
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                  height: size.height * 0.003),
+                                              Text(
+                                                '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.contact}',
+                                                style: const TextStyle(
+                                                  color: Color(0xFF929292),
+                                                  fontSize: 12,
+                                                  fontFamily: 'Poppins',
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 20),
-                                child: Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        print(
-                                            "iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => ChatPage(
-                                                  bookingId: widget
-                                                      .getBookingData!
-                                                      .bookingsId,
-                                                  usersDriverId: widget
-                                                      .getBookingData!
-                                                      .vehicles![0]
-                                                      .usersDriversId,
-                                                  guestName: widget
-                                                      .getBookingData!.name,
-                                                  driverName: widget
-                                                      .getBookingData!
-                                                      .vehicles![0]
-                                                      .vehiclesDrivers!
-                                                      .name),
-                                            ));
-                                      },
-                                      child: SvgPicture.asset(
-                                        'assets/images/chat-icon.svg',
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 20),
+                                      child: Row(
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              print(
+                                                  "iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) => ChatPage(
+                                                        bookingId: widget
+                                                            .getBookingData!
+                                                            .bookingsId,
+                                                        usersDriverId: widget
+                                                            .getBookingData!
+                                                            .vehicles![0]
+                                                            .usersDriversId,
+                                                        guestName: widget
+                                                            .getBookingData!
+                                                            .name,
+                                                        driverName: widget
+                                                            .getBookingData!
+                                                            .vehicles![0]
+                                                            .vehiclesDrivers!
+                                                            .name),
+                                                  ));
+                                            },
+                                            child: SvgPicture.asset(
+                                              'assets/images1/chat-icon.svg',
+                                            ),
+                                          ),
+                                          SizedBox(width: size.width * 0.06),
+                                          SvgPicture.asset(
+                                            'assets/images1/contact-icon.svg',
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    SizedBox(width: size.width * 0.06),
-                                    SvgPicture.asset(
-                                      'assets/images/contact-icon.svg',
                                     ),
                                   ],
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: size.height * 0.03),
-                          Row(
-                            children: [
-                              Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/images/small-black-bookings-icon.svg',
-                                    width: 20,
-                                    height: 20,
-                                  ),
-                                  SizedBox(width: size.width * 0.032),
-                                  Text(
-                                    '${widget.getBookingData!.pickupDate}',
-                                    style: const TextStyle(
-                                      color: Color(0xFF565656),
-                                      fontSize: 12,
-                                     fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w500,
+                                SizedBox(height: size.height * 0.03),
+                                Row(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          'assets/images1/small-black-bookings-icon.svg',
+                                          width: 20,
+                                          height: 20,
+                                        ),
+                                        SizedBox(width: size.width * 0.032),
+                                        Text(
+                                          '${widget.getBookingData!.pickupDate}',
+                                          style: const TextStyle(
+                                            color: Color(0xFF565656),
+                                            fontSize: 12,
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(width: size.width * 0.14),
-                              Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/images/clock-icon.svg',
-                                    width: 20,
-                                    height: 20,
-                                  ),
-                                  SizedBox(width: size.width * 0.032),
-                                  Text(
-                                    '${widget.getBookingData!.pickupTime}',
-                                    style: const TextStyle(
-                                      color: Color(0xFF565656),
-                                      fontSize: 12,
-                                     fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w500,
+                                    SizedBox(width: size.width * 0.14),
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          'assets/images1/clock-icon.svg',
+                                          width: 20,
+                                          height: 20,
+                                        ),
+                                        SizedBox(width: size.width * 0.032),
+                                        Text(
+                                          '${widget.getBookingData!.pickupTime}',
+                                          style: const TextStyle(
+                                            color: Color(0xFF565656),
+                                            fontSize: 12,
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: size.height * 0.02),
-                          Row(
-                            children: [
-                              SvgPicture.asset(
-                                'assets/images/clock-icon.svg',
-                                width: 20,
-                                height: 20,
-                              ),
-                              SizedBox(width: size.width * 0.032),
-                              Text(
-                                '${widget.getBookingData!.flightTime}',
-                                style: const TextStyle(
-                                  color: Color(0xFF565656),
-                                  fontSize: 12,
-                                 fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w500,
+                                  ],
                                 ),
-                              ),
-                              // SizedBox(width: size.width * 0.05),
-                              // const Text(
-                              //   'Waiting',
-                              //   style: TextStyle(
-                              //     color: Color(0xFF79BF42),
-                              //     fontSize: 12,
-                              //     fontFamily: 'Montserrat-Regular',
-                              //     fontWeight: FontWeight.w500,
-                              //   ),
-                              // ),
-                            ],
+                                SizedBox(height: size.height * 0.02),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/images1/clock-icon.svg',
+                                      width: 20,
+                                      height: 20,
+                                    ),
+                                    SizedBox(width: size.width * 0.032),
+                                    Text(
+                                      '${widget.getBookingData!.flightTime}',
+                                      style: const TextStyle(
+                                        color: Color(0xFF565656),
+                                        fontSize: 12,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    // SizedBox(width: size.width * 0.05),
+                                    // const Text(
+                                    //   'Waiting',
+                                    //   style: TextStyle(
+                                    //     color: Color(0xFF79BF42),
+                                    //     fontSize: 12,
+                                    //     fontFamily: 'Montserrat-Regular',
+                                    //     fontWeight: FontWeight.w500,
+                                    //   ),
+                                    // ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  Positioned(
+                    top: 40,
+                    left: 20,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                          height: 40,
+                          width: 40,
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              SvgPicture.asset('assets/images1/back-icon.svg'),
+                            ],
+                          )),
+                    ),
+                  ),
+                ],
               ),
+            )
+          : const Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 175),
+                  child: CircularProgressIndicator(
+                    color: Colors.amber,
+                  ),
+                )
+              ],
             ),
-            Positioned(
-              top: 40,
-              left: 20,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                    height: 40,
-                    width: 40,
-                    child: Column(
-                      children: [
-                        SizedBox(height: 10,),
-                        SvgPicture.asset('assets/images/back-icon.svg'),
-                      ],
-                    )),
-              ),
-            ),
-          ],
-        ),
-      ): const Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 175),
-            child: CircularProgressIndicator(
-              color: Colors.amber,
-            ),
-          )
-        ],
-      ),
     );
   }
 
@@ -557,45 +564,46 @@ class _PickUpPageState extends State<PickUpPage> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 250),
-                child: IconButton(onPressed: (){
-                  Navigator.pop(context);
-                  setState(() {
-
-                  });
-                }, icon: Icon(Icons.cancel, size: 30),),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    setState(() {});
+                  },
+                  icon: Icon(Icons.cancel, size: 30),
+                ),
               ),
               SizedBox(height: size.height * 0.02),
               CircleAvatar(
                 radius: 45,
                 child: Image.asset(
-                  'assets/images/profile.png',
+                  'assets/images1/profile.png',
                   fit: BoxFit.cover,
                 ),
               ),
               SizedBox(height: size.height * 0.02),
-               Text(
+              Text(
                 '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.name}',
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   color: Color(0xFF565656),
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                 fontFamily: 'Poppins',
+                  fontFamily: 'Poppins',
                 ),
               ),
               SizedBox(height: size.height * 0.01),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SvgPicture.asset('assets/images/green-fast-car-icon.svg'),
+                  SvgPicture.asset('assets/images1/green-fast-car-icon.svg'),
                   SizedBox(width: size.width * 0.02),
-                   Text(
+                  Text(
                     '${widget.getBookingData!.vehicles![0].vehiclesName!.name}',
-                    style:  TextStyle(
+                    style: TextStyle(
                       color: secondaryColor,
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
-                     fontFamily: 'Poppins',
+                      fontFamily: 'Poppins',
                     ),
                   ),
                 ],
@@ -614,18 +622,17 @@ class _PickUpPageState extends State<PickUpPage> {
               SizedBox(height: size.height * 0.08),
               GestureDetector(
                   onTap: () async {
-                      Uri phoneno = Uri.parse('tel: ${widget.getBookingData!.vehicles![0].vehiclesDrivers!.contact}');
-                      if (await launchUrl(phoneno)) {
-                        //dialer opened
-                      }else{
-                        //dailer is not opened
-                      }
+                    Uri phoneno = Uri.parse(
+                        'tel: ${widget.getBookingData!.vehicles![0].vehiclesDrivers!.contact}');
+                    if (await launchUrl(phoneno)) {
+                      //dialer opened
+                    } else {
+                      //dailer is not opened
+                    }
                     print(
                         "iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
-
                   },
                   child: dialogButtonTransparent('Contact', context)),
-
             ],
           ),
         ),

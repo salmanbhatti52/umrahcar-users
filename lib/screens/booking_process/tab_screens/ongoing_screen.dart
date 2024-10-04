@@ -107,7 +107,7 @@ class _OnGoingPageState extends State<OnGoingPage> {
                   ),
                   searchInputDecoration: InputDecoration(
                     prefixIcon: SvgPicture.asset(
-                      'assets/images/search-icon.svg',
+                      'assets/images1/search-icon.svg',
                       width: 25,
                       height: 25,
                       fit: BoxFit.scaleDown,
@@ -125,7 +125,7 @@ class _OnGoingPageState extends State<OnGoingPage> {
                               color: Color(0xFF565656),
                             ),
                             // SvgPicture.asset(
-                            //   'assets/images/close-icon.svg',
+                            //   'assets/images1/close-icon.svg',
                             //   width: 10,
                             //   height: 10,
                             //   fit: BoxFit.scaleDown,

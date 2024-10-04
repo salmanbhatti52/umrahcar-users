@@ -23,13 +23,13 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: mainColor,
+      backgroundColor: Colors.white,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.15),
+          color: Colors.white,
           border: Border.all(
             color: const Color(0xFFFFFFFF).withOpacity(0.15),
-            width: 1,
+            width: 0,
           ),
           borderRadius: const BorderRadius.only(
               topRight: Radius.circular(20), topLeft: Radius.circular(20)),
@@ -43,17 +43,17 @@ class _NavBarState extends State<NavBar> {
             data: NavigationBarThemeData(
               indicatorShape: const CircleBorder(),
               indicatorColor: Colors.transparent,
+              labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
               labelTextStyle: MaterialStateProperty.all(
-                 TextStyle(
-                  color: secondaryColor,
-                  fontSize: 8,
-                 fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w400,
+                const TextStyle(
+                  color: ConstantColor.navBarTextColor,
+                  fontSize: 10,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ),
             child: NavigationBar(
-              backgroundColor: mainColor,
+              backgroundColor: Colors.white,
               selectedIndex: index,
               labelBehavior:
                   NavigationDestinationLabelBehavior.onlyShowSelected,
@@ -62,21 +62,33 @@ class _NavBarState extends State<NavBar> {
               }),
               destinations: [
                 NavigationDestination(
-                  icon: SvgPicture.asset('assets/images/home-icon.svg'),
-                  selectedIcon:
-                      SvgPicture.asset('assets/images/active-home-icon.svg', color: buttonColor,),
+                  icon: SvgPicture.asset('assets/images1/home-icon.svg'),
+                  selectedIcon: SvgPicture.asset(
+                    'assets/images1/active-home-icon.svg',
+                    width: 24,
+                    height: 24,
+                    color: buttonColor,
+                  ),
                   label: 'Home',
                 ),
                 NavigationDestination(
-                  icon: SvgPicture.asset('assets/images/bookings-icon.svg'),
+                  icon: SvgPicture.asset('assets/images1/bookings-icon.svg'),
                   selectedIcon: SvgPicture.asset(
-                      'assets/images/active-bookings-icon.svg', color: buttonColor,),
+                    'assets/images1/active-bookings-icon.svg',
+                    width: 24,
+                    height: 24,
+                    color: buttonColor,
+                  ),
                   label: 'Bookings',
                 ),
                 NavigationDestination(
-                  icon: SvgPicture.asset('assets/images/profile-icon.svg'),
-                  selectedIcon:
-                      SvgPicture.asset('assets/images/active-profile-icon.svg', color: buttonColor,),
+                  icon: SvgPicture.asset('assets/images1/profile-icon.svg'),
+                  selectedIcon: SvgPicture.asset(
+                    'assets/images1/active-profile-icon.svg',
+                    width: 24,
+                    height: 24,
+                    color: buttonColor,
+                  ),
                   label: 'Profile',
                 ),
               ],
@@ -84,7 +96,10 @@ class _NavBarState extends State<NavBar> {
           ),
         ),
       ),
-      body: screens[index],
+      body: IndexedStack(
+        index: index,
+        children: screens,
+      ),
     );
   }
 }

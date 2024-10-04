@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:umrahcar_user/screens/splash_screen.dart';
 import 'package:umrahcar_user/utils/const.dart';
@@ -22,7 +23,6 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     configOneSignel();
-    // TODO: implement initState
     super.initState();
   }
 
@@ -32,7 +32,10 @@ class _MyAppState extends State<MyApp> {
       title: 'Umrah Passenger User',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.yellow,
+        primarySwatch: Colors.blue,
+        textTheme: GoogleFonts.robotoTextTheme(
+          Theme.of(context).textTheme,
+        ),
       ),
       home: const SplashScreen(),
     );

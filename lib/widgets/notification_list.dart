@@ -37,7 +37,7 @@ Widget notificationList(BuildContext context) {
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 16,
-                     fontFamily: 'Poppins',
+                        fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                       minFontSize: 16,
@@ -52,10 +52,10 @@ Widget notificationList(BuildContext context) {
                     width: size.width * 0.45,
                     child: AutoSizeText(
                       myList[index].message,
-                      style:  TextStyle(
+                      style: TextStyle(
                         color: secondaryColor,
                         fontSize: 10,
-                     fontFamily: 'Poppins',
+                        fontFamily: 'Poppins',
                         fontWeight: FontWeight.w600,
                       ),
                       minFontSize: 10,
@@ -77,7 +77,7 @@ Widget notificationList(BuildContext context) {
                     style: const TextStyle(
                       color: Color(0xFF565656),
                       fontSize: 12,
-                    fontFamily: 'Poppins',
+                      fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -120,11 +120,11 @@ Widget notificationList(BuildContext context) {
 }
 
 List myList = [
-  MyList("assets/images/list-image-1.png", "Albert Flores",
+  MyList("assets/images1/list-image-1.png", "Albert Flores",
       "Your Driver is on the Way so be Ready", "11:30 AM"),
-  MyList("assets/images/list-image-2.png", "Albert Flores",
+  MyList("assets/images1/list-image-2.png", "Albert Flores",
       "Your Driver has Arrived on your Spot", "11:30 AM"),
-  MyList("assets/images/list-image-4.png", "Albert Flores",
+  MyList("assets/images1/list-image-4.png", "Albert Flores",
       "Hi, I am waiting for you ", "5"),
 ];
 

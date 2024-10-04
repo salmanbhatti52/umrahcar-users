@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:umrahcar_user/utils/colors.dart';
 import 'package:umrahcar_user/widgets/button.dart';
@@ -49,7 +50,7 @@ class _TrackPageState extends State<TrackPage> {
       if (l.latitude != null && l.longitude != null) {
         _controller?.animateCamera(
           CameraUpdate.newCameraPosition(
-            CameraPosition(target: LatLng(lat!, long!), zoom: 17),
+            CameraPosition(target: LatLng(lat!, long!), zoom: 14),
           ),
         );
       }
@@ -60,10 +61,19 @@ class _TrackPageState extends State<TrackPage> {
   double? long;
   var icon;
   BitmapDescriptor? markerIcon;
+  String _formatDate(String date) {
+    final DateTime parsedDate = DateFormat('yyyy-MM-dd').parse(date);
+    return DateFormat('dd MMMM yyyy').format(parsedDate);
+  }
+
+  String _formatTime(String time) {
+    final DateTime parsedTime = DateFormat('HH:mm:ss').parse(time);
+    return DateFormat('h:mm a').format(parsedTime);
+  }
 
   void addCustomIcon() async {
     icon = await getBitmapDescriptorFromAssetBytes(
-        "assets/images/location.png", 50);
+        "assets/images1/location.png", 50);
     setState(() {});
   }
 
@@ -238,7 +248,7 @@ class _TrackPageState extends State<TrackPage> {
                     child: GoogleMap(
                       initialCameraPosition:
                           CameraPosition(target: _initialCameraPosition),
-                      mapType: MapType.satellite,
+                      mapType: MapType.normal,
                       onMapCreated: _onMapCreated,
                       myLocationEnabled: false,
                       markers: _buildMarkers(),
@@ -268,72 +278,84 @@ class _TrackPageState extends State<TrackPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(height: size.height * 0.03),
+
+                              // Booking Details Section
                               Row(
                                 children: [
                                   const Text(
                                     'Bookings Details',
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 16,
+                                      fontSize:
+                                          18, // Slightly larger font for better emphasis
                                       fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w600,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
+                                  const SizedBox(width: 20),
                                   Text(
-                                    '(Booking Id ${widget.getBookingData!.bookingsId})',
+                                    '(Booking Id: ${widget.getBookingData!.bookingsId})',
                                     style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 12,
+                                      color: ConstantColor.darkgreyColor,
+                                      fontSize:
+                                          14, // Increased size for better readability
                                       fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w300,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ],
                               ),
-                              SizedBox(height: size.height * 0.02),
+                              const SizedBox(
+                                  height: 10), // Added spacing for clarity
+
+                              // Pickup Location Section
                               const Text(
                                 'Pickup Location',
                                 style: TextStyle(
                                   color: Color(0xFF929292),
-                                  fontSize: 12,
+                                  fontSize:
+                                      14, // Improved font size for legibility
                                   fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              SizedBox(height: size.height * 0.02),
+                              const SizedBox(
+                                  height: 8), // Spacing between label and value
                               Text(
                                 '${widget.getBookingData!.routes!.pickup!.name} (${widget.getBookingData!.routes!.pickup!.type})',
                                 style: const TextStyle(
                                   color: Color(0xFF565656),
-                                  fontSize: 12,
+                                  fontSize: 14, // Font size increased
                                   fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              SizedBox(height: size.height * 0.02),
+                              const SizedBox(
+                                  height: 20), // Spacing before next section
+
+                              // Dropoff Location Section
                               const Text(
                                 'Drop off Location',
                                 style: TextStyle(
                                   color: Color(0xFF929292),
-                                  fontSize: 12,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              SizedBox(height: size.height * 0.02),
-                              Text(
-                                '${widget.getBookingData!.routes!.dropoff!.name} (${widget.getBookingData!.routes!.dropoff!.type})',
-                                style: const TextStyle(
-                                  color: Color(0xFF565656),
-                                  fontSize: 12,
+                                  fontSize: 14,
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              SizedBox(height: size.height * 0.025),
+                              const SizedBox(height: 8),
+                              Text(
+                                '${widget.getBookingData!.routes!.dropoff!.name} (${widget.getBookingData!.routes!.dropoff!.type})',
+                                style: const TextStyle(
+                                  color: Color(0xFF565656),
+                                  fontSize: 14,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(height: 25), // Added spacing
+
+                              // Vehicles Section
                               Row(
                                 children: [
                                   for (int i = 0;
@@ -342,20 +364,22 @@ class _TrackPageState extends State<TrackPage> {
                                               .getBookingData!.vehicles!.length;
                                       i++)
                                     Padding(
-                                      padding: const EdgeInsets.only(right: 7),
+                                      padding: const EdgeInsets.only(right: 10),
                                       child: Row(
                                         children: [
                                           SvgPicture.asset(
-                                            'assets/images/fast-car-icon.svg',
-                                            width: 10,
-                                            height: 10,
+                                            'assets/images1/fast-car-icon.svg',
+                                            width:
+                                                14, // Increased icon size for better visibility
+                                            height: 14,
                                           ),
-                                          SizedBox(width: size.width * 0.01),
+                                          const SizedBox(width: 6),
                                           Text(
                                             '${widget.getBookingData!.vehicles![i].vehiclesName!.name}',
                                             style: const TextStyle(
                                               color: Color(0xFF565656),
-                                              fontSize: 10,
+                                              fontSize:
+                                                  12, // Adjusted for readability
                                               fontFamily: 'Poppins',
                                               fontWeight: FontWeight.w500,
                                             ),
@@ -365,50 +389,59 @@ class _TrackPageState extends State<TrackPage> {
                                     ),
                                 ],
                               ),
-                              SizedBox(height: size.height * 0.02),
+                              const SizedBox(
+                                  height: 20), // Spacing before date and time
+
+                              // Date and Time Section
                               Row(
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceBetween, // Space between columns
                                 children: [
+                                  // Flight Date
                                   Row(
                                     children: [
                                       SvgPicture.asset(
-                                        'assets/images/small-black-bookings-icon.svg',
+                                        'assets/images1/small-black-bookings-icon.svg',
                                         width: 20,
                                         height: 20,
                                       ),
-                                      SizedBox(width: size.width * 0.032),
+                                      const SizedBox(width: 8),
                                       Text(
-                                        '${widget.getBookingData!.flightDate}',
+                                        _formatDate(
+                                            widget.getBookingData!.flightDate!),
                                         style: const TextStyle(
                                           color: Color(0xFF565656),
-                                          fontSize: 12,
+                                          fontSize: 14,
                                           fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.w500,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                     ],
                                   ),
-                                  SizedBox(width: size.width * 0.14),
+                                  // Pickup Time
                                   Row(
                                     children: [
                                       SvgPicture.asset(
-                                        'assets/images/clock-icon.svg',
+                                        'assets/images1/clock-icon.svg',
                                         width: 20,
                                         height: 20,
                                       ),
-                                      SizedBox(width: size.width * 0.032),
+                                      const SizedBox(width: 8),
                                       Text(
-                                        '${widget.getBookingData!.pickupTime}',
+                                        _formatTime(
+                                            widget.getBookingData!.pickupTime!),
                                         style: const TextStyle(
                                           color: Color(0xFF565656),
-                                          fontSize: 12,
+                                          fontSize: 14,
                                           fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.w500,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                     ],
                                   ),
                                 ],
                               ),
+
                               if (widget.getBookingData!.vehicles![0]
                                       .vehiclesDrivers !=
                                   null)
@@ -451,7 +484,7 @@ class _TrackPageState extends State<TrackPage> {
                                         CircleAvatar(
                                           radius: 15,
                                           child: Image.asset(
-                                            'assets/images/user-profile.png',
+                                            'assets/images1/user-profile.png',
                                             fit: BoxFit.cover,
                                           ),
                                         ),
@@ -474,7 +507,7 @@ class _TrackPageState extends State<TrackPage> {
                                     Row(
                                       children: [
                                         SvgPicture.asset(
-                                          'assets/images/location-icon.svg',
+                                          'assets/images1/location-icon.svg',
                                           width: 20,
                                           height: 20,
                                         ),
@@ -519,7 +552,7 @@ class _TrackPageState extends State<TrackPage> {
                                       child: Row(
                                         children: [
                                           SvgPicture.asset(
-                                              'assets/images/contact-icon.svg'),
+                                              'assets/images1/contact-icon.svg'),
                                           SizedBox(width: size.width * 0.032),
                                           SizedBox(
                                             width: size.width * 0.275,
@@ -548,7 +581,7 @@ class _TrackPageState extends State<TrackPage> {
                                       child: Row(
                                         children: [
                                           SvgPicture.asset(
-                                              'assets/images/whatsapp-icon.svg'),
+                                              'assets/images1/whatsapp-icon.svg'),
                                           SizedBox(width: size.width * 0.032),
                                           SizedBox(
                                             width: size.width * 0.275,
@@ -697,7 +730,7 @@ class _TrackPageState extends State<TrackPage> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              SvgPicture.asset('assets/images/back-icon.svg'),
+                              SvgPicture.asset('assets/images1/back-icon.svg'),
                             ],
                           )),
                     ),
@@ -712,7 +745,7 @@ class _TrackPageState extends State<TrackPage> {
                 Padding(
                   padding: EdgeInsets.only(left: 175, top: 30),
                   child: CircularProgressIndicator(
-                    color: Colors.amber,
+                    color: ConstantColor.primaryColor,
                   ),
                 ),
               ],

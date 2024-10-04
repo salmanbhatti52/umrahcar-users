@@ -103,14 +103,14 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: mainColor,
+      backgroundColor: ConstantColor.primaryColor,
       body: Stack(
         children: [
           Container(
-            color: const Color(0xFFF8B73F),
+            color: ConstantColor.primaryColor,
             // decoration: const BoxDecoration(
             //   image: DecorationImage(
-            //     image: AssetImage('assets/images/background.png'),
+            //     image: AssetImage('assets/images1/background.png'),
             //     fit: BoxFit.cover,
             //   ),
             // ),
@@ -129,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                         child: CircleAvatar(
                           radius: 35,
                           child: Image.asset(
-                            'assets/images/profile.png',
+                            'assets/images1/profile.png',
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -141,13 +141,22 @@ class _HomePageState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            const Text(
+                              'Hello,',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                             Text(
                               '$guestName',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
                                 fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ],
@@ -173,14 +182,8 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.black.withOpacity(0.15),
                               ),
                             ),
-                            child: Container(
-                              decoration: const ShapeDecoration(
-                                color: Color(0xFFDD9519),
-                                shape: OvalBorder(),
-                              ),
-                              child: SvgPicture.asset(
-                                  'assets/images/green-notification-icon.svg'),
-                            ),
+                            child: SvgPicture.asset(
+                                'assets/images1/green-notification-icon.svg'),
                           ),
                         ),
                       ),
@@ -290,13 +293,13 @@ class _HomePageState extends State<HomePage> {
                             Stack(
                               children: [
                                 Image.asset(
-                                  'assets/images/homepage-map.png',
+                                  'assets/images1/homepage-map.png',
                                 ),
                                 Positioned(
                                   top: 15,
                                   left: 115,
                                   child: SvgPicture.asset(
-                                      'assets/images/home-green-location-icon.svg'),
+                                      'assets/images1/home-green-location-icon.svg'),
                                 ),
                               ],
                             ),
@@ -312,7 +315,7 @@ class _HomePageState extends State<HomePage> {
                                       CircleAvatar(
                                         radius: 18,
                                         child: Image.asset(
-                                          'assets/images/user-profile.png',
+                                          'assets/images1/user-profile.png',
                                         ),
                                       ),
                                       SizedBox(width: size.width * 0.02),
@@ -334,29 +337,42 @@ class _HomePageState extends State<HomePage> {
                                     ],
                                   ),
                                 ),
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                        'assets/images/location-icon.svg'),
-                                    SizedBox(width: size.width * 0.02),
-                                    Container(
-                                      color: Colors.transparent,
-                                      width: size.width * 0.25,
-                                      child: AutoSizeText(
-                                        '${getBookingOngoingResponse!.data![0].routes!.pickup!.name}',
-                                        style: const TextStyle(
-                                          color: Color(0xFF565656),
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                        ),
-                                        minFontSize: 8,
-                                        maxFontSize: 8,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(right: 19, top: 0),
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/images1/location-icon.svg',
                                       ),
-                                    ),
-                                  ],
+                                      SizedBox(width: size.width * 0.01),
+                                      Text(
+                                          '${getBookingOngoingResponse!.data![0].routes!.pickup!.name}',
+                                          style: const TextStyle(
+                                            color: Color(0xFF565656),
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 12,
+                                          )),
+                                      // Container(
+                                      //   color: Colors.transparent,
+                                      //   width: size.width * 0.25,
+                                      //   child: AutoSizeText(
+                                      //     '${getBookingOngoingResponse!.data![0].routes!.pickup!.name}',
+                                      //     style: const TextStyle(
+                                      //       color: Color(0xFF565656),
+                                      //       fontFamily: 'Poppins',
+                                      //       fontWeight: FontWeight.w900,
+                                      //       fontSize: 18,
+                                      //     ),
+                                      //     minFontSize: 8,
+                                      //     maxFontSize: 8,
+                                      //     maxLines: 1,
+                                      //     overflow: TextOverflow.ellipsis,
+                                      //   ),
+                                      // ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -371,7 +387,7 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 130,
+                        height: 100,
                       ),
                       Text(
                         'No Current Booking',

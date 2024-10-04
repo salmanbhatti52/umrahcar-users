@@ -8,7 +8,7 @@ Widget button(buttonText, context) {
       height: MediaQuery.of(context).size.height * 0.065,
       width: MediaQuery.of(context).size.width * 0.8,
       decoration: BoxDecoration(
-        color: buttonColor,
+        color: ConstantColor.buttonColor.withOpacity(0.9),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Center(
@@ -17,7 +17,7 @@ Widget button(buttonText, context) {
           textAlign: TextAlign.center,
           style: const TextStyle(
             color: Colors.white,
-          fontFamily: 'Poppins',
+            fontFamily: 'Poppins',
             fontWeight: FontWeight.w600,
             fontSize: 18,
           ),
@@ -41,7 +41,7 @@ Widget buttonTransparent(buttonText, context) {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            'assets/images/small-delete-icon.svg',
+            'assets/images1/small-delete-icon.svg',
             // colorFilter: ColorFilter.mode(buttonColor, BlendMode.srcIn),
           ),
           SizedBox(width: MediaQuery.of(context).size.width * 0.03),
@@ -50,7 +50,7 @@ Widget buttonTransparent(buttonText, context) {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: buttonColor,
-             fontFamily: 'Poppins',
+              fontFamily: 'Poppins',
               fontWeight: FontWeight.w700,
               fontSize: 16,
               letterSpacing: 0.3,
@@ -77,7 +77,7 @@ Widget dialogButton(buttonText, context) {
           textAlign: TextAlign.center,
           style: const TextStyle(
             color: Colors.white,
-           fontFamily: 'Poppins',
+            fontFamily: 'Poppins',
             fontWeight: FontWeight.w700,
             fontSize: 16,
             letterSpacing: 0.3,
@@ -101,14 +101,14 @@ Widget dialogButtonTransparent(buttonText, context) {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SvgPicture.asset('assets/images/contact-icon.svg'),
+          SvgPicture.asset('assets/images1/contact-icon.svg'),
           SizedBox(width: MediaQuery.of(context).size.width * 0.03),
           Text(
             buttonText,
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: Colors.black,
-             fontFamily: 'Poppins',
+              fontFamily: 'Poppins',
               fontWeight: FontWeight.w700,
               fontSize: 16,
               letterSpacing: 0.3,
@@ -135,7 +135,7 @@ Widget dialogbuttonSmall(buttonText, context) {
           textAlign: TextAlign.center,
           style: const TextStyle(
             color: Colors.white,
-           fontFamily: 'Poppins',
+            fontFamily: 'Poppins',
             fontWeight: FontWeight.w700,
             fontSize: 16,
             letterSpacing: 0.3,
@@ -162,7 +162,7 @@ Widget dialogButtontransparentSmall(buttonText, context) {
           textAlign: TextAlign.center,
           style: const TextStyle(
             color: Colors.black,
-           fontFamily: 'Poppins',
+            fontFamily: 'Poppins',
             fontWeight: FontWeight.w700,
             fontSize: 16,
             letterSpacing: 0.3,

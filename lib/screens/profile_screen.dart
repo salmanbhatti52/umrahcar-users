@@ -55,7 +55,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: CircleAvatar(
                   radius: 55,
                   child: Image.asset(
-                    'assets/images/profile.png',
+                    'assets/images1/profile.png',
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -84,60 +84,79 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               SizedBox(height: size.height * 0.03),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 20), // Added more vertical padding for spacing
                 child: TextFormField(
                   readOnly: true,
                   decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 18), // Added padding for better spacing
                     hintText: '$guestName',
                     hintStyle: TextStyle(
-                      color: Colors.black.withOpacity(0.5),
-                      fontSize: 15,
+                      color: Colors.black.withOpacity(
+                          0.6), // Increased opacity for better visibility
+                      fontSize: 16, // Slightly increased font size
+                      fontWeight: FontWeight
+                          .w500, // Added weight for better readability
                     ),
                     prefixIcon: Padding(
-                      padding: const EdgeInsets.all(13.0),
+                      padding: const EdgeInsets.all(18.0), // Consistent padding
                       child: SvgPicture.asset(
-                        'assets/images/name-icon.svg',
+                        'assets/images1/name-icon.svg',
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                        borderSide: const BorderSide(color: Colors.grey)),
+                      borderRadius: BorderRadius.circular(
+                          30), // More rounded corners for a modern look
+                      borderSide: BorderSide(
+                          color: Colors.grey[400]!,
+                          width: 1.5), // Thicker border
+                    ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
+                      borderRadius:
+                          BorderRadius.circular(30), // Consistent border radius
                       borderSide: const BorderSide(
                         color: Color.fromARGB(255, 21, 21, 22),
-                        width: 1.0,
+                        width: 2.0, // Thicker border on focus
                       ),
                     ),
                   ),
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                padding: const EdgeInsets.symmetric(
+                    vertical: 10, horizontal: 20), // Consistent padding
                 child: TextFormField(
                   readOnly: true,
                   decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 18), // Consistent content padding
                     hintText: '$phoneNmbr',
                     hintStyle: TextStyle(
-                      color: Colors.black.withOpacity(0.5),
-                      fontSize: 15,
+                      color: Colors.black
+                          .withOpacity(0.6), // Consistent text style
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
                     ),
                     prefixIcon: Padding(
-                      padding: const EdgeInsets.all(14.0),
+                      padding: const EdgeInsets.all(18.0),
                       child: SvgPicture.asset(
-                        'assets/images/contact-icon.svg',
+                        'assets/images1/contact-icon.svg',
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                        borderSide: const BorderSide(color: Colors.grey)),
+                      borderRadius:
+                          BorderRadius.circular(30), // Consistent border radius
+                      borderSide:
+                          BorderSide(color: Colors.grey[400]!, width: 1.5),
+                    ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
+                      borderRadius: BorderRadius.circular(
+                          30), // Consistent focused border
                       borderSide: const BorderSide(
                         color: Color.fromARGB(255, 21, 21, 22),
-                        width: 1.0,
+                        width: 2.0,
                       ),
                     ),
                   ),
@@ -151,7 +170,7 @@ class _ProfilePageState extends State<ProfilePage> {
               //   child: Row(
               //     children: [
               //       SvgPicture.asset(
-              //         'assets/images/email-icon.svg',
+              //         'assets/images1/email-icon.svg',
               //         width: 20,
               //         height: 20,
               //       ),
@@ -214,7 +233,7 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             children: [
               SizedBox(height: size.height * 0.04),
-              SvgPicture.asset('assets/images/big-delete-icon.svg'),
+              SvgPicture.asset('assets/images1/big-delete-icon.svg'),
               SizedBox(height: size.height * 0.04),
               const Text(
                 'Are you sure you want to\nDelete your Account?',

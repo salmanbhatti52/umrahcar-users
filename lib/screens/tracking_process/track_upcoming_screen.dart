@@ -22,7 +22,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
         child: Stack(
           children: [
             Image.asset(
-              'assets/images/track-map.png',
+              'assets/images1/track-map.png',
               fit: BoxFit.cover,
             ),
             Positioned(
@@ -54,7 +54,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
-                          fontFamily: 'Poppins',
+                            fontFamily: 'Poppins',
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -64,7 +64,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                           style: TextStyle(
                             color: Color(0xFF929292),
                             fontSize: 12,
-                          fontFamily: 'Poppins',
+                            fontFamily: 'Poppins',
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -74,7 +74,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                           style: TextStyle(
                             color: Color(0xFF565656),
                             fontSize: 12,
-                           fontFamily: 'Poppins',
+                            fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -84,7 +84,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                           style: TextStyle(
                             color: Color(0xFF929292),
                             fontSize: 12,
-                           fontFamily: 'Poppins',
+                            fontFamily: 'Poppins',
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -94,7 +94,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                           style: TextStyle(
                             color: Color(0xFF565656),
                             fontSize: 12,
-                          fontFamily: 'Poppins',
+                            fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -102,7 +102,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                         Row(
                           children: [
                             SvgPicture.asset(
-                              'assets/images/fast-car-icon.svg',
+                              'assets/images1/fast-car-icon.svg',
                               width: 12,
                               height: 12,
                             ),
@@ -112,7 +112,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                               style: TextStyle(
                                 color: Color(0xFF565656),
                                 fontSize: 12,
-                              fontFamily: 'Poppins',
+                                fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -124,7 +124,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                             Row(
                               children: [
                                 SvgPicture.asset(
-                                  'assets/images/small-black-bookings-icon.svg',
+                                  'assets/images1/small-black-bookings-icon.svg',
                                   width: 20,
                                   height: 20,
                                 ),
@@ -134,7 +134,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                                   style: TextStyle(
                                     color: Color(0xFF565656),
                                     fontSize: 12,
-                                   fontFamily: 'Poppins',
+                                    fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -144,7 +144,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                             Row(
                               children: [
                                 SvgPicture.asset(
-                                  'assets/images/clock-icon.svg',
+                                  'assets/images1/clock-icon.svg',
                                   width: 20,
                                   height: 20,
                                 ),
@@ -154,7 +154,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                                   style: TextStyle(
                                     color: Color(0xFF565656),
                                     fontSize: 12,
-                                   fontFamily: 'Poppins',
+                                    fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -175,7 +175,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                                 CircleAvatar(
                                   radius: 15,
                                   child: Image.asset(
-                                    'assets/images/user-profile.png',
+                                    'assets/images1/user-profile.png',
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -187,7 +187,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                                     style: TextStyle(
                                       color: Color(0xFF565656),
                                       fontSize: 12,
-                                   fontFamily: 'Poppins',
+                                      fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -198,7 +198,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                             Row(
                               children: [
                                 SvgPicture.asset(
-                                  'assets/images/passenger-icon.svg',
+                                  'assets/images1/passenger-icon.svg',
                                   width: 20,
                                   height: 20,
                                 ),
@@ -210,7 +210,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                                     style: TextStyle(
                                       color: Color(0xFF565656),
                                       fontSize: 12,
-                                     fontFamily: 'Poppins',
+                                      fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -225,7 +225,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                             Row(
                               children: [
                                 SvgPicture.asset(
-                                    'assets/images/contact-icon.svg'),
+                                    'assets/images1/contact-icon.svg'),
                                 SizedBox(width: size.width * 0.032),
                                 SizedBox(
                                   width: size.width * 0.275,
@@ -234,7 +234,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                                     style: TextStyle(
                                       color: Color(0xFF565656),
                                       fontSize: 12,
-                                     fontFamily: 'Poppins',
+                                      fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -245,7 +245,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                             Row(
                               children: [
                                 SvgPicture.asset(
-                                    'assets/images/whatsapp-icon.svg'),
+                                    'assets/images1/whatsapp-icon.svg'),
                                 SizedBox(width: size.width * 0.032),
                                 SizedBox(
                                   width: size.width * 0.275,
@@ -254,7 +254,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                                     style: TextStyle(
                                       color: Color(0xFF565656),
                                       fontSize: 12,
-                                     fontFamily: 'Poppins',
+                                      fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -277,7 +277,7 @@ class _TrackUpcomingPageState extends State<TrackUpcomingPage> {
                 onTap: () {
                   Navigator.pop(context);
                 },
-                child: SvgPicture.asset('assets/images/back-icon.svg'),
+                child: SvgPicture.asset('assets/images1/back-icon.svg'),
               ),
             ),
           ],

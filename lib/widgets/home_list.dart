@@ -40,7 +40,7 @@ Widget homeList(BuildContext context) {
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 16,
-                       fontFamily: 'Poppins',
+                        fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                       minFontSize: 16,
@@ -55,14 +55,14 @@ Widget homeList(BuildContext context) {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SvgPicture.asset(
-                          'assets/images/small-black-bookings-icon.svg'),
+                          'assets/images1/small-black-bookings-icon.svg'),
                       SizedBox(width: size.width * 0.01),
                       const Text(
                         '12:00 am on 2-12-2022',
                         style: TextStyle(
                           color: Color(0xFF565656),
                           fontSize: 8,
-                        fontFamily: 'Poppins',
+                          fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -74,14 +74,14 @@ Widget homeList(BuildContext context) {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SvgPicture.asset(
-                          'assets/images/small-black-car-icon.svg'),
+                          'assets/images1/small-black-car-icon.svg'),
                       SizedBox(width: size.width * 0.01),
                       const Text(
                         'Sedan',
                         style: TextStyle(
                           color: Color(0xFF565656),
                           fontSize: 8,
-                        fontFamily: 'Poppins',
+                          fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -108,7 +108,7 @@ Widget homeList(BuildContext context) {
                       style: const TextStyle(
                         color: Color(0xFFCAAA00),
                         fontSize: 12,
-                       fontFamily: 'Poppins',
+                        fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -130,7 +130,7 @@ Widget homeList(BuildContext context) {
                     child: Text(
                       myList[index].status,
                       textAlign: TextAlign.end,
-                      style:  TextStyle(
+                      style: TextStyle(
                         color: secondaryColor,
                         fontSize: 12,
                         fontFamily: 'Poppins',
@@ -149,18 +149,18 @@ Widget homeList(BuildContext context) {
 }
 
 List myList = [
-  MyList("assets/images/list-image-1.png", "Makkah Hottle Aziziz", "Upcoming"),
-  MyList("assets/images/list-image-2.png", "Madina Airport", "Upcoming"),
-  MyList("assets/images/list-image-3.png", "Makkah Airport", "Upcoming"),
-  MyList("assets/images/list-image-4.png", "Madina Airport", "Completed"),
-  MyList("assets/images/list-image-1.png", "Makkah Hottle Aziziz", "Upcoming"),
-  MyList("assets/images/list-image-2.png", "Madina Airport", "Upcoming"),
-  MyList("assets/images/list-image-3.png", "Makkah Airport", "Upcoming"),
-  MyList("assets/images/list-image-4.png", "Madina Airport", "Completed"),
-  MyList("assets/images/list-image-1.png", "Makkah Hottle Aziziz", "Upcoming"),
-  MyList("assets/images/list-image-2.png", "Madina Airport", "Upcoming"),
-  MyList("assets/images/list-image-3.png", "Makkah Airport", "Upcoming"),
-  MyList("assets/images/list-image-4.png", "Madina Airport", "Completed"),
+  MyList("assets/images1/list-image-1.png", "Makkah Hottle Aziziz", "Upcoming"),
+  MyList("assets/images1/list-image-2.png", "Madina Airport", "Upcoming"),
+  MyList("assets/images1/list-image-3.png", "Makkah Airport", "Upcoming"),
+  MyList("assets/images1/list-image-4.png", "Madina Airport", "Completed"),
+  MyList("assets/images1/list-image-1.png", "Makkah Hottle Aziziz", "Upcoming"),
+  MyList("assets/images1/list-image-2.png", "Madina Airport", "Upcoming"),
+  MyList("assets/images1/list-image-3.png", "Makkah Airport", "Upcoming"),
+  MyList("assets/images1/list-image-4.png", "Madina Airport", "Completed"),
+  MyList("assets/images1/list-image-1.png", "Makkah Hottle Aziziz", "Upcoming"),
+  MyList("assets/images1/list-image-2.png", "Madina Airport", "Upcoming"),
+  MyList("assets/images1/list-image-3.png", "Makkah Airport", "Upcoming"),
+  MyList("assets/images1/list-image-4.png", "Madina Airport", "Completed"),
 ];
 
 class MyList {

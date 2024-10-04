@@ -24,7 +24,7 @@ class _DropOffPageState extends State<DropOffPage> {
         child: Stack(
           children: [
             Image.asset(
-              'assets/images/dropoff-map.png',
+              'assets/images1/dropoff-map.png',
               fit: BoxFit.cover,
             ),
             Positioned(
@@ -59,7 +59,7 @@ class _DropOffPageState extends State<DropOffPage> {
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
-                              fontFamily: 'Poppins',
+                                fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -88,7 +88,7 @@ class _DropOffPageState extends State<DropOffPage> {
                         Row(
                           children: [
                             SvgPicture.asset(
-                              'assets/images/green-location-icon.svg',
+                              'assets/images1/green-location-icon.svg',
                               width: 40,
                               height: 40,
                             ),
@@ -113,7 +113,7 @@ class _DropOffPageState extends State<DropOffPage> {
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 12,
-                                     fontFamily: 'Poppins',
+                                      fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w500,
                                     ),
                                     minFontSize: 12,
@@ -150,7 +150,7 @@ class _DropOffPageState extends State<DropOffPage> {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: SvgPicture.asset('assets/images/back-icon.svg')),
+                  child: SvgPicture.asset('assets/images1/back-icon.svg')),
             ),
           ],
         ),
@@ -190,7 +190,7 @@ class _DropOffPageState extends State<DropOffPage> {
                   color: Color(0xFF565656),
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
-                 fontFamily: 'Poppins',
+                  fontFamily: 'Poppins',
                 ),
               ),
               SizedBox(height: size.height * 0.06),
@@ -203,7 +203,7 @@ class _DropOffPageState extends State<DropOffPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 40),
                       child: SvgPicture.asset(
-                          'assets/images/location-path-icon.svg'),
+                          'assets/images1/location-path-icon.svg'),
                     ),
                     const Positioned(
                       top: 83,
@@ -215,7 +215,7 @@ class _DropOffPageState extends State<DropOffPage> {
                           color: Color(0xFF565656),
                           fontSize: 8,
                           fontWeight: FontWeight.w500,
-                         fontFamily: 'Poppins',
+                          fontFamily: 'Poppins',
                         ),
                       ),
                     ),
@@ -229,7 +229,7 @@ class _DropOffPageState extends State<DropOffPage> {
                           color: Color(0xFF565656),
                           fontSize: 8,
                           fontWeight: FontWeight.w500,
-                        fontFamily: 'Poppins',
+                          fontFamily: 'Poppins',
                         ),
                       ),
                     ),
@@ -243,7 +243,7 @@ class _DropOffPageState extends State<DropOffPage> {
                           color: Color(0xFF79BF42),
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                         fontFamily: 'Poppins',
+                          fontFamily: 'Poppins',
                         ),
                       ),
                     ),
@@ -256,7 +256,7 @@ class _DropOffPageState extends State<DropOffPage> {
                           color: Color(0xFF79BF42),
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
-                         fontFamily: 'Poppins',
+                          fontFamily: 'Poppins',
                         ),
                       ),
                     ),
@@ -269,7 +269,7 @@ class _DropOffPageState extends State<DropOffPage> {
                           color: Color(0xFF79BF42),
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
-                        fontFamily: 'Poppins',
+                          fontFamily: 'Poppins',
                         ),
                       ),
                     ),
@@ -301,7 +301,7 @@ class _DropOffPageState extends State<DropOffPage> {
                           color: Colors.black,
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
-                         fontFamily: 'Poppins',
+                          fontFamily: 'Poppins',
                         ),
                       ),
                     ),
@@ -353,7 +353,7 @@ class _DropOffPageState extends State<DropOffPage> {
                         color: Color(0xFF565656),
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
-                       fontFamily: 'Poppins',
+                        fontFamily: 'Poppins',
                       ),
                     ),
                     Container(

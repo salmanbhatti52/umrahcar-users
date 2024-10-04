@@ -28,7 +28,7 @@ class _NotificationPageState extends State<NotificationPage> {
               Navigator.pop(context);
             },
             child: SvgPicture.asset(
-              'assets/images/back-icon.svg',
+              'assets/images1/back-icon.svg',
               width: 22,
               height: 22,
               fit: BoxFit.scaleDown,
@@ -39,7 +39,7 @@ class _NotificationPageState extends State<NotificationPage> {
             style: TextStyle(
               color: Colors.black,
               fontSize: 26,
-            fontFamily: 'Poppins',
+              fontFamily: 'Poppins',
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -58,7 +58,7 @@ class _NotificationPageState extends State<NotificationPage> {
                   style: TextStyle(
                     color: Color(0xFF1E1E1E),
                     fontSize: 16,
-                   fontFamily: 'Poppins',
+                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w600,
                   ),
                 ),

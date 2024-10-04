@@ -113,7 +113,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               Navigator.pop(context);
             },
             child: SvgPicture.asset(
-              'assets/images/back-icon.svg',
+              'assets/images1/back-icon.svg',
               width: 22,
               height: 22,
               fit: BoxFit.scaleDown,
@@ -124,7 +124,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             style: TextStyle(
               color: Colors.black,
               fontSize: 26,
-             fontFamily: 'Poppins',
+              fontFamily: 'Poppins',
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -148,7 +148,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           CircleAvatar(
                             radius: 35,
                             child: Image.asset(
-                              'assets/images/profile.png',
+                              'assets/images1/profile.png',
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -181,7 +181,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                               child: Row(
                                                 children: [
                                                   SvgPicture.asset(
-                                                    'assets/images/camera-icon.svg',
+                                                    'assets/images1/camera-icon.svg',
                                                     width: 30,
                                                     height: 30,
                                                   ),
@@ -192,7 +192,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                                     style: TextStyle(
                                                       color: Colors.black,
                                                       fontSize: 16,
-                                                   fontFamily: 'Poppins',
+                                                      fontFamily: 'Poppins',
                                                       fontWeight:
                                                           FontWeight.w400,
                                                     ),
@@ -209,7 +209,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                               child: Row(
                                                 children: [
                                                   SvgPicture.asset(
-                                                    'assets/images/gallery-icon.svg',
+                                                    'assets/images1/gallery-icon.svg',
                                                     width: 30,
                                                     height: 30,
                                                   ),
@@ -220,7 +220,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                                     style: TextStyle(
                                                       color: Colors.black,
                                                       fontSize: 16,
-                                                     fontFamily: 'Poppins',
+                                                      fontFamily: 'Poppins',
                                                       fontWeight:
                                                           FontWeight.w400,
                                                     ),
@@ -239,7 +239,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 radius: 12,
                                 backgroundColor: const Color(0xFF79BF42),
                                 child: SvgPicture.asset(
-                                  'assets/images/white-camera-icon.svg',
+                                  'assets/images1/white-camera-icon.svg',
                                   width: 15,
                                   height: 15,
                                   fit: BoxFit.scaleDown,
@@ -263,7 +263,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           style: TextStyle(
                             color: Color(0xFF565656),
                             fontSize: 16,
-                           fontFamily: 'Poppins',
+                            fontFamily: 'Poppins',
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -274,7 +274,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
-                          fontFamily: 'Poppins',
+                            fontFamily: 'Poppins',
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -297,7 +297,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   // },
                   style: const TextStyle(
                     fontWeight: FontWeight.w400,
-                fontFamily: 'Poppins',
+                    fontFamily: 'Poppins',
                     fontSize: 16,
                     color: Color(0xFF6B7280),
                   ),
@@ -343,11 +343,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     hintStyle: const TextStyle(
                       color: Color(0xFF929292),
                       fontSize: 12,
-                    fontFamily: 'Poppins',
+                      fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
                     ),
                     prefixIcon: SvgPicture.asset(
-                      'assets/images/name-icon.svg',
+                      'assets/images1/name-icon.svg',
                       width: 25,
                       height: 25,
                       fit: BoxFit.scaleDown,
@@ -369,7 +369,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   // },
                   style: const TextStyle(
                     fontWeight: FontWeight.w400,
-                   fontFamily: 'Poppins',
+                    fontFamily: 'Poppins',
                     fontSize: 16,
                     color: Color(0xFF6B7280),
                   ),
@@ -415,11 +415,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     hintStyle: const TextStyle(
                       color: Color(0xFF929292),
                       fontSize: 12,
-                   fontFamily: 'Poppins',
+                      fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
                     ),
                     prefixIcon: SvgPicture.asset(
-                      'assets/images/business-name-icon.svg',
+                      'assets/images1/business-name-icon.svg',
                       width: 25,
                       height: 25,
                       fit: BoxFit.scaleDown,
@@ -441,7 +441,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   // },
                   style: const TextStyle(
                     fontWeight: FontWeight.w400,
-                  fontFamily: 'Poppins',
+                    fontFamily: 'Poppins',
                     fontSize: 16,
                     color: Color(0xFF6B7280),
                   ),
@@ -487,11 +487,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     hintStyle: const TextStyle(
                       color: Color(0xFF929292),
                       fontSize: 12,
-                    fontFamily: 'Poppins',
+                      fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
                     ),
                     prefixIcon: SvgPicture.asset(
-                      'assets/images/email-icon.svg',
+                      'assets/images1/email-icon.svg',
                       width: 25,
                       height: 25,
                       fit: BoxFit.scaleDown,
@@ -513,7 +513,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   // },
                   style: const TextStyle(
                     fontWeight: FontWeight.w400,
-                   fontFamily: 'Poppins',
+                    fontFamily: 'Poppins',
                     fontSize: 16,
                     color: Color(0xFF6B7280),
                   ),
@@ -559,11 +559,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     hintStyle: const TextStyle(
                       color: Color(0xFF929292),
                       fontSize: 12,
-                    fontFamily: 'Poppins',
+                      fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
                     ),
                     prefixIcon: SvgPicture.asset(
-                      'assets/images/city-icon.svg',
+                      'assets/images1/city-icon.svg',
                       width: 25,
                       height: 25,
                       fit: BoxFit.scaleDown,
@@ -602,7 +602,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             style: const TextStyle(
                               color: Color(0xFF929292),
                               fontSize: 14,
-                            fontFamily: 'Poppins',
+                              fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -613,7 +613,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         style: TextStyle(
                           color: Color(0xFF929292),
                           fontSize: 20,
-                        fontFamily: 'Poppins',
+                          fontFamily: 'Poppins',
                           fontWeight: FontWeight.normal,
                         ),
                       ),
@@ -630,7 +630,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           // },
                           style: const TextStyle(
                             fontWeight: FontWeight.w400,
-                           fontFamily: 'Poppins',
+                            fontFamily: 'Poppins',
                             fontSize: 16,
                             color: Color(0xFF6B7280),
                           ),
@@ -657,11 +657,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             hintStyle: const TextStyle(
                               color: Color(0xFF929292),
                               fontSize: 12,
-                            fontFamily: 'Poppins',
+                              fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,
                             ),
                             prefixIcon: SvgPicture.asset(
-                              'assets/images/contact-icon.svg',
+                              'assets/images1/contact-icon.svg',
                               width: 25,
                               height: 25,
                               fit: BoxFit.scaleDown,
@@ -687,7 +687,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   // },
                   style: const TextStyle(
                     fontWeight: FontWeight.w400,
-                   fontFamily: 'Poppins',
+                    fontFamily: 'Poppins',
                     fontSize: 16,
                     color: Color(0xFF6B7280),
                   ),
@@ -733,11 +733,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     hintStyle: const TextStyle(
                       color: Color(0xFF929292),
                       fontSize: 12,
-                    fontFamily: 'Poppins',
+                      fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
                     ),
                     prefixIcon: SvgPicture.asset(
-                      'assets/images/whatsapp-icon.svg',
+                      'assets/images1/whatsapp-icon.svg',
                       width: 25,
                       height: 25,
                       fit: BoxFit.scaleDown,
@@ -782,7 +782,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               //       padding: const EdgeInsets.symmetric(horizontal: 20),
               //       child: Row(
               //         children: [
-              //           SvgPicture.asset('assets/images/city-icon.svg'),
+              //           SvgPicture.asset('assets/images1/city-icon.svg'),
               //           const Padding(
               //             padding: EdgeInsets.only(left: 15),
               //             child: Text(
@@ -798,7 +798,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               //           Padding(
               //             padding: const EdgeInsets.only(left: 165),
               //             child: SvgPicture.asset(
-              //                 'assets/images/dropdown-icon.svg'),
+              //                 'assets/images1/dropdown-icon.svg'),
               //           )
               //         ],
               //       ),
