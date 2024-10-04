@@ -47,117 +47,110 @@ Widget upComingList(
                       ),
                     ],
                   ),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Card(
-                            elevation: 1,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 8, right: 8, bottom: 8, left: 8),
-                              child: Container(
-                                width: 60,
-                                height: 60,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Image.network(
-                                    "$imageUrl${getData.routes!.vehicles!.featureImage}"),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: size.width * 0.005),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                getData.name!,
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(height: size.height * 0.005),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "booking id: ${getData.bookingsId}",
-                                    style: const TextStyle(
-                                      color: Color(0xFF565656),
-                                      fontSize: 10,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  SizedBox(width: size.width * 0.05),
-                                  SvgPicture.asset(
-                                      'assets/images1/small-black-location-icon.svg'),
-                                  SizedBox(width: size.width * 0.01),
-                                  Text(
-                                    "${getData.routes!.pickup!.name}",
-                                    style: const TextStyle(
-                                      color: Color(0xFF565656),
-                                      fontSize: 10,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                            padding: const EdgeInsets.only(
+                                top: 8, right: 8, bottom: 8, left: 8),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16.0),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 3),
                                   ),
                                 ],
                               ),
-                              SizedBox(height: size.height * 0.005),
-                              SizedBox(
-                                width: 180,
-                                child: Row(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  width: 90,
+                                  height: 90,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Image.network(
+                                      "$imageUrl${getData.routes!.vehicles!.featureImage}"),
+                                ),
+                              ),
+                            ),
+                          ),
+                            SizedBox(width: size.width * 0.005),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  getData.name!,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: size.height * 0.005),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    for (int i = 0;
-                                        i < getData.vehicles!.length;
-                                        i++)
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 2),
-                                        child: getData.vehicles!.length < 4
-                                            ? Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  SvgPicture.asset(
-                                                      'assets/images1/small-black-car-icon.svg'),
-                                                  SizedBox(
-                                                      width: size.width * 0.01),
-                                                  Text(
-                                                    '${getData.vehicles![i].vehiclesName!.name}',
-                                                    style: const TextStyle(
-                                                      color: Color(0xFF565656),
-                                                      fontSize: 10,
-                                                      fontFamily: 'Poppins',
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
-                                                  ),
-                                                ],
-                                              )
-                                            : Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 5),
-                                                child: Column(
+                                    Text(
+                                      "booking id: ${getData.bookingsId}",
+                                      style: const TextStyle(
+                                        color: Color(0xFF565656),
+                                        fontSize: 10,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    SizedBox(width: size.width * 0.01),
+                                    SvgPicture.asset(
+                                        'assets/images1/small-black-location-icon.svg'),
+                                    SizedBox(width: size.width * 0.01),
+                                    Text(
+                                      "${getData.routes!.pickup!.name}",
+                                      style: const TextStyle(
+                                        color: Color(0xFF565656),
+                                        fontSize: 10,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: size.height * 0.005),
+                                SizedBox(
+                                  width: 180,
+                                  child: Row(
+                                    children: [
+                                      for (int i = 0;
+                                          i < getData.vehicles!.length;
+                                          i++)
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 2),
+                                          child: getData.vehicles!.length < 4
+                                              ? Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
                                                   children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              bottom: 4),
-                                                      child: SvgPicture.asset(
-                                                          'assets/images1/small-black-car-icon.svg'),
-                                                    ),
+                                                    SvgPicture.asset(
+                                                        'assets/images1/small-black-car-icon.svg'),
+                                                    SizedBox(
+                                                        width:
+                                                            size.width * 0.01),
                                                     Text(
                                                       '${getData.vehicles![i].vehiclesName!.name}',
                                                       style: const TextStyle(
@@ -170,58 +163,89 @@ Widget upComingList(
                                                       ),
                                                     ),
                                                   ],
+                                                )
+                                              : Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          right: 5),
+                                                  child: Column(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                bottom: 4),
+                                                        child: SvgPicture.asset(
+                                                            'assets/images1/small-black-car-icon.svg'),
+                                                      ),
+                                                      Text(
+                                                        '${getData.vehicles![i].vehiclesName!.name}',
+                                                        style: const TextStyle(
+                                                          color:
+                                                              Color(0xFF565656),
+                                                          fontSize: 10,
+                                                          fontFamily: 'Poppins',
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: size.height * 0.005),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/images1/small-black-bookings-icon.svg'),
+                                    SizedBox(width: size.width * 0.01),
+                                    Text(
+                                      '${_formatDate(getData.pickupDate!)} ${_formatTime(getData.pickupTime!)}',
+                                      style: const TextStyle(
+                                        color: Color(0xFF565656),
+                                        fontSize: 10,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w500,
                                       ),
+                                    ),
                                   ],
                                 ),
-                              ),
-                              SizedBox(height: size.height * 0.005),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                      'assets/images1/small-black-bookings-icon.svg'),
-                                  SizedBox(width: size.width * 0.01),
-                                  Text(
-                                    '${_formatDate(getData.pickupDate!)} ${_formatTime(getData.pickupTime!)}',
-                                    style: const TextStyle(
-                                      color: Color(0xFF565656),
-                                      fontSize: 10,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w500,
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => TrackPage(
+                                                getBookingData: getData),
+                                          ));
+                                    },
+                                    child: Text(
+                                      '${getData.status}',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: secondaryColor,
+                                        fontSize: 12,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          // SizedBox(width: size.width * 0.1),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        TrackPage(getBookingData: getData),
-                                  ));
-                            },
-                            child: Text(
-                              '${getData.status}',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: secondaryColor,
-                                fontSize: 12,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w500,
-                              ),
+                                )
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: size.height * 0.02),
-                    ],
+                            // SizedBox(width: size.width * 0.1),
+                          ],
+                        ),
+                        SizedBox(height: size.height * 0.02),
+                      ],
+                    ),
                   ),
                 ),
               ),

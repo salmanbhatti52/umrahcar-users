@@ -18,10 +18,23 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  Future<void> getLocalData() async {
+    final sharedPref = await SharedPreferences.getInstance();
+    var contact = sharedPref.getString('contact');
+    var name = sharedPref.getString('name');
+
+    print("contact nmbr: $contact");
+    print("name: $name");
+
+    phoneNmbr = contact; // Assign contact to phoneNmbr
+    guestName = name; // Assign name to guestName
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getLocalData();
   }
 
   @override

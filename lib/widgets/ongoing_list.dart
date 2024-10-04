@@ -45,31 +45,44 @@ Widget onGoingList(
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(
-                    top: 12,
+                    top: 10,
                     left: 10,
-                    right: 10,
                   ),
                   child: Column(
                     children: [
                       Row(
                         children: [
-                          Card(
-                            elevation: 1,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 8, right: 8, bottom: 8, left: 8),
-                              child: Container(
-                                width: 60,
-                                height: 60,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 8, right: 8, bottom: 8, left: 8),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16.0),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  width: 90,
+                                  height: 90,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Image.network(
+                                      "$imageUrl${getData.routes!.vehicles!.featureImage}"),
                                 ),
-                                child: Image.network(
-                                    "$imageUrl${getData.routes!.vehicles!.featureImage}"),
                               ),
                             ),
                           ),
-                          SizedBox(width: size.width * 0.003),
+                          SizedBox(width: size.width * 0.007),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,28 +208,28 @@ Widget onGoingList(
                                   ),
                                 ],
                               ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            TrackPage(getBookingData: getData),
+                                      ));
+                                },
+                                child: Text(
+                                  '',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: buttonColor,
+                                    fontSize: 12,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
-                          // GestureDetector(
-                          //   onTap: () {
-                          //     Navigator.push(
-                          //         context,
-                          //         MaterialPageRoute(
-                          //           builder: (context) =>
-                          //               TrackPage(getBookingData: getData),
-                          //         ));
-                          //   },
-                          //   child: Text(
-                          //     '',
-                          //     textAlign: TextAlign.center,
-                          //     style: TextStyle(
-                          //       color: buttonColor,
-                          //       fontSize: 12,
-                          //       fontFamily: 'Poppins',
-                          //       fontWeight: FontWeight.w500,
-                          //     ),
-                          //   ),
-                          // ),
                         ],
                       ),
                       SizedBox(height: size.height * 0.02),

@@ -136,12 +136,12 @@ class _PickUpPageState extends State<PickUpPage> {
       if (getBookingOngoingResponse.data![i].bookingsId ==
           widget.getBookingData!.bookingsId) {
         print(
-            "Driver Status: ${getBookingOngoingResponse.data![i].driverTripStatus!.name!}");
+            "Driver Status: ${getBookingOngoingResponse.data![i].driverTripStatus!}");
         String? latt = getBookingOngoingResponse
             .data![i].vehicles![0].vehiclesDrivers!.lattitude;
         String? longg = getBookingOngoingResponse
             .data![i].vehicles![0].vehiclesDrivers!.longitude;
-        statuses = getBookingOngoingResponse.data![i].driverTripStatus!.name!;
+        statuses = getBookingOngoingResponse.data![i].driverTripStatus!;
         print("statusessss: ${statuses}");
         calculateDistance(longg, latt);
 

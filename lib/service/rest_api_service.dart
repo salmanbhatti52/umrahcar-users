@@ -129,33 +129,32 @@ class DioClient {
     }
   }
 
-Future<GetBookingListModel> getBookingCompleted(
-    Map<String, dynamic> model, BuildContext context) async {
-  try {
-    final response = await _dio.post(
-      '$baseUrl/get_bookings_users_completed',
-      data: model,
-    );
-
-    // Check for a successful response
-    if (response.statusCode == 200) {
-      print("Response data: ${response.data}");
-      return GetBookingListModel.fromJson(response.data);
-    } else {
-      // Show a snack bar if the response status is not successful
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("No data received")),
+  Future<GetBookingListModel> getBookingCompleted(
+      Map<String, dynamic> model, BuildContext context) async {
+    try {
+      final response = await _dio.post(
+        '$baseUrl/get_bookings_users_completed',
+        data: model,
       );
+
+      // Check for a successful response
+      if (response.statusCode == 200) {
+        print("Response data: ${response.data}");
+        return GetBookingListModel.fromJson(response.data);
+      } else {
+        // Show a snack bar if the response status is not successful
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("No data received")),
+        );
+      }
+    } catch (e) {
+      // Log the error for debugging purposes
+      print("Error fetching completed bookings: $e");
     }
-  } catch (e) {
-    // Log the error for debugging purposes
-    print("Error fetching completed bookings: $e");
+
+    // Return an empty model if the request failed or no data was received
+    return GetBookingListModel();
   }
-
-  // Return an empty model if the request failed or no data was received
-  return GetBookingListModel();
-}
-
 
   Future<GetChatModel> getChat(
       Map<String, dynamic> model, BuildContext context) async {

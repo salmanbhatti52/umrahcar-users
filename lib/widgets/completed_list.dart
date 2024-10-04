@@ -40,19 +40,33 @@ Widget completedList(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Card(
-                        elevation: 1,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 8, right: 8, bottom: 8, left: 8),
-                          child: Container(
-                            width: 60,
-                            height: 60,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8, right: 8, bottom: 8, left: 8),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16.0),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: 90,
+                              height: 90,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                              ),
+                              child: Image.network(
+                                  "$imageUrl${getData.routes!.vehicles!.featureImage}"),
                             ),
-                            child: Image.network(
-                                "$imageUrl${getData.routes!.vehicles!.featureImage}"),
                           ),
                         ),
                       ),
