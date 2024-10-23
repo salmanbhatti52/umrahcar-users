@@ -152,10 +152,10 @@ class _TrackPageState extends State<TrackPage> {
     _initialCameraPosition = const LatLng(20.5937, 78.9629);
     addCustomIcon();
     if (widget.getBookingData!.vehicles![0].vehiclesDrivers != null) {
-      print(
-          "lat: ${widget.getBookingData!.vehicles![0].vehiclesDrivers!.lattitude}");
-      print(
-          "log: ${widget.getBookingData!.vehicles![0].vehiclesDrivers!.longitude}");
+      // print(
+      //     "lat: ${widget.getBookingData!.vehicles![0].vehiclesDrivers!.lattitude}");
+      // print(
+      //     "log: ${widget.getBookingData!.vehicles![0].vehiclesDrivers!.longitude}");
     }
   }
 
@@ -613,7 +613,7 @@ class _TrackPageState extends State<TrackPage> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     const Text(
-                                      'Booked Fare',
+                                      'Payment Type',
                                       style: TextStyle(
                                         color: Color(0xFF929292),
                                         fontSize: 12,
@@ -634,7 +634,7 @@ class _TrackPageState extends State<TrackPage> {
                                             ),
                                           )
                                         : Text(
-                                            '${widget.getBookingData!.bookedFare}',
+                                            '${widget.getBookingData!.paymentType}',
                                             style: const TextStyle(
                                               color: Color(0xFF565656),
                                               fontSize: 12,
@@ -656,7 +656,7 @@ class _TrackPageState extends State<TrackPage> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     const Text(
-                                      'Cash Receive From Customer',
+                                      'Payable Cash To Driver',
                                       style: TextStyle(
                                         color: Color(0xFF929292),
                                         fontSize: 12,
@@ -665,15 +665,26 @@ class _TrackPageState extends State<TrackPage> {
                                       ),
                                     ),
                                     SizedBox(height: size.height * 0.02),
-                                    Text(
-                                      'credit (${widget.getBookingData!.cashReceiveFromCustomer})',
-                                      style: const TextStyle(
-                                        color: Color(0xFF565656),
-                                        fontSize: 12,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
+                                    widget.getBookingData!.paymentType ==
+                                            "credit"
+                                        ? const Text(
+                                            '0',
+                                            style: TextStyle(
+                                              color: Color(0xFF565656),
+                                              fontSize: 12,
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          )
+                                        : Text(
+                                            '${widget.getBookingData!.cashReceiveFromCustomer}',
+                                            style: const TextStyle(
+                                              color: Color(0xFF565656),
+                                              fontSize: 12,
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          )
                                   ],
                                 ),
                               SizedBox(height: size.height * 0.03),
@@ -683,7 +694,7 @@ class _TrackPageState extends State<TrackPage> {
                                 widget.getBookingData!.driverTripStatus !=
                                             null &&
                                         widget.getBookingData!.driverTripStatus!
-                                                 ==
+                                                .name! ==
                                             "Ride End"
                                     ? GestureDetector(
                                         onTap: () {

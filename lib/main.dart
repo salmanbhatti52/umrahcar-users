@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:umrahcar_user/screens/splash_screen.dart';
 import 'package:umrahcar_user/utils/const.dart';
 
@@ -14,7 +15,7 @@ class MyApp extends StatefulWidget {
   @override
   State<MyApp> createState() => _MyAppState();
 }
-
+SharedPreferences? sharedPref;
 class _MyAppState extends State<MyApp> {
   void configOneSignel() {
     OneSignal.shared.setAppId(onesignalAppId);

@@ -9,6 +9,10 @@ import '../models/get_booking_list_model.dart';
 import '../screens/tracking_process/track_screen.dart';
 import '../utils/const.dart';
 
+void _showSnackbar(BuildContext context, String message) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+}
+
 Widget upComingList(
     BuildContext context, GetBookingListModel getBookingUpcomingResponse) {
   var size = MediaQuery.of(context).size;
@@ -21,18 +25,36 @@ Widget upComingList(
           itemBuilder: (BuildContext context, int index) {
             var getData = getBookingUpcomingResponse.data![index];
 
-            return Material(
-              color: Colors.transparent,
-              child: InkWell(
-                splashColor: Colors.grey.withOpacity(0.5),
-                onTap: () {
-                  Navigator.push(
+            return InkWell(
+              splashColor: Colors.grey.withOpacity(0.5),
+              onTap: () {
+                if (getData.vehicles != null &&
+                    getData.vehicles!.isNotEmpty &&
+                    index < getData.vehicles!.length) {
+                  if (getData.vehicles![index].vehiclesDrivers?.lattitude ==
+                      null) {
+                    _showSnackbar(context, "Wait for Acceptance");
+                  } else {
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
                             TrackPage(getBookingData: getData),
-                      ));
-                },
+                      ),
+                    );
+                  }
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TrackPage(getBookingData: getData),
+                    ),
+                  );
+                  // _showSnackbar(context, "Invalid vehicle data");
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
@@ -56,35 +78,35 @@ Widget upComingList(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Padding(
-                            padding: const EdgeInsets.only(
-                                top: 8, right: 8, bottom: 8, left: 8),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16.0),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.2),
-                                    spreadRadius: 2,
-                                    blurRadius: 5,
-                                    offset: const Offset(0, 3),
+                              padding: const EdgeInsets.only(
+                                  top: 8, right: 8, bottom: 8, left: 8),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.2),
+                                      spreadRadius: 2,
+                                      blurRadius: 5,
+                                      offset: const Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    width: 90,
+                                    height: 90,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Image.network(
+                                        "$imageUrl${getData.routes!.vehicles!.featureImage}"),
                                   ),
-                                ],
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  width: 90,
-                                  height: 90,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Image.network(
-                                      "$imageUrl${getData.routes!.vehicles!.featureImage}"),
                                 ),
                               ),
                             ),
-                          ),
                             SizedBox(width: size.width * 0.005),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -162,6 +184,63 @@ Widget upComingList(
                                                             FontWeight.w500,
                                                       ),
                                                     ),
+                                                    SizedBox(
+                                                        width:
+                                                            size.width * 0.01),
+                                                    if (getData.paymentType ==
+                                                        "credit")
+                                                      const Row(
+                                                        children: [
+                                                          Icon(
+                                                            Icons
+                                                                .attach_money, // This is the currency icon
+                                                            size: 10,
+                                                            color: Color(
+                                                                0xFF565656),
+                                                          ),
+                                                          Text(
+                                                            "credit",
+                                                            style: TextStyle(
+                                                              color: Color(
+                                                                  0xFF565656),
+                                                              fontSize: 10,
+                                                              fontFamily:
+                                                                  'Poppins',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    if (getData
+                                                            .cashReceiveFromCustomer !=
+                                                        "0")
+                                                      Row(
+                                                        children: [
+                                                          const Icon(
+                                                            Icons
+                                                                .attach_money, // This is the currency icon
+                                                            size: 10,
+                                                            color: Color(
+                                                                0xFF565656),
+                                                          ),
+                                                          Text(
+                                                            "${getData.cashReceiveFromCustomer}",
+                                                            style:
+                                                                const TextStyle(
+                                                              color: Color(
+                                                                  0xFF565656),
+                                                              fontSize: 10,
+                                                              fontFamily:
+                                                                  'Poppins',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      )
                                                   ],
                                                 )
                                               : Padding(
