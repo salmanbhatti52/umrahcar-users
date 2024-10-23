@@ -248,7 +248,7 @@ class _UpcomingPageState extends State<UpcomingPage> {
                         setState(() {});
                       },
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: upComingList(
                             context,
                             getBookingUpcomingResponse ??

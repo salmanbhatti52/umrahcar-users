@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:umrahcar_user/main.dart';
 import 'package:umrahcar_user/utils/colors.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:umrahcar_user/widgets/button.dart';
-
-import '../models/get_booking_list_model.dart';
-import '../service/rest_api_service.dart';
-import 'homepage_screen.dart';
 import 'login_screen.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -18,16 +15,16 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  Future<void> getLocalData() async {
-    final sharedPref = await SharedPreferences.getInstance();
-    var contact = sharedPref.getString('contact');
-    var name = sharedPref.getString('name');
+  String? contact;
+  String? userName;
+  getLocalData() async {
+    sharedPref = await SharedPreferences.getInstance();
+    contact = sharedPref?.getString('contactNumber');
+    userName = sharedPref?.getString('UserName');
+    setState(() {});
 
-    print("contact nmbr: $contact");
-    print("name: $name");
-
-    phoneNmbr = contact; // Assign contact to phoneNmbr
-    guestName = name; // Assign name to guestName
+    print("contact Number By Zain: $contact");
+    print("User Name By Zain: $userName");
   }
 
   @override
@@ -80,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: Container(
                     color: Colors.transparent,
                     child: AutoSizeText(
-                      '$guestName',
+                      '$userName',
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 16,
@@ -105,7 +102,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(
                         vertical: 18), // Added padding for better spacing
-                    hintText: '$guestName',
+                    hintText: '$userName',
                     hintStyle: TextStyle(
                       color: Colors.black.withOpacity(
                           0.6), // Increased opacity for better visibility
@@ -145,7 +142,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(
                         vertical: 18), // Consistent content padding
-                    hintText: '$phoneNmbr',
+                    hintText: '$contact',
                     hintStyle: TextStyle(
                       color: Colors.black
                           .withOpacity(0.6), // Consistent text style

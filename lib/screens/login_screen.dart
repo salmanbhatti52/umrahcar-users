@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:umrahcar_user/main.dart';
 import 'package:umrahcar_user/utils/colors.dart';
 import 'package:umrahcar_user/widgets/button.dart';
 import 'package:umrahcar_user/widgets/navbar.dart';
@@ -268,6 +269,20 @@ class _LogInPageState extends State<LogInPage> {
                                   await DioClient().login(mapData, context);
                               SharedPreferences prefs =
                                   await SharedPreferences.getInstance();
+
+                              sharedPref =
+                                  await SharedPreferences.getInstance();
+                              // await prefs?.setString('userID',
+                              //     "${loginUserModels.data?.passportHolderId}");
+                              String contactNumber =
+                                  "${countryCode!.dialCode}${contactNumberController.text}";
+                              String userName =
+                                  "${response.data!.guestData!.name}";
+                                   await sharedPref?.setString(
+                                  'UserName', userName);
+                              await sharedPref?.setString(
+                                  'contactNumber', contactNumber);
+
                               await prefs.setString("contact",
                                   "${countryCode!.dialCode}${contactNumberController.text}");
                               await prefs.setString(

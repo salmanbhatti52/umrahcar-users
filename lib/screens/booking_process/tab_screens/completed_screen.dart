@@ -205,7 +205,7 @@ class _CompletedPageState extends State<CompletedPage> {
                         setState(() {});
                       },
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
                         child:
                             completedList(context, getBookingCompletedResponse),
                       ),

@@ -97,6 +97,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState(); // Call super.initState() first
     getLocalData(); // Fetch local data
+    getBookingListOngoing();
   }
 
   @override
@@ -232,6 +233,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.amber,
                                 onRefresh: () async {
                                   getBookingListOngoing();
+                                  setState(() {});
                                 },
                                 child: onGoingList(
                                     context,
@@ -325,7 +327,7 @@ class _HomePageState extends State<HomePage> {
                                                     .vehicles![0]
                                                     .vehiclesDrivers !=
                                                 null
-                                            ? '${getBookingOngoingResponse!.data![0].vehicles![0].vehiclesDrivers!.name}'
+                                            ? '${getBookingOngoingResponse!.data![0].vehicles![0].vehiclesName!.name}'
                                             : "",
                                         style: const TextStyle(
                                           color: Colors.black,
