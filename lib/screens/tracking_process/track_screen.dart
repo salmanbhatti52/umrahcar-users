@@ -712,7 +712,7 @@ class _TrackPageState extends State<TrackPage> {
                 Padding(
                   padding: EdgeInsets.only(left: 175, top: 30),
                   child: CircularProgressIndicator(
-                    color: Colors.amber,
+                    color: Colors.blue,
                   ),
                 ),
               ],

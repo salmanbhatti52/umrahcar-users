@@ -162,7 +162,7 @@ class _ChatPageState extends State<ChatPage> {
                     height:MediaQuery.of(context).size.height/1.3,
 
                     child: RefreshIndicator(
-                      color: Colors.amber,
+                      color: Colors.blue,
                       key: refreshKey,
                       onRefresh: ()async{
                         await Future.delayed(const Duration(milliseconds: 1500));

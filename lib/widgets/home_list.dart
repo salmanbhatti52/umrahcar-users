@@ -131,7 +131,7 @@ Widget homeList(BuildContext context) {
                       myList[index].status,
                       textAlign: TextAlign.end,
                       style:  TextStyle(
-                        color: secondaryColor,
+                        color: buttonColor,
                         fontSize: 12,
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w500,

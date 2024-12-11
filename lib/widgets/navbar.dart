@@ -45,7 +45,7 @@ class _NavBarState extends State<NavBar> {
               indicatorColor: Colors.transparent,
               labelTextStyle: MaterialStateProperty.all(
                  TextStyle(
-                  color: secondaryColor,
+                  color: buttonColor,
                   fontSize: 8,
                  fontFamily: 'Poppins',
                   fontWeight: FontWeight.w400,

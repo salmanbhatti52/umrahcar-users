@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> {
       body: Stack(
         children: [
           Container(
-            color: const Color(0xFFF8B73F),
+            color: buttonColor,
             // decoration: const BoxDecoration(
             //   image: DecorationImage(
             //     image: AssetImage('assets/images/background.png'),
@@ -166,18 +166,18 @@ class _HomePageState extends State<HomePage> {
                             //     ));
                           },
                           child: Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                width: 1,
-                                color: Colors.black.withOpacity(0.15),
-                              ),
-                            ),
+                            // decoration: BoxDecoration(
+                            //   shape: BoxShape.circle,
+                            //   border: Border.all(
+                            //     width: 1,
+                            //     color: Colors.black.withOpacity(0.15),
+                            //   ),
+                            // ),
                             child: Container(
-                              decoration: const ShapeDecoration(
-                                color: Color(0xFFDD9519),
-                                shape: OvalBorder(),
-                              ),
+                              // decoration: const ShapeDecoration(
+                              //   color: Color(0xFFDD9519),
+                              //   shape: OvalBorder(),
+                              // ),
                               child: SvgPicture.asset(
                                   'assets/images/green-notification-icon.svg'),
                             ),
@@ -226,7 +226,7 @@ class _HomePageState extends State<HomePage> {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: RefreshIndicator(
-                                color: Colors.amber,
+                                color: Colors.blue,
                                 onRefresh: () async {
                                   getBookingListOngoing();
                                 },

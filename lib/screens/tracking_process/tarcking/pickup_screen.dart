@@ -533,7 +533,7 @@ class _PickUpPageState extends State<PickUpPage> {
           Padding(
             padding: EdgeInsets.only(left: 175),
             child: CircularProgressIndicator(
-              color: Colors.amber,
+              color: Colors.blue,
             ),
           )
         ],

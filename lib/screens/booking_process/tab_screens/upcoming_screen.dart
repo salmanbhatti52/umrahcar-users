@@ -242,7 +242,7 @@ class _UpcomingPageState extends State<UpcomingPage> {
                     color: Colors.transparent,
                     height: size.height * 0.6,
                     child: RefreshIndicator(
-                      color: Colors.amber,
+                      color: Colors.blue,
                       onRefresh: () async {
                         getBookingListUpcoming();
                         setState(() {});

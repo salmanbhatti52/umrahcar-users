@@ -205,7 +205,7 @@ class _OnGoingPageState extends State<OnGoingPage> {
                     color: Colors.transparent,
                     height: size.height * 0.6,
                     child: RefreshIndicator(
-                      color: Colors.amber,
+                      color: Colors.blue,
                       onRefresh: () async {
                         getBookingListOngoing();
                         setState(() {});

@@ -51,24 +51,41 @@ class _SplashScreenState extends State<SplashScreen> {
       onWillPop: () {
         return Future.value(false);
       },
+      // child: Scaffold(
+      // backgroundColor: secondaryColor,
+      //   body: Container(
+      //       decoration: BoxDecoration(
+      //         // color: secondaryColor,
+      //         image: DecorationImage(
+      //           image: AssetImage(backImage),
+      //           fit: BoxFit.fill,
+      //
+      //         ),
+      //       ),
+      //       child: SvgPicture.asset(
+      //         'assets/images/umrah-logo.svg',
+      //        height: double.infinity,
+      //        width: double.infinity,
+      //        fit: BoxFit.scaleDown,
+      //       //   colorBlendMode: BlendMode.darken,
+      //       )),
+      // ),
       child: Scaffold(
-      backgroundColor: secondaryColor,
-        body: Container(
-            decoration: BoxDecoration(
-              // color: secondaryColor,
-              image: DecorationImage(
-                image: AssetImage(backImage),
-                fit: BoxFit.fill,
-                
-              ),
-            ),
-            child: SvgPicture.asset(
-              'assets/images/umrah-logo.svg',
-             height: double.infinity,
-             width: double.infinity,
-             fit: BoxFit.scaleDown,
-            //   colorBlendMode: BlendMode.darken,
-            )),
+        backgroundColor: Colors.white,
+        body: Center(
+          child: SizedBox(
+              height: 250,
+              width: 250,
+              child: Center(
+                child: SvgPicture.asset(
+                  'assets/app-icon.svg',
+                  height: double.infinity,
+                  width: double.infinity,
+                  fit: BoxFit.scaleDown,
+                  //   colorBlendMode: BlendMode.darken,
+                ),
+              )),
+        ),
       ),
     );
   }

@@ -76,26 +76,24 @@ class _LogInPageState extends State<LogInPage> {
           //   elevation: 0,
           // ),
           backgroundColor: mainColor,
-          body:  Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(backImage),
-                alignment: Alignment.topCenter,
-                fit: BoxFit.scaleDown
-              ),
-            ), child: Center(
+          body:  Center(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Form(
                   key: logInFormKey,
                   child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child:  SvgPicture.asset(
-                            'assets/images/umrah-passenger-logo.svg'),
-                      ),
                       SizedBox(height: size.height * 0.04),
+                      Container(
+                        width: size.width,
+                        height: size.height * 0.36,
+                        decoration: const BoxDecoration(),
+                        child: SvgPicture.asset(
+                          'assets/app-icon.svg',
+                          fit: BoxFit.scaleDown,
+                        ),
+                      ),
+                      SizedBox(height: size.height * 0.0),
                       Container(
                         margin: const EdgeInsets.only(left: 20,right: 20),
                         child: const Text(
@@ -282,7 +280,6 @@ class _LogInPageState extends State<LogInPage> {
             ),
           ),
         ),
-      ),
     );
   }
 }
