@@ -43,7 +43,7 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                       color: Colors.black,
                       fontSize: 16,
                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   SizedBox(height: size.height * 0.005),
@@ -55,7 +55,7 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                         "booking id: ${getData.bookingsId}",
                         style: const TextStyle(
                           color: Color(0xFF565656),
-                          fontSize: 8,
+                          fontSize: 10,
                          fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
                         ),
@@ -69,7 +69,7 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                         "${getData.routes!.pickup!.name}",
                         style: const TextStyle(
                           color: Color(0xFF565656),
-                          fontSize: 8,
+                          fontSize: 10,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
                         ),
@@ -97,7 +97,7 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                                   '${getData.vehicles![i].vehiclesName!.name}',
                                   style: const TextStyle(
                                     color: Color(0xFF565656),
-                                    fontSize: 7,
+                                    fontSize: 10,
                                   fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -117,7 +117,7 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                                     '${getData.vehicles![i].vehiclesName!.name}',
                                     style: const TextStyle(
                                       color: Color(0xFF565656),
-                                      fontSize: 7,
+                                      fontSize: 10,
                                      fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -140,7 +140,7 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                       Text(
                         '${getData.pickupTime} ${getData.pickupDate}',                        style: const TextStyle(
                           color: Color(0xFF565656),
-                          fontSize: 8,
+                          fontSize: 10,
                         fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
                         ),

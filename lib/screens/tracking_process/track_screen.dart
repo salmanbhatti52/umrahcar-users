@@ -18,7 +18,7 @@ import '../../models/update_user_location.dart';
 import '../../service/rest_api_service.dart';
 
 class TrackPage extends StatefulWidget {
-  GetBookingData? getBookingData;
+  Datum? getBookingData;
   TrackPage({super.key, this.getBookingData});
 
   @override
@@ -275,7 +275,7 @@ class _TrackPageState extends State<TrackPage> {
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,
-                                      fontFamily: 'Poppins',
+                                      fontFamily: 'Montserrat-Regular',
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -286,9 +286,9 @@ class _TrackPageState extends State<TrackPage> {
                                     '(Booking Id ${widget.getBookingData!.bookingsId})',
                                     style: const TextStyle(
                                       color: Colors.black,
-                                      fontSize: 12,
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w300,
+                                      fontSize: 13,
+                                      fontFamily: 'Montserrat-Regular',
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 ],
@@ -299,7 +299,7 @@ class _TrackPageState extends State<TrackPage> {
                                 style: TextStyle(
                                   color: Color(0xFF929292),
                                   fontSize: 12,
-                                  fontFamily: 'Poppins',
+                                  fontFamily: 'Montserrat-Regular',
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
@@ -309,7 +309,7 @@ class _TrackPageState extends State<TrackPage> {
                                 style: const TextStyle(
                                   color: Color(0xFF565656),
                                   fontSize: 12,
-                                  fontFamily: 'Poppins',
+                                  fontFamily: 'Montserrat-Regular',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -319,7 +319,7 @@ class _TrackPageState extends State<TrackPage> {
                                 style: TextStyle(
                                   color: Color(0xFF929292),
                                   fontSize: 12,
-                                  fontFamily: 'Poppins',
+                                  fontFamily: 'Montserrat-Regular',
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
@@ -329,7 +329,7 @@ class _TrackPageState extends State<TrackPage> {
                                 style: const TextStyle(
                                   color: Color(0xFF565656),
                                   fontSize: 12,
-                                  fontFamily: 'Poppins',
+                                  fontFamily: 'Montserrat-Regular',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -356,7 +356,7 @@ class _TrackPageState extends State<TrackPage> {
                                             style: const TextStyle(
                                               color: Color(0xFF565656),
                                               fontSize: 10,
-                                              fontFamily: 'Poppins',
+                                              fontFamily: 'Montserrat-Regular',
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
@@ -381,7 +381,7 @@ class _TrackPageState extends State<TrackPage> {
                                         style: const TextStyle(
                                           color: Color(0xFF565656),
                                           fontSize: 12,
-                                          fontFamily: 'Poppins',
+                                          fontFamily: 'Montserrat-Regular',
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -401,7 +401,7 @@ class _TrackPageState extends State<TrackPage> {
                                         style: const TextStyle(
                                           color: Color(0xFF565656),
                                           fontSize: 12,
-                                          fontFamily: 'Poppins',
+                                          fontFamily: 'Montserrat-Regular',
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -433,7 +433,7 @@ class _TrackPageState extends State<TrackPage> {
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 16,
-                                    fontFamily: 'Poppins',
+                                    fontFamily: 'Montserrat-Regular',
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -463,7 +463,7 @@ class _TrackPageState extends State<TrackPage> {
                                             style: const TextStyle(
                                               color: Color(0xFF565656),
                                               fontSize: 12,
-                                              fontFamily: 'Poppins',
+                                              fontFamily: 'Montserrat-Regular',
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
@@ -486,7 +486,7 @@ class _TrackPageState extends State<TrackPage> {
                                             style: const TextStyle(
                                               color: Color(0xFF565656),
                                               fontSize: 12,
-                                              fontFamily: 'Poppins',
+                                              fontFamily: 'Montserrat-Regular',
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
@@ -528,7 +528,7 @@ class _TrackPageState extends State<TrackPage> {
                                               style: const TextStyle(
                                                 color: Color(0xFF565656),
                                                 fontSize: 12,
-                                                fontFamily: 'Poppins',
+                                                fontFamily: 'Montserrat-Regular',
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
@@ -557,7 +557,7 @@ class _TrackPageState extends State<TrackPage> {
                                               style: const TextStyle(
                                                 color: Color(0xFF565656),
                                                 fontSize: 12,
-                                                fontFamily: 'Poppins',
+                                                fontFamily: 'Montserrat-Regular',
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
@@ -584,7 +584,7 @@ class _TrackPageState extends State<TrackPage> {
                                       style: TextStyle(
                                         color: Color(0xFF929292),
                                         fontSize: 12,
-                                        fontFamily: 'Poppins',
+                                        fontFamily: 'Montserrat-Regular',
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
@@ -596,7 +596,7 @@ class _TrackPageState extends State<TrackPage> {
                                             style: TextStyle(
                                               color: Color(0xFF565656),
                                               fontSize: 12,
-                                              fontFamily: 'Poppins',
+                                              fontFamily: 'Montserrat-Regular',
                                               fontWeight: FontWeight.w500,
                                             ),
                                           )
@@ -605,7 +605,7 @@ class _TrackPageState extends State<TrackPage> {
                                             style: const TextStyle(
                                               color: Color(0xFF565656),
                                               fontSize: 12,
-                                              fontFamily: 'Poppins',
+                                              fontFamily: 'Montserrat-Regular',
                                               fontWeight: FontWeight.w500,
                                             ),
                                           )
@@ -627,7 +627,7 @@ class _TrackPageState extends State<TrackPage> {
                                       style: TextStyle(
                                         color: Color(0xFF929292),
                                         fontSize: 12,
-                                        fontFamily: 'Poppins',
+                                        fontFamily: 'Montserrat-Regular',
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
@@ -637,7 +637,7 @@ class _TrackPageState extends State<TrackPage> {
                                       style: const TextStyle(
                                         color: Color(0xFF565656),
                                         fontSize: 12,
-                                        fontFamily: 'Poppins',
+                                        fontFamily: 'Montserrat-Regular',
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),

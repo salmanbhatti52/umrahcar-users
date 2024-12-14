@@ -57,7 +57,7 @@ Widget upComingList(BuildContext context,GetBookingListModel getBookingUpcomingR
                           color: Colors.black,
                           fontSize: 16,
                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       SizedBox(height: size.height * 0.005),
@@ -69,7 +69,7 @@ Widget upComingList(BuildContext context,GetBookingListModel getBookingUpcomingR
                             "booking id: ${getData.bookingsId}",
                             style: const TextStyle(
                               color: Color(0xFF565656),
-                              fontSize: 8,
+                              fontSize: 10,
                            fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,
                             ),
@@ -83,7 +83,7 @@ Widget upComingList(BuildContext context,GetBookingListModel getBookingUpcomingR
                             "${getData.routes!.pickup!.name}",
                             style: const TextStyle(
                               color: Color(0xFF565656),
-                              fontSize: 8,
+                              fontSize: 10,
                              fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,
                             ),
@@ -111,7 +111,7 @@ Widget upComingList(BuildContext context,GetBookingListModel getBookingUpcomingR
                                       '${getData.vehicles![i].vehiclesName!.name}',
                                       style: const TextStyle(
                                         color: Color(0xFF565656),
-                                        fontSize: 7,
+                                        fontSize: 10,
                                       fontFamily: 'Poppins',
                                         fontWeight: FontWeight.w500,
                                       ),
@@ -131,7 +131,7 @@ Widget upComingList(BuildContext context,GetBookingListModel getBookingUpcomingR
                                         '${getData.vehicles![i].vehiclesName!.name}',
                                         style: const TextStyle(
                                           color: Color(0xFF565656),
-                                          fontSize: 7,
+                                          fontSize: 10,
                                          fontFamily: 'Poppins',
                                           fontWeight: FontWeight.w500,
                                         ),
@@ -155,7 +155,7 @@ Widget upComingList(BuildContext context,GetBookingListModel getBookingUpcomingR
                             '${getData.pickupTime} ${getData.pickupDate}',
                             style: const TextStyle(
                               color: Color(0xFF565656),
-                              fontSize: 8,
+                              fontSize: 10,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,
                             ),

@@ -124,7 +124,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             style: TextStyle(
               color: Colors.black,
               fontSize: 26,
-             fontFamily: 'Poppins',
+             fontFamily: 'Montserrat-Regular',
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -192,7 +192,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                                     style: TextStyle(
                                                       color: Colors.black,
                                                       fontSize: 16,
-                                                   fontFamily: 'Poppins',
+                                                   fontFamily: 'Montserrat-Regular',
                                                       fontWeight:
                                                           FontWeight.w400,
                                                     ),
@@ -220,7 +220,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                                     style: TextStyle(
                                                       color: Colors.black,
                                                       fontSize: 16,
-                                                     fontFamily: 'Poppins',
+                                                     fontFamily: 'Montserrat-Regular',
                                                       fontWeight:
                                                           FontWeight.w400,
                                                     ),
@@ -263,7 +263,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           style: TextStyle(
                             color: Color(0xFF565656),
                             fontSize: 16,
-                           fontFamily: 'Poppins',
+                           fontFamily: 'Montserrat-Regular',
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -274,7 +274,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
-                          fontFamily: 'Poppins',
+                          fontFamily: 'Montserrat-Regular',
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -602,7 +602,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             style: const TextStyle(
                               color: Color(0xFF929292),
                               fontSize: 14,
-                            fontFamily: 'Poppins',
+                            fontFamily: 'Montserrat-Regular',
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -613,7 +613,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         style: TextStyle(
                           color: Color(0xFF929292),
                           fontSize: 20,
-                        fontFamily: 'Poppins',
+                        fontFamily: 'Montserrat-Regular',
                           fontWeight: FontWeight.normal,
                         ),
                       ),

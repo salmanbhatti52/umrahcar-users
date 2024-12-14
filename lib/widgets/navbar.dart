@@ -46,9 +46,9 @@ class _NavBarState extends State<NavBar> {
               labelTextStyle: MaterialStateProperty.all(
                  TextStyle(
                   color: buttonColor,
-                  fontSize: 8,
+                  fontSize: 10,
                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ),

@@ -1,6 +1,16 @@
+// To parse this JSON data, do
+//
+//     final getBookingListModel = getBookingListModelFromJson(jsonString);
+
+import 'dart:convert';
+
+GetBookingListModel getBookingListModelFromJson(String str) => GetBookingListModel.fromJson(json.decode(str));
+
+String getBookingListModelToJson(GetBookingListModel data) => json.encode(data.toJson());
+
 class GetBookingListModel {
   String? status;
-  List<GetBookingData>? data;
+  List<Datum>? data;
 
   GetBookingListModel({
     this.status,
@@ -9,16 +19,16 @@ class GetBookingListModel {
 
   factory GetBookingListModel.fromJson(Map<String, dynamic> json) => GetBookingListModel(
     status: json["status"],
-    data: json["data"] != null ? List<GetBookingData>.from(json["data"].map((x) => GetBookingData.fromJson(x))) : null,
+    data: json["data"] == null ? [] : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "status": status,
-    "data": data != null ? List<dynamic>.from(data!.map((x) => x.toJson())) : null,
+    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
   };
 }
 
-class GetBookingData {
+class Datum {
   String? bookingsId;
   String? parentId;
   String? usersAgentsId;
@@ -26,14 +36,14 @@ class GetBookingData {
   String? contact;
   String? whatsapp;
   String? onesignalId;
-  String? guestLatitude;
-  String? guestLongitude;
+  dynamic guestLattitude;
+  dynamic guestLongitude;
   String? bookedBy;
-  String? bookingDate;
+  DateTime? bookingDate;
   String? bookingTime;
   String? routesId;
   String? routesDetails;
-  PickupHotel? pickupHotel;
+  dynamic pickupHotel;
   DropoffHotel? dropoffHotel;
   String? noOfPassengers;
   String? noOfAdults;
@@ -41,12 +51,12 @@ class GetBookingData {
   String? noOfInfants;
   String? pickupLocation;
   String? dropoffLocation;
-  String? pickupDate;
+  DateTime? pickupDate;
   String? pickupTime;
   String? flightCompaniesId;
   String? flightNumber;
   String? flightDetails;
-  String? flightDate;
+  DateTime? flightDate;
   String? flightTime;
   String? actualFare;
   String? agentFare;
@@ -56,25 +66,25 @@ class GetBookingData {
   String? visaTypesId;
   String? serviceType;
   String? paymentType;
-  String? dateAdded;
-  String? dateModified;
+  DateTime? dateAdded;
+  DateTime? dateModified;
   FinalStatus? finalStatus;
   String? finalStatusOther;
   String? paymentStatus;
   String? completedStatus;
   String? status;
-  String? cancelReason;
-  String? driverTripStatus;
-  String? pickupDatetime;
+  dynamic cancelReason;
+  DriverTripStatus? driverTripStatus;
+  DateTime? pickupDatetime;
   String? source;
   Routes? routes;
   UsersAgentsData? usersAgentsData;
   FlightCompanies? flightCompanies;
   VisaTypes? visaTypes;
-  List<Vehicles>? vehicles;
+  List<Vehicle>? vehicles;
   String? pendingUpdate;
 
-  GetBookingData({
+  Datum({
     this.bookingsId,
     this.parentId,
     this.usersAgentsId,
@@ -82,7 +92,7 @@ class GetBookingData {
     this.contact,
     this.whatsapp,
     this.onesignalId,
-    this.guestLatitude,
+    this.guestLattitude,
     this.guestLongitude,
     this.bookedBy,
     this.bookingDate,
@@ -131,7 +141,7 @@ class GetBookingData {
     this.pendingUpdate,
   });
 
-  factory GetBookingData.fromJson(Map<String, dynamic> json) => GetBookingData(
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     bookingsId: json["bookings_id"],
     parentId: json["parent_id"],
     usersAgentsId: json["users_agents_id"],
@@ -139,27 +149,27 @@ class GetBookingData {
     contact: json["contact"],
     whatsapp: json["whatsapp"],
     onesignalId: json["onesignal_id"],
-    guestLatitude: json["guest_lattitude"],
+    guestLattitude: json["guest_lattitude"],
     guestLongitude: json["guest_longitude"],
     bookedBy: json["booked_by"],
-    bookingDate: json["booking_date"],
+    bookingDate: json["booking_date"] == null ? null : DateTime.parse(json["booking_date"]),
     bookingTime: json["booking_time"],
     routesId: json["routes_id"],
     routesDetails: json["routes_details"],
-    pickupHotel: json["pickup_hotel"] != null ? PickupHotel.fromJson(json["pickup_hotel"]) : null,
-    dropoffHotel: json["dropoff_hotel"] != null ? DropoffHotel.fromJson(json["dropoff_hotel"]) : null,
+    pickupHotel: json["pickup_hotel"],
+    dropoffHotel: json["dropoff_hotel"] == null ? null : DropoffHotel.fromJson(json["dropoff_hotel"]),
     noOfPassengers: json["no_of_passengers"],
     noOfAdults: json["no_of_adults"],
     noOfChilds: json["no_of_childs"],
     noOfInfants: json["no_of_infants"],
     pickupLocation: json["pickup_location"],
     dropoffLocation: json["dropoff_location"],
-    pickupDate: json["pickup_date"],
+    pickupDate: json["pickup_date"] == null ? null : DateTime.parse(json["pickup_date"]),
     pickupTime: json["pickup_time"],
     flightCompaniesId: json["flight_companies_id"],
     flightNumber: json["flight_number"],
     flightDetails: json["flight_details"],
-    flightDate: json["flight_date"],
+    flightDate: json["flight_date"] == null ? null : DateTime.parse(json["flight_date"]),
     flightTime: json["flight_time"],
     actualFare: json["actual_fare"],
     agentFare: json["agent_fare"],
@@ -169,22 +179,22 @@ class GetBookingData {
     visaTypesId: json["visa_types_id"],
     serviceType: json["service_type"],
     paymentType: json["payment_type"],
-    dateAdded: json["date_added"],
-    dateModified: json["date_modified"],
-    finalStatus: json["final_status"] != null ? FinalStatus.fromJson(json["final_status"]) : null,
+    dateAdded: json["date_added"] == null ? null : DateTime.parse(json["date_added"]),
+    dateModified: json["date_modified"] == null ? null : DateTime.parse(json["date_modified"]),
+    finalStatus: json["final_status"] == null ? null : FinalStatus.fromJson(json["final_status"]),
     finalStatusOther: json["final_status_other"],
     paymentStatus: json["payment_status"],
     completedStatus: json["completed_status"],
     status: json["status"],
     cancelReason: json["cancel_reason"],
-    driverTripStatus: json["driver_trip_status"],
-    pickupDatetime: json["pickup_datetime"],
+    driverTripStatus: json["driver_trip_status"] == null ? null : DriverTripStatus.fromJson(json["driver_trip_status"]),
+    pickupDatetime: json["pickup_datetime"] == null ? null : DateTime.parse(json["pickup_datetime"]),
     source: json["source"],
-    routes: json["routes"] != null ? Routes.fromJson(json["routes"]) : null,
-    usersAgentsData: json["users_agents_data"] != null ? UsersAgentsData.fromJson(json["users_agents_data"]) : null,
-    flightCompanies: json["flight_companies"] != null ? FlightCompanies.fromJson(json["flight_companies"]) : null,
-    visaTypes: json["visa_types"] != null ? VisaTypes.fromJson(json["visa_types"]) : null,
-    vehicles: json["vehicles"] != null ? List<Vehicles>.from(json["vehicles"].map((x) => Vehicles.fromJson(x))) : null,
+    routes: json["routes"] == null ? null : Routes.fromJson(json["routes"]),
+    usersAgentsData: json["users_agents_data"] == null ? null : UsersAgentsData.fromJson(json["users_agents_data"]),
+    flightCompanies: json["flight_companies"] == null ? null : FlightCompanies.fromJson(json["flight_companies"]),
+    visaTypes: json["visa_types"] == null ? null : VisaTypes.fromJson(json["visa_types"]),
+    vehicles: json["vehicles"] == null ? [] : List<Vehicle>.from(json["vehicles"]!.map((x) => Vehicle.fromJson(x))),
     pendingUpdate: json["pending_update"],
   );
 
@@ -196,14 +206,14 @@ class GetBookingData {
     "contact": contact,
     "whatsapp": whatsapp,
     "onesignal_id": onesignalId,
-    "guest_lattitude": guestLatitude,
+    "guest_lattitude": guestLattitude,
     "guest_longitude": guestLongitude,
     "booked_by": bookedBy,
-    "booking_date": bookingDate,
+    "booking_date": "${bookingDate!.year.toString().padLeft(4, '0')}-${bookingDate!.month.toString().padLeft(2, '0')}-${bookingDate!.day.toString().padLeft(2, '0')}",
     "booking_time": bookingTime,
     "routes_id": routesId,
     "routes_details": routesDetails,
-    "pickup_hotel": pickupHotel?.toJson(),
+    "pickup_hotel": pickupHotel,
     "dropoff_hotel": dropoffHotel?.toJson(),
     "no_of_passengers": noOfPassengers,
     "no_of_adults": noOfAdults,
@@ -211,12 +221,12 @@ class GetBookingData {
     "no_of_infants": noOfInfants,
     "pickup_location": pickupLocation,
     "dropoff_location": dropoffLocation,
-    "pickup_date": pickupDate,
+    "pickup_date": "${pickupDate!.year.toString().padLeft(4, '0')}-${pickupDate!.month.toString().padLeft(2, '0')}-${pickupDate!.day.toString().padLeft(2, '0')}",
     "pickup_time": pickupTime,
     "flight_companies_id": flightCompaniesId,
     "flight_number": flightNumber,
     "flight_details": flightDetails,
-    "flight_date": flightDate,
+    "flight_date": "${flightDate!.year.toString().padLeft(4, '0')}-${flightDate!.month.toString().padLeft(2, '0')}-${flightDate!.day.toString().padLeft(2, '0')}",
     "flight_time": flightTime,
     "actual_fare": actualFare,
     "agent_fare": agentFare,
@@ -226,54 +236,46 @@ class GetBookingData {
     "visa_types_id": visaTypesId,
     "service_type": serviceType,
     "payment_type": paymentType,
-    "date_added": dateAdded,
-    "date_modified": dateModified,
+    "date_added": dateAdded?.toIso8601String(),
+    "date_modified": dateModified?.toIso8601String(),
     "final_status": finalStatus?.toJson(),
     "final_status_other": finalStatusOther,
     "payment_status": paymentStatus,
     "completed_status": completedStatus,
     "status": status,
     "cancel_reason": cancelReason,
-    "driver_trip_status": driverTripStatus,
-    "pickup_datetime": pickupDatetime,
+    "driver_trip_status": driverTripStatus?.toJson(),
+    "pickup_datetime": pickupDatetime?.toIso8601String(),
     "source": source,
     "routes": routes?.toJson(),
     "users_agents_data": usersAgentsData?.toJson(),
     "flight_companies": flightCompanies?.toJson(),
     "visa_types": visaTypes?.toJson(),
-    "vehicles": vehicles != null ? List<dynamic>.from(vehicles!.map((x) => x.toJson())) : null,
+    "vehicles": vehicles == null ? [] : List<dynamic>.from(vehicles!.map((x) => x.toJson())),
     "pending_update": pendingUpdate,
   };
 }
 
-class PickupHotel {
-  String? hotelsId;
-  String? citiesId;
+class DriverTripStatus {
+  String? bookingsDriversStatusId;
   String? name;
-  String? city;
   String? status;
 
-  PickupHotel({
-    this.hotelsId,
-    this.citiesId,
+  DriverTripStatus({
+    this.bookingsDriversStatusId,
     this.name,
-    this.city,
     this.status,
   });
 
-  factory PickupHotel.fromJson(Map<String, dynamic> json) => PickupHotel(
-    hotelsId: json["hotels_id"],
-    citiesId: json["cities_id"],
+  factory DriverTripStatus.fromJson(Map<String, dynamic> json) => DriverTripStatus(
+    bookingsDriversStatusId: json["bookings_drivers_status_id"],
     name: json["name"],
-    city: json["city"],
     status: json["status"],
   );
 
   Map<String, dynamic> toJson() => {
-    "hotels_id": hotelsId,
-    "cities_id": citiesId,
+    "bookings_drivers_status_id": bookingsDriversStatusId,
     "name": name,
-    "city": city,
     "status": status,
   };
 }
@@ -334,6 +336,34 @@ class FinalStatus {
   };
 }
 
+class FlightCompanies {
+  String? flightCompaniesId;
+  String? name;
+  String? code;
+  String? status;
+
+  FlightCompanies({
+    this.flightCompaniesId,
+    this.name,
+    this.code,
+    this.status,
+  });
+
+  factory FlightCompanies.fromJson(Map<String, dynamic> json) => FlightCompanies(
+    flightCompaniesId: json["flight_companies_id"],
+    name: json["name"],
+    code: json["code"],
+    status: json["status"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "flight_companies_id": flightCompaniesId,
+    "name": name,
+    "code": code,
+    "status": status,
+  };
+}
+
 class Routes {
   String? routesId;
   String? routesPickupId;
@@ -342,8 +372,8 @@ class Routes {
   String? fare;
   String? serviceType;
   String? status;
-  VehicleDetails? vehicles;
-  Pickup? pickup;
+  Vehicles? vehicles;
+  Dropoff? pickup;
   Dropoff? dropoff;
 
   Routes({
@@ -367,9 +397,9 @@ class Routes {
     fare: json["fare"],
     serviceType: json["service_type"],
     status: json["status"],
-    vehicles: json["vehicles"] != null ? VehicleDetails.fromJson(json["vehicles"]) : null,
-    pickup: json["pickup"] != null ? Pickup.fromJson(json["pickup"]) : null,
-    dropoff: json["dropoff"] != null ? Dropoff.fromJson(json["dropoff"]) : null,
+    vehicles: json["vehicles"] == null ? null : Vehicles.fromJson(json["vehicles"]),
+    pickup: json["pickup"] == null ? null : Dropoff.fromJson(json["pickup"]),
+    dropoff: json["dropoff"] == null ? null : Dropoff.fromJson(json["dropoff"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -383,78 +413,6 @@ class Routes {
     "vehicles": vehicles?.toJson(),
     "pickup": pickup?.toJson(),
     "dropoff": dropoff?.toJson(),
-  };
-}
-
-class VehicleDetails {
-  String? vehiclesId;
-  String? name;
-  String? noOfPassengers;
-  String? featureImage;
-  String? noOfBags;
-  String? noOfDoors;
-  String? ac;
-  String? status;
-
-  VehicleDetails({
-    this.vehiclesId,
-    this.name,
-    this.noOfPassengers,
-    this.featureImage,
-    this.noOfBags,
-    this.noOfDoors,
-    this.ac,
-    this.status,
-  });
-
-  factory VehicleDetails.fromJson(Map<String, dynamic> json) => VehicleDetails(
-    vehiclesId: json["vehicles_id"],
-    name: json["name"],
-    noOfPassengers: json["no_of_passengers"],
-    featureImage: json["feature_image"],
-    noOfBags: json["no_of_bags"],
-    noOfDoors: json["no_of_doors"],
-    ac: json["ac"],
-    status: json["status"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "vehicles_id": vehiclesId,
-    "name": name,
-    "no_of_passengers": noOfPassengers,
-    "feature_image": featureImage,
-    "no_of_bags": noOfBags,
-    "no_of_doors": noOfDoors,
-    "ac": ac,
-    "status": status,
-  };
-}
-
-class Pickup {
-  String? routesPickupId;
-  String? name;
-  String? type;
-  String? status;
-
-  Pickup({
-    this.routesPickupId,
-    this.name,
-    this.type,
-    this.status,
-  });
-
-  factory Pickup.fromJson(Map<String, dynamic> json) => Pickup(
-    routesPickupId: json["routes_pickup_id"],
-    name: json["name"],
-    type: json["type"],
-    status: json["status"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "routes_pickup_id": routesPickupId,
-    "name": name,
-    "type": type,
-    "status": status,
   };
 }
 
@@ -490,6 +448,50 @@ class Dropoff {
   };
 }
 
+class Vehicles {
+  String? vehiclesId;
+  String? name;
+  String? noOfPassengers;
+  String? featureImage;
+  String? noOfBags;
+  String? noOfDoors;
+  String? ac;
+  String? status;
+
+  Vehicles({
+    this.vehiclesId,
+    this.name,
+    this.noOfPassengers,
+    this.featureImage,
+    this.noOfBags,
+    this.noOfDoors,
+    this.ac,
+    this.status,
+  });
+
+  factory Vehicles.fromJson(Map<String, dynamic> json) => Vehicles(
+    vehiclesId: json["vehicles_id"],
+    name: json["name"],
+    noOfPassengers: json["no_of_passengers"],
+    featureImage: json["feature_image"],
+    noOfBags: json["no_of_bags"],
+    noOfDoors: json["no_of_doors"],
+    ac: json["ac"],
+    status: json["status"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "vehicles_id": vehiclesId,
+    "name": name,
+    "no_of_passengers": noOfPassengers,
+    "feature_image": featureImage,
+    "no_of_bags": noOfBags,
+    "no_of_doors": noOfDoors,
+    "ac": ac,
+    "status": status,
+  };
+}
+
 class UsersAgentsData {
   String? usersAgentsId;
   String? usersRolesId;
@@ -515,8 +517,8 @@ class UsersAgentsData {
   String? serviceType;
   String? notificationSwitch;
   String? resetOtp;
-  String? dateAdded;
-  String? dateModified;
+  dynamic dateAdded;
+  DateTime? dateModified;
   String? status;
 
   UsersAgentsData({
@@ -575,7 +577,7 @@ class UsersAgentsData {
     notificationSwitch: json["notification_switch"],
     resetOtp: json["reset_otp"],
     dateAdded: json["date_added"],
-    dateModified: json["date_modified"],
+    dateModified: json["date_modified"] == null ? null : DateTime.parse(json["date_modified"]),
     status: json["status"],
   );
 
@@ -605,36 +607,156 @@ class UsersAgentsData {
     "notification_switch": notificationSwitch,
     "reset_otp": resetOtp,
     "date_added": dateAdded,
-    "date_modified": dateModified,
+    "date_modified": dateModified?.toIso8601String(),
     "status": status,
   };
 }
 
-class FlightCompanies {
-  String? flightCompaniesId;
-  String? name;
-  String? code;
-  String? status;
+class Vehicle {
+  String? bookingsMultipleId;
+  String? bookingsId;
+  String? vehiclesId;
+  String? usersDriversId;
+  String? usersDriversFare;
+  String? paidStatus;
+  DateTime? dateAdded;
+  DateTime? dateModified;
+  VehiclesDrivers? vehiclesDrivers;
+  Vehicles? vehiclesName;
 
-  FlightCompanies({
-    this.flightCompaniesId,
-    this.name,
-    this.code,
-    this.status,
+  Vehicle({
+    this.bookingsMultipleId,
+    this.bookingsId,
+    this.vehiclesId,
+    this.usersDriversId,
+    this.usersDriversFare,
+    this.paidStatus,
+    this.dateAdded,
+    this.dateModified,
+    this.vehiclesDrivers,
+    this.vehiclesName,
   });
 
-  factory FlightCompanies.fromJson(Map<String, dynamic> json) => FlightCompanies(
-    flightCompaniesId: json["flight_companies_id"],
-    name: json["name"],
-    code: json["code"],
-    status: json["status"],
+  factory Vehicle.fromJson(Map<String, dynamic> json) => Vehicle(
+    bookingsMultipleId: json["bookings_multiple_id"],
+    bookingsId: json["bookings_id"],
+    vehiclesId: json["vehicles_id"],
+    usersDriversId: json["users_drivers_id"],
+    usersDriversFare: json["users_drivers_fare"],
+    paidStatus: json["paid_status"],
+    dateAdded: json["date_added"] == null ? null : DateTime.parse(json["date_added"]),
+    dateModified: json["date_modified"] == null ? null : DateTime.parse(json["date_modified"]),
+    vehiclesDrivers: json["vehicles_drivers"] == null ? null : VehiclesDrivers.fromJson(json["vehicles_drivers"]),
+    vehiclesName: json["vehicles_name"] == null ? null : Vehicles.fromJson(json["vehicles_name"]),
   );
 
   Map<String, dynamic> toJson() => {
-    "flight_companies_id": flightCompaniesId,
+    "bookings_multiple_id": bookingsMultipleId,
+    "bookings_id": bookingsId,
+    "vehicles_id": vehiclesId,
+    "users_drivers_id": usersDriversId,
+    "users_drivers_fare": usersDriversFare,
+    "paid_status": paidStatus,
+    "date_added": dateAdded?.toIso8601String(),
+    "date_modified": dateModified?.toIso8601String(),
+    "vehicles_drivers": vehiclesDrivers?.toJson(),
+    "vehicles_name": vehiclesName?.toJson(),
+  };
+}
+
+class VehiclesDrivers {
+  String? usersDriversId;
+  String? parentId;
+  String? onesignalId;
+  String? longitude;
+  String? lattitude;
+  String? walletAmount;
+  String? driversType;
+  String? companyName;
+  String? name;
+  String? email;
+  String? password;
+  String? contact;
+  String? whatsapp;
+  String? city;
+  String? rating;
+  String? image;
+  String? status;
+  String? resetOtp;
+  String? notificationSwitch;
+  DateTime? dateAdded;
+  DateTime? dateModified;
+
+  VehiclesDrivers({
+    this.usersDriversId,
+    this.parentId,
+    this.onesignalId,
+    this.longitude,
+    this.lattitude,
+    this.walletAmount,
+    this.driversType,
+    this.companyName,
+    this.name,
+    this.email,
+    this.password,
+    this.contact,
+    this.whatsapp,
+    this.city,
+    this.rating,
+    this.image,
+    this.status,
+    this.resetOtp,
+    this.notificationSwitch,
+    this.dateAdded,
+    this.dateModified,
+  });
+
+  factory VehiclesDrivers.fromJson(Map<String, dynamic> json) => VehiclesDrivers(
+    usersDriversId: json["users_drivers_id"],
+    parentId: json["parent_id"],
+    onesignalId: json["onesignal_id"],
+    longitude: json["longitude"],
+    lattitude: json["lattitude"],
+    walletAmount: json["wallet_amount"],
+    driversType: json["drivers_type"],
+    companyName: json["company_name"],
+    name: json["name"],
+    email: json["email"],
+    password: json["password"],
+    contact: json["contact"],
+    whatsapp: json["whatsapp"],
+    city: json["city"],
+    rating: json["rating"],
+    image: json["image"],
+    status: json["status"],
+    resetOtp: json["reset_otp"],
+    notificationSwitch: json["notification_switch"],
+    dateAdded: json["date_added"] == null ? null : DateTime.parse(json["date_added"]),
+    dateModified: json["date_modified"] == null ? null : DateTime.parse(json["date_modified"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "users_drivers_id": usersDriversId,
+    "parent_id": parentId,
+    "onesignal_id": onesignalId,
+    "longitude": longitude,
+    "lattitude": lattitude,
+    "wallet_amount": walletAmount,
+    "drivers_type": driversType,
+    "company_name": companyName,
     "name": name,
-    "code": code,
+    "email": email,
+    "password": password,
+    "contact": contact,
+    "whatsapp": whatsapp,
+    "city": city,
+    "rating": rating,
+    "image": image,
     "status": status,
+    "reset_otp": resetOtp,
+    "notification_switch": notificationSwitch,
+    "date_added": dateAdded?.toIso8601String(),
+    "date_modified": dateModified?.toIso8601String(),
   };
 }
 
@@ -658,102 +780,6 @@ class VisaTypes {
   Map<String, dynamic> toJson() => {
     "visa_types_id": visaTypesId,
     "name": name,
-    "status": status,
-  };
-}
-
-class Vehicles {
-  String? bookingsMultipleId;
-  String? bookingsId;
-  String? vehiclesId;
-  String? usersDriversId;
-  String? usersDriversFare;
-  String? paidStatus;
-  String? dateAdded;
-  String? dateModified;
-  VehicleName? vehiclesName;
-  dynamic vehiclesDrivers;
-
-  Vehicles({
-    this.bookingsMultipleId,
-    this.bookingsId,
-    this.vehiclesId,
-    this.usersDriversId,
-    this.usersDriversFare,
-    this.paidStatus,
-    this.dateAdded,
-    this.dateModified,
-    this.vehiclesName,
-    this.vehiclesDrivers,
-  });
-
-  factory Vehicles.fromJson(Map<String, dynamic> json) => Vehicles(
-    bookingsMultipleId: json["bookings_multiple_id"],
-    bookingsId: json["bookings_id"],
-    vehiclesId: json["vehicles_id"],
-    usersDriversId: json["users_drivers_id"],
-    usersDriversFare: json["users_drivers_fare"],
-    paidStatus: json["paid_status"],
-    dateAdded: json["date_added"],
-    dateModified: json["date_modified"],
-    vehiclesName: json["vehicles_name"] != null ? VehicleName.fromJson(json["vehicles_name"]) : null,
-    vehiclesDrivers: json["vehicles_drivers"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "bookings_multiple_id": bookingsMultipleId,
-    "bookings_id": bookingsId,
-    "vehicles_id": vehiclesId,
-    "users_drivers_id": usersDriversId,
-    "users_drivers_fare": usersDriversFare,
-    "paid_status": paidStatus,
-    "date_added": dateAdded,
-    "date_modified": dateModified,
-    "vehicles_name": vehiclesName?.toJson(),
-    "vehicles_drivers": vehiclesDrivers,
-  };
-}
-
-class VehicleName {
-  String? vehiclesId;
-  String? name;
-  String? noOfPassengers;
-  String? featureImage;
-  String? noOfBags;
-  String? noOfDoors;
-  String? ac;
-  String? status;
-
-  VehicleName({
-    this.vehiclesId,
-    this.name,
-    this.noOfPassengers,
-    this.featureImage,
-    this.noOfBags,
-    this.noOfDoors,
-    this.ac,
-    this.status,
-  });
-
-  factory VehicleName.fromJson(Map<String, dynamic> json) => VehicleName(
-    vehiclesId: json["vehicles_id"],
-    name: json["name"],
-    noOfPassengers: json["no_of_passengers"],
-    featureImage: json["feature_image"],
-    noOfBags: json["no_of_bags"],
-    noOfDoors: json["no_of_doors"],
-    ac: json["ac"],
-    status: json["status"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "vehicles_id": vehiclesId,
-    "name": name,
-    "no_of_passengers": noOfPassengers,
-    "feature_image": featureImage,
-    "no_of_bags": noOfBags,
-    "no_of_doors": noOfDoors,
-    "ac": ac,
     "status": status,
   };
 }

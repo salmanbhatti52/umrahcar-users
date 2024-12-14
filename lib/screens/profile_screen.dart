@@ -42,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
             style: TextStyle(
                 color: Colors.black,
                 fontSize: 26,
-                fontFamily: 'Poppins',
+                fontFamily: 'Montserrat-Regular',
                 fontWeight: FontWeight.w700),
           ),
           centerTitle: true,
@@ -71,7 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 16,
-                        fontFamily: 'Poppins',
+                        fontFamily: 'Montserrat-Regular',
                         fontWeight: FontWeight.w600,
                       ),
                       minFontSize: 16,
@@ -223,7 +223,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   color: Color(0xFF565656),
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Montserrat-Regular',
                 ),
               ),
               SizedBox(height: size.height * 0.06),

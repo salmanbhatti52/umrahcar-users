@@ -60,7 +60,7 @@ Widget onGoingList(
                               color: Colors.black,
                               fontSize: 16,
                               fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w900,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           SizedBox(height: size.height * 0.005),
@@ -72,7 +72,7 @@ Widget onGoingList(
                                 "booking id: ${getData.bookingsId}",
                                 style: const TextStyle(
                                   color: Color(0xFF565656),
-                                  fontSize: 8,
+                                  fontSize: 10,
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -85,7 +85,7 @@ Widget onGoingList(
                                 "${getData.routes!.pickup!.name}",
                                 style: const TextStyle(
                                   color: Color(0xFF565656),
-                                  fontSize: 8,
+                                  fontSize: 10,
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -117,7 +117,7 @@ Widget onGoingList(
                                                 '${getData.vehicles![i].vehiclesName!.name}',
                                                 style: const TextStyle(
                                                   color: Color(0xFF565656),
-                                                  fontSize: 7,
+                                                  fontSize: 10,
                                                   fontFamily: 'Poppins',
                                                   fontWeight: FontWeight.w500,
                                                 ),
@@ -140,7 +140,7 @@ Widget onGoingList(
                                                   '${getData.vehicles![i].vehiclesName!.name}',
                                                   style: const TextStyle(
                                                     color: Color(0xFF565656),
-                                                    fontSize: 7,
+                                                    fontSize: 10,
                                                     fontFamily: 'Poppins',
                                                     fontWeight: FontWeight.w500,
                                                   ),
@@ -161,10 +161,10 @@ Widget onGoingList(
                                   'assets/images/small-black-bookings-icon.svg'),
                               SizedBox(width: size.width * 0.01),
                               Text(
-                                '${_formatDate(getData.pickupDate!)} ${_formatTime(getData.pickupTime!)}',
+                                '${_formatDate(getData.pickupDate!.toString())} ${_formatTime(getData.pickupTime!)}',
                                 style: const TextStyle(
                                   color: Color(0xFF565656),
-                                  fontSize: 8,
+                                  fontSize: 10,
                                   fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w500,
                                 ),

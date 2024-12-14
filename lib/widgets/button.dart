@@ -17,7 +17,7 @@ Widget button(buttonText, context) {
           textAlign: TextAlign.center,
           style: const TextStyle(
             color: Colors.white,
-          fontFamily: 'Poppins',
+          fontFamily: 'Montserrat-Regular',
             fontWeight: FontWeight.w600,
             fontSize: 18,
           ),
@@ -50,7 +50,7 @@ Widget buttonTransparent(buttonText, context) {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: buttonColor,
-             fontFamily: 'Poppins',
+             fontFamily: 'Poppins-Regular',
               fontWeight: FontWeight.w700,
               fontSize: 16,
               letterSpacing: 0.3,
@@ -77,7 +77,7 @@ Widget dialogButton(buttonText, context) {
           textAlign: TextAlign.center,
           style: const TextStyle(
             color: Colors.white,
-           fontFamily: 'Poppins',
+           fontFamily: 'Poppins-Regular',
             fontWeight: FontWeight.w700,
             fontSize: 16,
             letterSpacing: 0.3,
@@ -135,7 +135,7 @@ Widget dialogbuttonSmall(buttonText, context) {
           textAlign: TextAlign.center,
           style: const TextStyle(
             color: Colors.white,
-           fontFamily: 'Poppins',
+           fontFamily: 'Poppins-Regular',
             fontWeight: FontWeight.w700,
             fontSize: 16,
             letterSpacing: 0.3,
@@ -162,7 +162,7 @@ Widget dialogButtontransparentSmall(buttonText, context) {
           textAlign: TextAlign.center,
           style: const TextStyle(
             color: Colors.black,
-           fontFamily: 'Poppins',
+           fontFamily: 'Poppins-Regular',
             fontWeight: FontWeight.w700,
             fontSize: 16,
             letterSpacing: 0.3,

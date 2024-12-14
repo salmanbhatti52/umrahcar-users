@@ -115,7 +115,7 @@ class _ChatPageState extends State<ChatPage> {
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 16,
-                           fontFamily: 'Poppins',
+                           fontFamily: 'Montserrat-Regular',
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -125,7 +125,7 @@ class _ChatPageState extends State<ChatPage> {
                           style: TextStyle(
                             color: Color(0xFF79BF42),
                             fontSize: 10,
-                           fontFamily: 'Poppins',
+                           fontFamily: 'Montserrat-Regular',
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -195,7 +195,7 @@ class _ChatPageState extends State<ChatPage> {
                                     style:  TextStyle(
                                       color: getChatModel.data!.message![i].receiver=="Drivers" ? Colors.black: Colors.white,
                                       fontSize: 12,
-                                     fontFamily: 'Poppins',
+                                     fontFamily: 'Montserrat-Regular',
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),

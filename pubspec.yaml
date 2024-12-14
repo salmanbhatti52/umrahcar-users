@@ -49,7 +49,7 @@ dependencies:
   json_annotation: ^4.8.1
   intl: ^0.18.1
   url_launcher: ^6.1.12
-  google_maps_flutter:
+  google_maps_flutter: ^2.6.1
   location:
   rename:
   geolocator: ^10.0.0
@@ -98,8 +98,8 @@ flutter:
     - family: Montserrat-Regular
       fonts:
         - asset: assets/fonts/Montserrat-Regular.ttf
-    - family: Poppins
-      fonts:
-        - asset: assets/fonts/Poppins-Regular.ttf
+#    - family: Poppins
+#      fonts:
+#        - asset: assets/fonts/Poppins-Regular.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

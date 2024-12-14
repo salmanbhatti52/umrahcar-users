@@ -21,7 +21,7 @@ import '../../../models/update_user_location.dart';
 import '../../../service/rest_api_service.dart';
 import '../../homepage_screen.dart';
 class PickUpPage extends StatefulWidget {
-  GetBookingData? getBookingData;
+  Datum? getBookingData;
   PickUpPage({super.key, this.getBookingData});
 
   @override
@@ -134,7 +134,7 @@ class _PickUpPageState extends State<PickUpPage> {
         print("Driver Status: ${getBookingOngoingResponse.data![i].driverTripStatus!}");
         String? latt=getBookingOngoingResponse.data![i].vehicles![0].vehiclesDrivers!.lattitude;
         String? longg=getBookingOngoingResponse.data![i].vehicles![0].vehiclesDrivers!.longitude;
-        statuses=getBookingOngoingResponse.data![i].driverTripStatus!;
+        statuses=getBookingOngoingResponse.data![i].driverTripStatus!.toString();
         print("statusessss: ${statuses}");
         calculateDistance(longg,latt);
 
@@ -322,7 +322,7 @@ class _PickUpPageState extends State<PickUpPage> {
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
-                                 fontFamily: 'Poppins',
+                                 fontFamily: 'Montserrat-Regular',
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
@@ -331,7 +331,7 @@ class _PickUpPageState extends State<PickUpPage> {
                                 style:  TextStyle(
                                   color: secondaryColor,
                                   fontSize: 16,
-                                  fontFamily: 'Poppins',
+                                  fontFamily: 'Montserrat-Regular',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -365,7 +365,7 @@ class _PickUpPageState extends State<PickUpPage> {
                                           style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 16,
-                                           fontFamily: 'Poppins',
+                                           fontFamily: 'Montserrat-Regular',
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
@@ -375,7 +375,7 @@ class _PickUpPageState extends State<PickUpPage> {
                                           style: const TextStyle(
                                             color: Color(0xFF929292),
                                             fontSize: 12,
-                                           fontFamily: 'Poppins',
+                                           fontFamily: 'Montserrat-Regular',
                                             fontWeight: FontWeight.w400,
                                           ),
                                         ),
@@ -441,7 +441,7 @@ class _PickUpPageState extends State<PickUpPage> {
                                     style: const TextStyle(
                                       color: Color(0xFF565656),
                                       fontSize: 12,
-                                     fontFamily: 'Poppins',
+                                     fontFamily: 'Montserrat-Regular',
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -461,7 +461,7 @@ class _PickUpPageState extends State<PickUpPage> {
                                     style: const TextStyle(
                                       color: Color(0xFF565656),
                                       fontSize: 12,
-                                     fontFamily: 'Poppins',
+                                     fontFamily: 'Montserrat-Regular',
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -483,7 +483,7 @@ class _PickUpPageState extends State<PickUpPage> {
                                 style: const TextStyle(
                                   color: Color(0xFF565656),
                                   fontSize: 12,
-                                 fontFamily: 'Poppins',
+                                 fontFamily: 'Montserrat-Regular',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -580,7 +580,7 @@ class _PickUpPageState extends State<PickUpPage> {
                   color: Color(0xFF565656),
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                 fontFamily: 'Poppins',
+                 fontFamily: 'Montserrat-Regular',
                 ),
               ),
               SizedBox(height: size.height * 0.01),
@@ -595,7 +595,7 @@ class _PickUpPageState extends State<PickUpPage> {
                       color: secondaryColor,
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
-                     fontFamily: 'Poppins',
+                     fontFamily: 'Montserrat-Regular',
                     ),
                   ),
                 ],
@@ -608,7 +608,7 @@ class _PickUpPageState extends State<PickUpPage> {
                   color: Colors.black,
                   fontSize: 26,
                   fontWeight: FontWeight.w700,
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Montserrat-Regular',
                 ),
               ),
               SizedBox(height: size.height * 0.08),

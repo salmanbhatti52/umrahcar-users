@@ -40,7 +40,7 @@ Widget homeList(BuildContext context) {
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 16,
-                       fontFamily: 'Poppins',
+                       fontFamily: 'bold',
                         fontWeight: FontWeight.w500,
                       ),
                       minFontSize: 16,
@@ -62,7 +62,7 @@ Widget homeList(BuildContext context) {
                         style: TextStyle(
                           color: Color(0xFF565656),
                           fontSize: 8,
-                        fontFamily: 'Poppins',
+                        fontFamily: 'Montserrat-Regular',
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -81,7 +81,7 @@ Widget homeList(BuildContext context) {
                         style: TextStyle(
                           color: Color(0xFF565656),
                           fontSize: 8,
-                        fontFamily: 'Poppins',
+                        fontFamily: 'Montserrat-Regular',
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -108,7 +108,7 @@ Widget homeList(BuildContext context) {
                       style: const TextStyle(
                         color: Color(0xFFCAAA00),
                         fontSize: 12,
-                       fontFamily: 'Poppins',
+                       fontFamily: 'Montserrat-Regular',
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -133,7 +133,7 @@ Widget homeList(BuildContext context) {
                       style:  TextStyle(
                         color: buttonColor,
                         fontSize: 12,
-                        fontFamily: 'Poppins',
+                        fontFamily: 'Montserrat-Regular',
                         fontWeight: FontWeight.w500,
                       ),
                     ),

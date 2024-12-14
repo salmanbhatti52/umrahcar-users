@@ -146,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Montserrat-Regular',
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -210,7 +210,7 @@ class _HomePageState extends State<HomePage> {
                                 'Bookings',
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontFamily: 'Poppins',
+                                  fontFamily: 'Montserrat-Regular',
                                   fontWeight: FontWeight.w600,
                                   fontSize: 16,
                                 ),
@@ -281,7 +281,7 @@ class _HomePageState extends State<HomePage> {
                               'On Going Booking',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Montserrat-Regular',
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16,
                               ),
@@ -326,7 +326,7 @@ class _HomePageState extends State<HomePage> {
                                             : "",
                                         style: const TextStyle(
                                           color: Colors.black,
-                                          fontFamily: 'Poppins',
+                                          fontFamily: 'Montserrat-Regular',
                                           fontWeight: FontWeight.w500,
                                           fontSize: 12,
                                         ),
@@ -346,12 +346,12 @@ class _HomePageState extends State<HomePage> {
                                         '${getBookingOngoingResponse!.data![0].routes!.pickup!.name}',
                                         style: const TextStyle(
                                           color: Color(0xFF565656),
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
+                                          fontFamily: 'Montserrat-Regular',
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: 12,
                                         ),
-                                        minFontSize: 8,
-                                        maxFontSize: 8,
+                                        minFontSize: 12,
+                                        maxFontSize: 12,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -377,7 +377,7 @@ class _HomePageState extends State<HomePage> {
                         'No Current Booking',
                         style: TextStyle(
                           color: Colors.black,
-                          fontFamily: 'Poppins',
+                          fontFamily: 'Montserrat-Regular',
                           fontWeight: FontWeight.w900,
                           fontSize: 15,
                         ),
