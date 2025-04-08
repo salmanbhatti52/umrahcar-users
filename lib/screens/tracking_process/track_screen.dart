@@ -34,8 +34,11 @@ class _TrackPageState extends State<TrackPage> {
     }
   }
 
-  void showSnackbar({required String error, required BuildContext context}) {
-    final snackBar = SnackBar(content: Text(error));
+  showSnackbar({error, context}) {
+    final snackBar = SnackBar(
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      content: Text(error, style: Theme.of(context).textTheme.bodyMedium),
+    );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
@@ -225,7 +228,7 @@ class _TrackPageState extends State<TrackPage> {
     print("latlat: $lat");
     print("long: $long");
     return Scaffold(
-      backgroundColor: mainColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: (getProfileResponse.data != null || (lat != null && long != null))
           ? Container(
               color: Colors.transparent,
@@ -250,14 +253,14 @@ class _TrackPageState extends State<TrackPage> {
                       width: size.width,
                       height: size.height * 0.56,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(20),
                         ),
                         border: Border.all(
                           width: 1,
-                          color: const Color(0xFF000000).withOpacity(0.15),
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15),
                         ),
                       ),
                       child: Padding(
@@ -270,12 +273,10 @@ class _TrackPageState extends State<TrackPage> {
                               SizedBox(height: size.height * 0.03),
                               Row(
                                 children: [
-                                  const Text(
+                                   Text(
                                     'Bookings Details',
-                                    style: TextStyle(
-                                      color: Colors.black,
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                       fontSize: 16,
-                                      fontFamily: 'Montserrat-Regular',
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -284,52 +285,46 @@ class _TrackPageState extends State<TrackPage> {
                                   ),
                                   Text(
                                     '(Booking Id ${widget.getBookingData!.bookingsId})',
-                                    style: const TextStyle(
-                                      color: Colors.black,
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                       fontSize: 13,
-                                      fontFamily: 'Montserrat-Regular',
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 ],
                               ),
                               SizedBox(height: size.height * 0.02),
-                              const Text(
+                              Text(
                                 'Pickup Location',
-                                style: TextStyle(
-                                  color: Color(0xFF929292),
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: ConstantColor.greyColor,
                                   fontSize: 12,
-                                  fontFamily: 'Montserrat-Regular',
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
                               SizedBox(height: size.height * 0.02),
                               Text(
                                 '${widget.getBookingData!.routes!.pickup!.name} (${widget.getBookingData!.routes!.pickup!.type})',
-                                style: const TextStyle(
-                                  color: Color(0xFF565656),
+                                style:  Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: ConstantColor.darkgreyColor,
                                   fontSize: 12,
-                                  fontFamily: 'Montserrat-Regular',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
                               SizedBox(height: size.height * 0.02),
-                              const Text(
+                               Text(
                                 'Drop off Location',
-                                style: TextStyle(
-                                  color: Color(0xFF929292),
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: ConstantColor.greyColor,
                                   fontSize: 12,
-                                  fontFamily: 'Montserrat-Regular',
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
                               SizedBox(height: size.height * 0.02),
                               Text(
                                 '${widget.getBookingData!.routes!.dropoff!.name} (${widget.getBookingData!.routes!.dropoff!.type})',
-                                style: const TextStyle(
-                                  color: Color(0xFF565656),
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: ConstantColor.darkgreyColor,
                                   fontSize: 12,
-                                  fontFamily: 'Montserrat-Regular',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -349,14 +344,14 @@ class _TrackPageState extends State<TrackPage> {
                                             'assets/images/fast-car-icon.svg',
                                             width: 10,
                                             height: 10,
+                                            color: Theme.of(context).colorScheme.onSurface,
                                           ),
                                           SizedBox(width: size.width * 0.01),
                                           Text(
                                             '${widget.getBookingData!.vehicles![i].vehiclesName!.name}',
-                                            style: const TextStyle(
-                                              color: Color(0xFF565656),
+                                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                              color: ConstantColor.darkgreyColor,
                                               fontSize: 10,
-                                              fontFamily: 'Montserrat-Regular',
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
@@ -374,14 +369,14 @@ class _TrackPageState extends State<TrackPage> {
                                         'assets/images/small-black-bookings-icon.svg',
                                         width: 20,
                                         height: 20,
+                                        color: Theme.of(context).colorScheme.onSurface,
                                       ),
                                       SizedBox(width: size.width * 0.032),
                                       Text(
                                         '${widget.getBookingData!.flightDate}',
-                                        style: const TextStyle(
-                                          color: Color(0xFF565656),
+                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                          color: ConstantColor.darkgreyColor,
                                           fontSize: 12,
-                                          fontFamily: 'Montserrat-Regular',
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -394,14 +389,14 @@ class _TrackPageState extends State<TrackPage> {
                                         'assets/images/clock-icon.svg',
                                         width: 20,
                                         height: 20,
+                                        color: Theme.of(context).colorScheme.onSurface,
                                       ),
                                       SizedBox(width: size.width * 0.032),
                                       Text(
                                         '${widget.getBookingData!.pickupTime}',
-                                        style: const TextStyle(
-                                          color: Color(0xFF565656),
+                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                          color: ConstantColor.darkgreyColor,
                                           fontSize: 12,
-                                          fontFamily: 'Montserrat-Regular',
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
@@ -417,8 +412,7 @@ class _TrackPageState extends State<TrackPage> {
                                       .vehiclesDrivers !=
                                   null)
                                 Divider(
-                                  color:
-                                      const Color(0xFF929292).withOpacity(0.3),
+                                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
                                   thickness: 1,
                                 ),
                               if (widget.getBookingData!.vehicles![0]
@@ -428,12 +422,10 @@ class _TrackPageState extends State<TrackPage> {
                               if (widget.getBookingData!.vehicles![0]
                                       .vehiclesDrivers !=
                                   null)
-                                const Text(
+                                 Text(
                                   'Driver Details',
-                                  style: TextStyle(
-                                    color: Colors.black,
+                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     fontSize: 16,
-                                    fontFamily: 'Montserrat-Regular',
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -450,6 +442,7 @@ class _TrackPageState extends State<TrackPage> {
                                       children: [
                                         CircleAvatar(
                                           radius: 15,
+                                          backgroundColor: Theme.of(context).colorScheme.surface,
                                           child: Image.asset(
                                             'assets/images/user-profile.png',
                                             fit: BoxFit.cover,
@@ -460,10 +453,9 @@ class _TrackPageState extends State<TrackPage> {
                                           width: size.width * 0.275,
                                           child: Text(
                                             '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.name}',
-                                            style: const TextStyle(
-                                              color: Color(0xFF565656),
+                                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                              color: ConstantColor.darkgreyColor,
                                               fontSize: 12,
-                                              fontFamily: 'Montserrat-Regular',
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
@@ -477,16 +469,16 @@ class _TrackPageState extends State<TrackPage> {
                                           'assets/images/location-icon.svg',
                                           width: 20,
                                           height: 20,
+                                          color: Theme.of(context).colorScheme.onSurface,
                                         ),
                                         SizedBox(width: size.width * 0.045),
                                         SizedBox(
                                           width: size.width * 0.275,
                                           child: Text(
                                             '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.city}',
-                                            style: const TextStyle(
-                                              color: Color(0xFF565656),
+                                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                              color: ConstantColor.darkgreyColor,
                                               fontSize: 12,
-                                              fontFamily: 'Montserrat-Regular',
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
@@ -519,16 +511,16 @@ class _TrackPageState extends State<TrackPage> {
                                       child: Row(
                                         children: [
                                           SvgPicture.asset(
+                                              color: Theme.of(context).colorScheme.onSurface,
                                               'assets/images/contact-icon.svg'),
                                           SizedBox(width: size.width * 0.032),
                                           SizedBox(
                                             width: size.width * 0.275,
                                             child: Text(
                                               '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.contact}',
-                                              style: const TextStyle(
-                                                color: Color(0xFF565656),
+                                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                                color: ConstantColor.darkgreyColor,
                                                 fontSize: 12,
-                                                fontFamily: 'Montserrat-Regular',
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
@@ -548,16 +540,16 @@ class _TrackPageState extends State<TrackPage> {
                                       child: Row(
                                         children: [
                                           SvgPicture.asset(
+                                              color: Theme.of(context).colorScheme.onSurface,
                                               'assets/images/whatsapp-icon.svg'),
                                           SizedBox(width: size.width * 0.032),
                                           SizedBox(
                                             width: size.width * 0.275,
                                             child: Text(
                                               '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.whatsapp}',
-                                              style: const TextStyle(
-                                                color: Color(0xFF565656),
+                                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                                color: ConstantColor.darkgreyColor,
                                                 fontSize: 12,
-                                                fontFamily: 'Montserrat-Regular',
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
@@ -569,48 +561,48 @@ class _TrackPageState extends State<TrackPage> {
                                 ),
                               SizedBox(height: size.height * 0.02),
                               Divider(
-                                color: const Color(0xFF929292).withOpacity(0.3),
+                                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
                                 thickness: 1,
                               ),
-                              if (widget.getBookingData!.bookedFare != "0")
-                                SizedBox(height: size.height * 0.01),
-                              if (widget.getBookingData!.bookedFare != "0")
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Text(
-                                      'Booked Fare',
-                                      style: TextStyle(
-                                        color: Color(0xFF929292),
-                                        fontSize: 12,
-                                        fontFamily: 'Montserrat-Regular',
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                    SizedBox(height: size.height * 0.03),
-                                    widget.getBookingData!.paymentType ==
-                                            "credit"
-                                        ? const Text(
-                                            'credit',
-                                            style: TextStyle(
-                                              color: Color(0xFF565656),
-                                              fontSize: 12,
-                                              fontFamily: 'Montserrat-Regular',
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          )
-                                        : Text(
-                                            '${widget.getBookingData!.bookedFare}',
-                                            style: const TextStyle(
-                                              color: Color(0xFF565656),
-                                              fontSize: 12,
-                                              fontFamily: 'Montserrat-Regular',
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          )
-                                  ],
-                                ),
+                              // if (widget.getBookingData!.bookedFare != "0")
+                              //   SizedBox(height: size.height * 0.01),
+                              // if (widget.getBookingData!.bookedFare != "0")
+                              //   Row(
+                              //     mainAxisAlignment:
+                              //         MainAxisAlignment.spaceBetween,
+                              //     children: [
+                              //       const Text(
+                              //         'Booked Fare',
+                              //         style: TextStyle(
+                              //           color: Color(0xFF929292),
+                              //           fontSize: 12,
+                              //           fontFamily: 'Montserrat-Regular',
+                              //           fontWeight: FontWeight.w400,
+                              //         ),
+                              //       ),
+                              //       SizedBox(height: size.height * 0.03),
+                              //       widget.getBookingData!.paymentType ==
+                              //               "credit"
+                              //           ? const Text(
+                              //               'credit',
+                              //               style: TextStyle(
+                              //                 color: Color(0xFF565656),
+                              //                 fontSize: 12,
+                              //                 fontFamily: 'Montserrat-Regular',
+                              //                 fontWeight: FontWeight.w500,
+                              //               ),
+                              //             )
+                              //           : Text(
+                              //               '${widget.getBookingData!.bookedFare}',
+                              //               style: const TextStyle(
+                              //                 color: Color(0xFF565656),
+                              //                 fontSize: 12,
+                              //                 fontFamily: 'Montserrat-Regular',
+                              //                 fontWeight: FontWeight.w500,
+                              //               ),
+                              //             )
+                              //     ],
+                              //   ),
                               if (widget.getBookingData!
                                       .cashReceiveFromCustomer !=
                                   "0")
@@ -622,22 +614,20 @@ class _TrackPageState extends State<TrackPage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const Text(
+                                     Text(
                                       'Cash Receive From Customer',
-                                      style: TextStyle(
-                                        color: Color(0xFF929292),
+                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                        color: ConstantColor.darkgreyColor,
                                         fontSize: 12,
-                                        fontFamily: 'Montserrat-Regular',
-                                        fontWeight: FontWeight.w400,
+                                        fontWeight: FontWeight.w500,
                                       ),
                                     ),
                                     SizedBox(height: size.height * 0.02),
                                     Text(
-                                      'credit (${widget.getBookingData!.cashReceiveFromCustomer})',
-                                      style: const TextStyle(
-                                        color: Color(0xFF565656),
+                                      'cash (${widget.getBookingData!.cashReceiveFromCustomer})',
+                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                        color: ConstantColor.darkgreyColor,
                                         fontSize: 12,
-                                        fontFamily: 'Montserrat-Regular',
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
@@ -689,34 +679,37 @@ class _TrackPageState extends State<TrackPage> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: SizedBox(
-                          height: 40,
-                          width: 40,
-                          child: Column(
-                            children: [
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              SvgPicture.asset('assets/images/back-icon.svg'),
-                            ],
-                          )),
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Theme.of(context).colorScheme.surface,
+                        ),
+                        child: Center(
+                          child: SvgPicture.asset(
+                            'assets/images/back-icon.svg',
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
             )
-          : const Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 175, top: 30),
-                  child: CircularProgressIndicator(
-                    color: Colors.blue,
-                  ),
-                ),
-              ],
+          : Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 175, top: 30),
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).colorScheme.onSurface),
             ),
+          ),
+        ],
+      ),
     );
   }
 }

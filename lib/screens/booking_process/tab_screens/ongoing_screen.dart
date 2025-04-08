@@ -74,7 +74,7 @@ class _OnGoingPageState extends State<OnGoingPage> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        backgroundColor: mainColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: Column(
           children: [
             SizedBox(height: size.height * 0.03),
@@ -85,24 +85,23 @@ class _OnGoingPageState extends State<OnGoingPage> {
                 child: SearchField(
                   controller: searchController,
                   inputType: TextInputType.text,
-                  marginColor: mainColor,
+                  marginColor: Theme.of(context).scaffoldBackgroundColor,
                   suggestionsDecoration: SuggestionDecoration(
-                    color: mainColor,
-                    padding: const EdgeInsets.only(
-                        left: 20, right: 20, top: 5, bottom: 5),
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    padding: const EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
                       width: 1,
-                      color: const Color(0xFF000000).withOpacity(0.15),
+                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15),
                     ),
                   ),
                   offset: const Offset(0, 46),
                   suggestionItemDecoration: BoxDecoration(
-                    color: mainColor,
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
                       width: 1,
-                      color: const Color(0xFFFFFFFF),
+                      color: Theme.of(context).scaffoldBackgroundColor,
                     ),
                   ),
                   searchInputDecoration: InputDecoration(
@@ -111,6 +110,7 @@ class _OnGoingPageState extends State<OnGoingPage> {
                       width: 25,
                       height: 25,
                       fit: BoxFit.scaleDown,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                     suffixIcon: isFocused == true
                         ? GestureDetector(
@@ -122,7 +122,7 @@ class _OnGoingPageState extends State<OnGoingPage> {
                             child: const Icon(
                               Icons.close,
                               size: 20,
-                              color: Color(0xFF565656),
+                              color: ConstantColor.darkgreyColor,
                             ),
                             // SvgPicture.asset(
                             //   'assets/images/close-icon.svg',
@@ -133,24 +133,23 @@ class _OnGoingPageState extends State<OnGoingPage> {
                           )
                         : null,
                     hintText: "Search",
-                    hintStyle: const TextStyle(
-                      color: Color(0xFF929292),
+                    hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: ConstantColor.greyColor,
                       fontSize: 12,
-                      fontFamily: 'Poppins',
                       fontWeight: FontWeight.w500,
                     ),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 1,
-                        color: const Color(0xFF000000).withOpacity(0.15),
+                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15),
                       ),
                       borderRadius: BorderRadius.circular(25),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 1,
-                        color: const Color(0xFF000000).withOpacity(0.15),
+                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15),
                       ),
                       borderRadius: BorderRadius.circular(25),
                     ),
@@ -182,16 +181,14 @@ class _OnGoingPageState extends State<OnGoingPage> {
                   suggestions: suggestions
                       .map((e) => SearchFieldListItem<String>(e))
                       .toList(),
-                  suggestionStyle: const TextStyle(
-                    color: Color(0xFF929292),
+                  suggestionStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: ConstantColor.greyColor,
                     fontSize: 14,
-                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
                   ),
-                  searchStyle: const TextStyle(
-                    color: Color(0xFF929292),
+                  searchStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: ConstantColor.greyColor,
                     fontSize: 16,
-                    fontFamily: 'Poppins',
                     fontWeight: FontWeight.w400,
                   ),
                 ),

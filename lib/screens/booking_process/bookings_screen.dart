@@ -18,18 +18,17 @@ class _BookingsPageState extends State<BookingsPage> {
         return Future.value(false);
       },
       child: Scaffold(
-        backgroundColor: mainColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: mainColor,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0,
           automaticallyImplyLeading: false,
-          title: const Text(
+          title: Text(
             'Bookings',
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: 26,
-                fontFamily: 'Montserrat-Regular',
-                fontWeight: FontWeight.w700),
+            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                  fontSize: 26,
+                  fontWeight: FontWeight.w700,
+                ),
           ),
           centerTitle: true,
         ),

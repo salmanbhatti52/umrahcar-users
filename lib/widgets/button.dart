@@ -8,16 +8,15 @@ Widget button(buttonText, context) {
       height: MediaQuery.of(context).size.height * 0.065,
       width: MediaQuery.of(context).size.width * 0.8,
       decoration: BoxDecoration(
-        color: buttonColor,
+        color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Center(
         child: Text(
           buttonText,
           textAlign: TextAlign.center,
-          style: const TextStyle(
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: Colors.white,
-          fontFamily: 'Montserrat-Regular',
             fontWeight: FontWeight.w600,
             fontSize: 18,
           ),
@@ -35,7 +34,7 @@ Widget buttonTransparent(buttonText, context) {
       decoration: BoxDecoration(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: buttonColor, width: 1),
+        border: Border.all(color: Theme.of(context).primaryColor, width: 2),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -49,11 +48,9 @@ Widget buttonTransparent(buttonText, context) {
             buttonText,
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: buttonColor,
-             fontFamily: 'Poppins-Regular',
+              color: Theme.of(context).primaryColor,
               fontWeight: FontWeight.w700,
               fontSize: 16,
-              letterSpacing: 0.3,
             ),
           ),
         ],

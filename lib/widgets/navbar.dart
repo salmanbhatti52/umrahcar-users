@@ -23,12 +23,12 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: mainColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.15),
+          color: Theme.of(context).colorScheme.surface,
           border: Border.all(
-            color: const Color(0xFFFFFFFF).withOpacity(0.15),
+            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15),
             width: 1,
           ),
           borderRadius: const BorderRadius.only(
@@ -44,16 +44,16 @@ class _NavBarState extends State<NavBar> {
               indicatorShape: const CircleBorder(),
               indicatorColor: Colors.transparent,
               labelTextStyle: MaterialStateProperty.all(
-                 TextStyle(
-                  color: buttonColor,
+                TextStyle(
+                  color: Theme.of(context).primaryColor,
                   fontSize: 10,
-                 fontFamily: 'Poppins',
                   fontWeight: FontWeight.w700,
+                  fontFamily: 'Montserrat-Regular',
                 ),
               ),
             ),
             child: NavigationBar(
-              backgroundColor: mainColor,
+              backgroundColor: Theme.of(context).colorScheme.surface,
               selectedIndex: index,
               labelBehavior:
                   NavigationDestinationLabelBehavior.onlyShowSelected,
@@ -62,21 +62,24 @@ class _NavBarState extends State<NavBar> {
               }),
               destinations: [
                 NavigationDestination(
-                  icon: SvgPicture.asset('assets/images/home-icon.svg'),
+                  icon: SvgPicture.asset('assets/images/home-icon.svg',
+                      color: Theme.of(context).colorScheme.onSurface,),
                   selectedIcon:
-                      SvgPicture.asset('assets/images/active-home-icon.svg', color: buttonColor,),
+                      SvgPicture.asset('assets/images/active-home-icon.svg', color: Theme.of(context).primaryColor,),
                   label: 'Home',
                 ),
                 NavigationDestination(
-                  icon: SvgPicture.asset('assets/images/bookings-icon.svg'),
+                  icon: SvgPicture.asset('assets/images/bookings-icon.svg'
+                      , color: Theme.of(context).colorScheme.onSurface,),
                   selectedIcon: SvgPicture.asset(
-                      'assets/images/active-bookings-icon.svg', color: buttonColor,),
+                      'assets/images/active-bookings-icon.svg', color: Theme.of(context).primaryColor,),
                   label: 'Bookings',
                 ),
                 NavigationDestination(
-                  icon: SvgPicture.asset('assets/images/profile-icon.svg'),
+                  icon: SvgPicture.asset('assets/images/profile-icon.svg',
+                      color: Theme.of(context).colorScheme.onSurface,),
                   selectedIcon:
-                      SvgPicture.asset('assets/images/active-profile-icon.svg', color: buttonColor,),
+                      SvgPicture.asset('assets/images/active-profile-icon.svg', color: Theme.of(context).primaryColor,),
                   label: 'Profile',
                 ),
               ],

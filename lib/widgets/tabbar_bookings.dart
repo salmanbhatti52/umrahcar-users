@@ -28,11 +28,11 @@ class _TabbarBookingsState extends State<TabbarBookings>
               width: MediaQuery.of(context).size.width * 0.93,
               height: MediaQuery.of(context).size.height * 0.070,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(30),
                 border: Border.all(
                   width: 1,
-                  color: const Color(0xFF000000).withOpacity(0.15),
+                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15),
                 ),
               ),
               child: Padding(

@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,7 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:umrahcar_user/utils/colors.dart';
 import 'package:umrahcar_user/widgets/button.dart';
 import 'package:umrahcar_user/widgets/navbar.dart';
-import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 
 import '../service/rest_api_service.dart';
 import '../utils/const.dart';
@@ -25,7 +25,6 @@ class _LogInPageState extends State<LogInPage> {
   String backImage = "assets/images/custom-car.png";
   TextEditingController contactNumberController = TextEditingController();
   final GlobalKey<FormState> logInFormKey = GlobalKey<FormState>();
-  final countryPicker = const FlCountryCodePicker();
   CountryCode? countryCode;
 
   DateTime? currentBackPressTime;
@@ -75,7 +74,7 @@ class _LogInPageState extends State<LogInPage> {
           //   backgroundColor: mainColor,
           //   elevation: 0,
           // ),
-          backgroundColor: mainColor,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           body:  Center(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -96,13 +95,12 @@ class _LogInPageState extends State<LogInPage> {
                       SizedBox(height: size.height * 0.0),
                       Container(
                         margin: const EdgeInsets.only(left: 20,right: 20),
-                        child: const Text(
+                        child:  Text(
                           'Welcome to UmrahCar Passenger App',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: 'Montserrat-Regular',
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -128,49 +126,43 @@ class _LogInPageState extends State<LogInPage> {
                             }
                             return null;
                           },
-          
-                          style: const TextStyle(
+
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.w400,
-                            fontFamily: 'Montserrat-Regular',
                             fontSize: 16,
-                            color: Color(0xFF6B7280),
                           ),
                           decoration: InputDecoration(
                             filled: false,
+                            fillColor: Theme.of(context).colorScheme.surface,
                             errorStyle: const TextStyle(
                               color: Colors.red,
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
-                              wordSpacing: 2,
                             ),
-          
                             border: OutlineInputBorder(
-                              borderRadius:
-                              const BorderRadius.all(Radius.circular(10)),
-                              borderSide: BorderSide(
-                                color: const Color(0xFF000000).withOpacity(0.15),
-                                width: 1,
-                              ),
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide: BorderSide.none,
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                              const BorderRadius.all(Radius.circular(14)),
+                              borderRadius: BorderRadius.circular(16),
                               borderSide: BorderSide(
-                                color: const Color(0xFF000000).withOpacity(0.15),
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSurface
+                                    .withOpacity(0.15),
                                 width: 1,
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                              const BorderRadius.all(Radius.circular(16)),
+                              borderRadius: BorderRadius.circular(16),
                               borderSide: BorderSide(
-                                color: const Color(0xFF000000).withOpacity(0.15),
+                                color: Theme.of(context).primaryColor,
                                 width: 1,
                               ),
                             ),
-                            errorBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(16)),
-                              borderSide: BorderSide(
+                            errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide: const BorderSide(
                                 color: Colors.red,
                                 width: 1,
                               ),
@@ -178,56 +170,65 @@ class _LogInPageState extends State<LogInPage> {
                             contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 25, vertical: 20),
                             hintText: "Contact Number",
-                            hintStyle: const TextStyle(
-                              color: Color(0xFF929292),
-                              fontSize: 12,
-                              fontFamily: 'Montserrat-Regular',
-                              fontWeight: FontWeight.w500,
+                            hintStyle: Theme.of(context)
+                                .textTheme
+                                .labelMedium
+                                ?.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withOpacity(0.6),
                             ),
-                            prefixIcon: GestureDetector(
-                              onTap: () async {
-                                final code =
-                                await countryPicker.showPicker(context: context);
-                                setState(() {
-                                  countryCode = code;
-                                });
-                                print('countryCode: ${countryCode!.dialCode}');
-                                print('countryName: ${countryCode!.name}');
-                              },
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 10),
-                                    child: Text(
-                                      countryCode?.dialCode ?? "+234",
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        color: Colors.black54,
-                                        fontSize: 12,
-                                       fontFamily: 'Poppins',
-                                      ),
-                                    ),
+                            prefixIcon: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                CountryCodePicker(
+                                  onChanged: (CountryCode code) {
+                                    setState(() {
+                                      countryCode = code;
+                                    });
+                                    print('countryCode: ${countryCode?.dialCode}');
+                                    print('countryName: ${countryCode?.name}');
+                                  },
+                                  initialSelection: 'NG',
+                                  favorite: ['+234', 'NG'],
+                                  textStyle: TextStyle(
+                                    color: Theme.of(context).colorScheme.onSurface,
+                                    fontSize: 14,
                                   ),
-                                  SizedBox(width: size.width * 0.03),
-                                  const Text(
-                                    '|',
-                                    style: TextStyle(
-                                      color: Colors.black54,
-                                      fontSize: 25,
-                                     fontFamily: 'Poppins',
-                                    ),
+                                  showFlag: true,
+                                  showFlagDialog: true,
+                                  dialogTextStyle: TextStyle(
+                                    color: Theme.of(context).colorScheme.onSurface,
                                   ),
-                                  SizedBox(width: size.width * 0.03),
-                                  SvgPicture.asset(
-                                    'assets/images/contact-icon.svg',
-                                    width: 25,
-                                    height: 25,
-                                    fit: BoxFit.scaleDown,
+                                  dialogBackgroundColor:
+                                  Theme.of(context).scaffoldBackgroundColor,
+                                  searchStyle: TextStyle(
+                                    color: Theme.of(context).colorScheme.onSurface,
                                   ),
-          
-                                ],
-                              ),
+                                  padding: const EdgeInsets.only(left: 10),
+                                ),
+                                Text(
+                                  '|',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 16,
+                                    color:
+                                    Theme.of(context).colorScheme.onSurface,
+                                  ),
+                                ),
+                                SizedBox(width: size.width * 0.03),
+                                SvgPicture.asset(
+                                  'assets/images/contact-icon.svg',
+                                  width: 25,
+                                  height: 25,
+                                  fit: BoxFit.scaleDown,
+                                  color: Theme.of(context).colorScheme.onSurface,
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -238,7 +239,7 @@ class _LogInPageState extends State<LogInPage> {
                           final status =
                           await OneSignal.shared.getDeviceState();
                           String? onesignalId = status?.userId;
-          
+
                           print("onesignalId: $onesignalId");
                           if(logInFormKey.currentState!.validate()) {
                             if(countryCode !=null){
@@ -253,18 +254,18 @@ class _LogInPageState extends State<LogInPage> {
                               await prefs.setString("contact", "${countryCode!.dialCode}${contactNumberController.text}");
                               await prefs.setString("name", "${response.data!.guestData!.name}");
                               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const NavBar()));
-        
-                                      
+
+
                             }
                             else{
-                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Country Code not selected")));
-          
+                              ScaffoldMessenger.of(context).showSnackBar( SnackBar(backgroundColor: Theme.of(context).scaffoldBackgroundColor,content: Text("Country Code not selected")));
+
                             }
-          
-          
+
+
                           }
-          
-          
+
+
                           // Navigator.of(context).pushAndRemoveUntil(
                           //     MaterialPageRoute(
                           //         builder: (context) => const HomePage()),

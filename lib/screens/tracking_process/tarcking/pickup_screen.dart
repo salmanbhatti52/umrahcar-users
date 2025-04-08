@@ -262,7 +262,7 @@ class _PickUpPageState extends State<PickUpPage> {
     var size = MediaQuery.of(context).size;
     print("markerIcon: ${markerIcon}");
     return Scaffold(
-      backgroundColor: mainColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: getProfileResponse.data !=null ?
       Container(
         color: Colors.transparent,
@@ -296,14 +296,14 @@ class _PickUpPageState extends State<PickUpPage> {
                   width: size.width,
                   height: size.height * 0.28,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
                     ),
                     border: Border.all(
                       width: 1,
-                      color: const Color(0xFF000000).withOpacity(0.15),
+                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15),
                     ),
                   ),
                   child: Padding(
@@ -319,21 +319,18 @@ class _PickUpPageState extends State<PickUpPage> {
                             children: [
                               Text(
                                 statuses,
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                   fontSize: 16,
-                                 fontFamily: 'Montserrat-Regular',
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
                                Text(
                                 '${distance} Away',
-                                style:  TextStyle(
-                                  color: secondaryColor,
-                                  fontSize: 16,
-                                  fontFamily: 'Montserrat-Regular',
-                                  fontWeight: FontWeight.w500,
-                                ),
+                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                   color: primaryColor,
+                                   fontSize: 16,
+                                   fontWeight: FontWeight.w500,
+                                 ),
                               ),
                             ],
                           ),
@@ -348,6 +345,8 @@ class _PickUpPageState extends State<PickUpPage> {
                                 children: [
                                   CircleAvatar(
                                     radius: 30,
+                                    backgroundColor: Theme.of(context).colorScheme.surface,
+
                                     child: Image.asset(
                                       'assets/images/user-profile.png',
                                       fit: BoxFit.cover,
@@ -362,20 +361,20 @@ class _PickUpPageState extends State<PickUpPage> {
                                       children: [
                                         Text(
                                           '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.name}',
-                                          style: const TextStyle(
-                                            color: Colors.black,
+                                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                             fontSize: 16,
-                                           fontFamily: 'Montserrat-Regular',
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
                                         SizedBox(height: size.height * 0.003),
                                         Text(
                                           '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.contact}',
-                                          style: const TextStyle(
-                                            color: Color(0xFF929292),
+                                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onSurface
+                                                .withOpacity(0.6),
                                             fontSize: 12,
-                                           fontFamily: 'Montserrat-Regular',
                                             fontWeight: FontWeight.w400,
                                           ),
                                         ),
@@ -414,11 +413,23 @@ class _PickUpPageState extends State<PickUpPage> {
                                       },
                                       child: SvgPicture.asset(
                                         'assets/images/chat-icon.svg',
+                                        color: Theme.of(context).colorScheme.onSurface,
                                       ),
                                     ),
                                     SizedBox(width: size.width * 0.06),
-                                    SvgPicture.asset(
-                                      'assets/images/contact-icon.svg',
+                                    InkWell(
+                                      onTap: () async {
+                                        Uri phoneno = Uri.parse('tel:${widget.getBookingData!.vehicles![0].vehiclesDrivers!.contact}');
+                                        if (await launchUrl(phoneno)) {
+                                          // Dialer opened
+                                        } else {
+                                          // Dialer not opened
+                                        }
+                                      },
+                                      child: SvgPicture.asset(
+                                        'assets/images/contact-icon.svg',
+                                        color: Theme.of(context).colorScheme.onSurface,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -434,14 +445,14 @@ class _PickUpPageState extends State<PickUpPage> {
                                     'assets/images/small-black-bookings-icon.svg',
                                     width: 20,
                                     height: 20,
+                                    color: Theme.of(context).colorScheme.onSurface,
                                   ),
                                   SizedBox(width: size.width * 0.032),
                                   Text(
                                     '${widget.getBookingData!.pickupDate}',
-                                    style: const TextStyle(
-                                      color: Color(0xFF565656),
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                      color: ConstantColor.darkgreyColor,
                                       fontSize: 12,
-                                     fontFamily: 'Montserrat-Regular',
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -454,14 +465,14 @@ class _PickUpPageState extends State<PickUpPage> {
                                     'assets/images/clock-icon.svg',
                                     width: 20,
                                     height: 20,
+                                    color: Theme.of(context).colorScheme.onSurface,
                                   ),
                                   SizedBox(width: size.width * 0.032),
                                   Text(
                                     '${widget.getBookingData!.pickupTime}',
-                                    style: const TextStyle(
-                                      color: Color(0xFF565656),
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                      color: ConstantColor.darkgreyColor,
                                       fontSize: 12,
-                                     fontFamily: 'Montserrat-Regular',
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -476,14 +487,14 @@ class _PickUpPageState extends State<PickUpPage> {
                                 'assets/images/clock-icon.svg',
                                 width: 20,
                                 height: 20,
+                                color: Theme.of(context).colorScheme.onSurface,
                               ),
                               SizedBox(width: size.width * 0.032),
                               Text(
                                 '${widget.getBookingData!.flightTime}',
-                                style: const TextStyle(
-                                  color: Color(0xFF565656),
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: ConstantColor.darkgreyColor,
                                   fontSize: 12,
-                                 fontFamily: 'Montserrat-Regular',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -514,28 +525,33 @@ class _PickUpPageState extends State<PickUpPage> {
                   Navigator.pop(context);
                 },
                 child: Container(
-                    height: 40,
-                    width: 40,
-                    child: Column(
-                      children: [
-                        SizedBox(height: 10,),
-                        SvgPicture.asset('assets/images/back-icon.svg'),
-                      ],
-                    )),
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Theme.of(context).colorScheme.surface,
+                  ),
+                  child: Center(
+                    child: SvgPicture.asset(
+                      'assets/images/back-icon.svg',
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
         ),
-      ): const Column(
+      ): Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
-            padding: EdgeInsets.only(left: 175),
+            padding: const EdgeInsets.only(left: 175, top: 30),
             child: CircularProgressIndicator(
-              color: Colors.blue,
+              valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).colorScheme.onSurface),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -544,7 +560,7 @@ class _PickUpPageState extends State<PickUpPage> {
   Widget driverReached() {
     var size = MediaQuery.of(context).size;
     return Dialog(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(40),
       ),
@@ -567,6 +583,7 @@ class _PickUpPageState extends State<PickUpPage> {
               SizedBox(height: size.height * 0.02),
               CircleAvatar(
                 radius: 45,
+                backgroundColor: Theme.of(context).colorScheme.surface,
                 child: Image.asset(
                   'assets/images/profile.png',
                   fit: BoxFit.cover,
@@ -576,39 +593,35 @@ class _PickUpPageState extends State<PickUpPage> {
                Text(
                 '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.name}',
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Color(0xFF565656),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                 fontFamily: 'Montserrat-Regular',
-                ),
+                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                   color: ConstantColor.darkgreyColor,
+                   fontSize: 16,
+                   fontWeight: FontWeight.w600,
+                 ),
               ),
               SizedBox(height: size.height * 0.01),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SvgPicture.asset('assets/images/green-fast-car-icon.svg'),
+                  SvgPicture.asset('assets/images/green-fast-car-icon.svg' , color: Theme.of(context).colorScheme.onSurface,),
                   SizedBox(width: size.width * 0.02),
                    Text(
                     '${widget.getBookingData!.vehicles![0].vehiclesName!.name}',
-                    style:  TextStyle(
-                      color: secondaryColor,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                     fontFamily: 'Montserrat-Regular',
-                    ),
+                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                       color: primaryColor,
+                       fontSize: 12,
+                       fontWeight: FontWeight.w500,
+                     ),
                   ),
                 ],
               ),
               SizedBox(height: size.height * 0.04),
-              const Text(
+               Text(
                 'Your Driver has\nReached on your Spot',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
+                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                   fontSize: 26,
                   fontWeight: FontWeight.w700,
-                  fontFamily: 'Montserrat-Regular',
                 ),
               ),
               SizedBox(height: size.height * 0.08),

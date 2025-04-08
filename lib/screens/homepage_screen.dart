@@ -103,11 +103,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: mainColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
           Container(
-            color: buttonColor,
+            color: primaryColor,
             // decoration: const BoxDecoration(
             //   image: DecorationImage(
             //     image: AssetImage('assets/images/background.png'),
@@ -128,6 +128,7 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.only(left: 20),
                         child: CircleAvatar(
                           radius: 35,
+                          backgroundColor: Theme.of(context).colorScheme.surface,
                           child: Image.asset(
                             'assets/images/profile.png',
                             fit: BoxFit.cover,
@@ -143,10 +144,9 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Text(
                               '$guestName',
-                              style: const TextStyle(
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                 color: Colors.white,
                                 fontSize: 16,
-                                fontFamily: 'Montserrat-Regular',
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -191,7 +191,7 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: mainColor,
+                      color: Theme.of(context).scaffoldBackgroundColor,
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(20),
@@ -201,16 +201,14 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: size.height * 0.1567),
-                        const Padding(
+                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 'Bookings',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontFamily: 'Montserrat-Regular',
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 16,
                                 ),
@@ -264,11 +262,11 @@ class _HomePageState extends State<HomePage> {
                       width: size.width,
                       height: size.height * 0.245,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
                           width: 1,
-                          color: Colors.black.withOpacity(0.15),
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15),
                         ),
                       ),
                       child: Padding(
@@ -277,11 +275,9 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                             Text(
                               'On Going Booking',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'Montserrat-Regular',
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16,
                               ),
@@ -311,6 +307,7 @@ class _HomePageState extends State<HomePage> {
                                     children: [
                                       CircleAvatar(
                                         radius: 18,
+                                        backgroundColor: Theme.of(context).colorScheme.surface,
                                         child: Image.asset(
                                           'assets/images/user-profile.png',
                                         ),
@@ -324,9 +321,7 @@ class _HomePageState extends State<HomePage> {
                                                 null
                                             ? '${getBookingOngoingResponse!.data![0].vehicles![0].vehiclesDrivers!.name}'
                                             : "",
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: 'Montserrat-Regular',
+                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                           fontWeight: FontWeight.w500,
                                           fontSize: 12,
                                         ),
@@ -344,12 +339,11 @@ class _HomePageState extends State<HomePage> {
                                       width: size.width * 0.25,
                                       child: AutoSizeText(
                                         '${getBookingOngoingResponse!.data![0].routes!.pickup!.name}',
-                                        style: const TextStyle(
-                                          color: Color(0xFF565656),
-                                          fontFamily: 'Montserrat-Regular',
-                                          fontWeight: FontWeight.w900,
-                                          fontSize: 12,
-                                        ),
+                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                        color: ConstantColor.darkgreyColor,
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 12,
+                                      ),
                                         minFontSize: 12,
                                         maxFontSize: 12,
                                         maxLines: 1,
@@ -366,7 +360,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 )
-              : const Padding(
+              :  Padding(
                   padding: EdgeInsets.only(left: 120, right: 20, top: 180),
                   child: Column(
                     children: [
@@ -375,9 +369,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Text(
                         'No Current Booking',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'Montserrat-Regular',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w900,
                           fontSize: 15,
                         ),

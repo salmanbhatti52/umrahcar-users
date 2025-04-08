@@ -39,10 +39,8 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                 children: [
                   Text(
                     getData.name!,
-                    style: const TextStyle(
-                      color: Colors.black,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontSize: 16,
-                     fontFamily: 'Poppins',
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -53,24 +51,24 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                     children: [
                       Text(
                         "booking id: ${getData.bookingsId}",
-                        style: const TextStyle(
-                          color: Color(0xFF565656),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: ConstantColor.darkgreyColor,
                           fontSize: 10,
-                         fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
                         ),
                       ),
 
                       SizedBox(width: size.width * 0.05),
                       SvgPicture.asset(
-                          'assets/images/small-black-location-icon.svg'),
+                        'assets/images1/small-black-location-icon.svg',
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
                       SizedBox(width: size.width * 0.01),
                       Text(
                         "${getData.routes!.pickup!.name}",
-                        style: const TextStyle(
-                          color: Color(0xFF565656),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: ConstantColor.darkgreyColor,
                           fontSize: 10,
-                          fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -91,14 +89,16 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                SvgPicture.asset('assets/images/small-black-car-icon.svg'),
+                                SvgPicture.asset(
+                                  'assets/images1/small-black-car-icon.svg',
+                                  color: Theme.of(context).colorScheme.onSurface,
+                                ),
                                 SizedBox(width: size.width * 0.01),
                                 Text(
                                   '${getData.vehicles![i].vehiclesName!.name}',
-                                  style: const TextStyle(
-                                    color: Color(0xFF565656),
+                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: ConstantColor.darkgreyColor,
                                     fontSize: 10,
-                                  fontFamily: 'Poppins',
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -111,14 +111,16 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 4),
-                                    child: SvgPicture.asset('assets/images/small-black-car-icon.svg'),
+                                    child: SvgPicture.asset(
+                                      'assets/images1/small-black-car-icon.svg',
+                                      color: Theme.of(context).colorScheme.onSurface,
+                                    ),
                                   ),
                                   Text(
                                     '${getData.vehicles![i].vehiclesName!.name}',
-                                    style: const TextStyle(
-                                      color: Color(0xFF565656),
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                      color: ConstantColor.darkgreyColor,
                                       fontSize: 10,
-                                     fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -135,15 +137,17 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SvgPicture.asset(
-                          'assets/images/small-black-bookings-icon.svg'),
+                        'assets/images1/small-black-bookings-icon.svg',
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
                       SizedBox(width: size.width * 0.01),
                       Text(
-                        '${getData.pickupTime} ${getData.pickupDate}',                        style: const TextStyle(
-                          color: Color(0xFF565656),
-                          fontSize: 10,
-                        fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w500,
-                        ),
+                        '${getData.pickupTime} ${getData.pickupDate}',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: ConstantColor.darkgreyColor,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w500,
+                      ),
                       ),
                     ],
                   ),
@@ -161,10 +165,9 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                 child: Text(
                   'Completed',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: secondaryColor,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: ConstantColor.secondaryColor,
                     fontSize: 12,
-                  fontFamily: 'Poppins',
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -178,7 +181,15 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
   ):Container(
     height: 300,
     width: 300,
-    child: Center(child: const Text("No Completed Booking")),
+    child: Center(
+      child: Text(
+        "No Completed Booking",
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    ),
   );
 }
 

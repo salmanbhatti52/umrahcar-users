@@ -56,10 +56,8 @@ Widget onGoingList(
                         children: [
                           Text(
                             getData.name!,
-                            style: const TextStyle(
-                              color: Colors.black,
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               fontSize: 16,
-                              fontFamily: 'Poppins',
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -70,23 +68,23 @@ Widget onGoingList(
                             children: [
                               Text(
                                 "booking id: ${getData.bookingsId}",
-                                style: const TextStyle(
-                                  color: Color(0xFF565656),
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: ConstantColor.darkgreyColor,
                                   fontSize: 10,
-                                  fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
                               SizedBox(width: size.width * 0.02),
                               SvgPicture.asset(
-                                  'assets/images/small-black-location-icon.svg'),
+                                'assets/images1/small-black-location-icon.svg',
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
                               SizedBox(width: size.width * 0.01),
                               Text(
                                 "${getData.routes!.pickup!.name}",
-                                style: const TextStyle(
-                                  color: Color(0xFF565656),
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: ConstantColor.darkgreyColor,
                                   fontSize: 10,
-                                  fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -110,15 +108,16 @@ Widget onGoingList(
                                                 CrossAxisAlignment.center,
                                             children: [
                                               SvgPicture.asset(
-                                                  'assets/images/small-black-car-icon.svg'),
+                                                'assets/images1/small-black-car-icon.svg',
+                                                color: Theme.of(context).colorScheme.onSurface,
+                                              ),
                                               SizedBox(
                                                   width: size.width * 0.01),
                                               Text(
                                                 '${getData.vehicles![i].vehiclesName!.name}',
-                                                style: const TextStyle(
-                                                  color: Color(0xFF565656),
+                                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                                  color: ConstantColor.darkgreyColor,
                                                   fontSize: 10,
-                                                  fontFamily: 'Poppins',
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                               ),
@@ -134,14 +133,15 @@ Widget onGoingList(
                                                       const EdgeInsets.only(
                                                           bottom: 4),
                                                   child: SvgPicture.asset(
-                                                      'assets/images/small-black-car-icon.svg'),
+                                                    'assets/images1/small-black-car-icon.svg',
+                                                    color: Theme.of(context).colorScheme.onSurface,
+                                                  ),
                                                 ),
                                                 Text(
                                                   '${getData.vehicles![i].vehiclesName!.name}',
-                                                  style: const TextStyle(
-                                                    color: Color(0xFF565656),
+                                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                                    color: ConstantColor.darkgreyColor,
                                                     fontSize: 10,
-                                                    fontFamily: 'Poppins',
                                                     fontWeight: FontWeight.w500,
                                                   ),
                                                 ),
@@ -158,14 +158,15 @@ Widget onGoingList(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               SvgPicture.asset(
-                                  'assets/images/small-black-bookings-icon.svg'),
+                                'assets/images1/small-black-calendar-icon.svg',
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
                               SizedBox(width: size.width * 0.01),
                               Text(
                                 '${_formatDate(getData.pickupDate!.toString())} ${_formatTime(getData.pickupTime!)}',
-                                style: const TextStyle(
-                                  color: Color(0xFF565656),
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: ConstantColor.darkgreyColor,
                                   fontSize: 10,
-                                  fontFamily: 'Poppins',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -186,10 +187,9 @@ Widget onGoingList(
                         child: Text(
                           '',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: buttonColor,
-                            fontSize: 12,
-                            fontFamily: 'Poppins',
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: ConstantColor.darkgreyColor,
+                            fontSize: 10,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -205,7 +205,11 @@ Widget onGoingList(
       : const SizedBox(
           // height: 300,
           // width: 300,
-          child: Center(child: Text("No Ongoing Booking")),
+          child: Center(child: Text("No Ongoing Booking", style: TextStyle(
+            fontSize: 16,
+            color: ConstantColor.darkgreyColor,
+            fontWeight: FontWeight.w500,
+          ))),
         );
 }
 

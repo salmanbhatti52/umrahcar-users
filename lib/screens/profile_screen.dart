@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_switch/flutter_switch.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:umrahcar_user/main.dart';
 import 'package:umrahcar_user/utils/colors.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:umrahcar_user/widgets/button.dart';
@@ -32,18 +35,17 @@ class _ProfilePageState extends State<ProfilePage> {
         return Future.value(false);
       },
       child: Scaffold(
-        backgroundColor: mainColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: mainColor,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0,
           automaticallyImplyLeading: false,
-          title: const Text(
+          title:  Text(
             'Profile',
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: 26,
-                fontFamily: 'Montserrat-Regular',
-                fontWeight: FontWeight.w700),
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+              fontSize: 26,
+              fontWeight: FontWeight.w700,
+            ),
           ),
           centerTitle: true,
         ),
@@ -68,10 +70,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     color: Colors.transparent,
                     child: AutoSizeText(
                       '$guestName',
-                      style: const TextStyle(
-                        color: Colors.black,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontSize: 16,
-                        fontFamily: 'Montserrat-Regular',
                         fontWeight: FontWeight.w600,
                       ),
                       minFontSize: 16,
@@ -90,23 +90,27 @@ class _ProfilePageState extends State<ProfilePage> {
                   readOnly: true,
                   decoration: InputDecoration(
                     hintText: '$guestName',
-                    hintStyle: TextStyle(
-                      color: Colors.black.withOpacity(0.5),
-                      fontSize: 15,
-                    ),
+                    hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16,
+                  ),
                     prefixIcon: Padding(
                       padding: const EdgeInsets.all(13.0),
                       child: SvgPicture.asset(
                         'assets/images/name-icon.svg',
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25),
-                        borderSide: const BorderSide(color: Colors.grey)),
+                        borderSide:  BorderSide(color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withOpacity(0.5),)),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25),
-                      borderSide: const BorderSide(
-                        color: Color.fromARGB(255, 21, 21, 22),
+                      borderSide:  BorderSide(
+                        color: Theme.of(context).primaryColor,
                         width: 1.0,
                       ),
                     ),
@@ -120,23 +124,27 @@ class _ProfilePageState extends State<ProfilePage> {
                   readOnly: true,
                   decoration: InputDecoration(
                     hintText: '$phoneNmbr',
-                    hintStyle: TextStyle(
-                      color: Colors.black.withOpacity(0.5),
-                      fontSize: 15,
+                    hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
                     ),
                     prefixIcon: Padding(
                       padding: const EdgeInsets.all(14.0),
                       child: SvgPicture.asset(
                         'assets/images/contact-icon.svg',
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25),
-                        borderSide: const BorderSide(color: Colors.grey)),
+                        borderSide:  BorderSide(color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withOpacity(0.5),)),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25),
-                      borderSide: const BorderSide(
-                        color: Color.fromARGB(255, 21, 21, 22),
+                      borderSide:  BorderSide(
+                        color: Theme.of(context).primaryColor,
                         width: 1.0,
                       ),
                     ),
@@ -144,7 +152,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
 
-              SizedBox(height: size.height * 0.02),
+              SizedBox(height: size.height * 0.17),
               // SizedBox(height: size.height * 0.05),
               // Padding(
               //   padding: const EdgeInsets.only(left: 40),
@@ -180,7 +188,78 @@ class _ProfilePageState extends State<ProfilePage> {
               //   },
               //   child: buttonTransparent('Delete my Account', context),
               // ),
-              SizedBox(height: size.height * 0.20),
+              Container(
+                width: size.width * 0.8,
+                height: size.height * 0.08,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface,
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(
+                    width: 1,
+                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.15),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context).shadowColor.withOpacity(0.05),
+                      blurRadius: 8,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      Provider.of<ThemeProvider>(context).isDarkMode
+                          ? Icons.light_mode
+                          : Icons.dark_mode,
+                      size: 25,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                    SizedBox(width: size.width * 0.04),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Dark Mode',
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            Provider.of<ThemeProvider>(context).isDarkMode
+                                ? 'Switch to Light Mode'
+                                : 'Switch to Dark Mode',
+                            style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                              color: ConstantColor.darkgreyColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    FlutterSwitch(
+                      width: 45,
+                      height: 25,
+                      activeColor: ConstantColor.primaryColor,
+                      inactiveColor: ConstantColor.darkgreyColor.withOpacity(0.2),
+                      activeToggleColor: primaryColor,
+                      inactiveToggleColor: ConstantColor.darkgreyColor,
+                      toggleSize: 25,
+                      value: Provider.of<ThemeProvider>(context).isDarkMode,
+                      borderRadius: 50,
+                      padding: 2,
+                      onToggle: (val) {
+                        Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: size.height * 0.03),
               InkWell(
                   onTap: () async {
                     SharedPreferences preferences =
