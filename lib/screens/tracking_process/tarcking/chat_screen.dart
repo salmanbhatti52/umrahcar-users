@@ -240,19 +240,19 @@ class _ChatPageState extends State<ChatPage> {
                               ),
                             ),
                           ),
-                          const SizedBox(height: 3),
-                          Text(
-                            // You can format the timestamp here if available in your model
-                            "02:09", // Replace with actual timestamp if available
-                            style: TextStyle(
-                              color: isSender
-                                  ? primaryColor
-                                  : Colors.grey,
-                              fontSize: 10,
-                              fontFamily: 'Montserrat-Regular',
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
+                          // const SizedBox(height: 3),
+                          // Text(
+                          //   // You can format the timestamp here if available in your model
+                          //   "02:09", // Replace with actual timestamp if available
+                          //   style: TextStyle(
+                          //     color: isSender
+                          //         ? primaryColor
+                          //         : Colors.grey,
+                          //     fontSize: 10,
+                          //     fontFamily: 'Montserrat-Regular',
+                          //     fontWeight: FontWeight.w400,
+                          //   ),
+                          // ),
                         ],
                       ),
                     );
