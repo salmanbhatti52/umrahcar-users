@@ -196,7 +196,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   void configOneSignel() {
-    OneSignal.shared.setAppId(onesignalAppId);
+    OneSignal.initialize(onesignalAppId);
   }
 
   @override
