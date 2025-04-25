@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:umrahcar_user/screens/tracking_process/tarcking/chat_screen.dart';
 import 'package:umrahcar_user/utils/colors.dart';
 import 'package:umrahcar_user/widgets/button.dart';
 import 'package:umrahcar_user/screens/tracking_process/tarcking/pickup_screen.dart';
@@ -547,6 +548,62 @@ class _TrackPageState extends State<TrackPage> {
                                             width: size.width * 0.275,
                                             child: Text(
                                               '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.whatsapp}',
+                                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                                color: ConstantColor.darkgreyColor,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              if (widget.getBookingData!.vehicles![0]
+                                      .vehiclesDrivers !=
+                                  null)
+                                SizedBox(height: size.height * 0.02),
+                              if (widget.getBookingData!.vehicles![0]
+                                      .vehiclesDrivers !=
+                                  null)
+                                Row(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        print(
+                                            "iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => ChatPage(
+                                                  bookingId: widget
+                                                      .getBookingData!
+                                                      .bookingsId,
+                                                  usersDriverId: widget
+                                                      .getBookingData!
+                                                      .vehicles![0]
+                                                      .usersDriversId,
+                                                  guestName: widget
+                                                      .getBookingData!.name,
+                                                  driverName: widget
+                                                      .getBookingData!
+                                                      .vehicles![0]
+                                                      .vehiclesDrivers!
+                                                      .name),
+                                            ));
+                                      },
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            'assets/images/chat-icon.svg',
+                                            color: Theme.of(context).colorScheme.onSurface,
+                                          ),
+                                          SizedBox(width: size.width * 0.032),
+                                          SizedBox(
+                                            width: size.width * 0.275,
+                                            child: Text(
+                                              'Chat',
                                               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                                 color: ConstantColor.darkgreyColor,
                                                 fontSize: 12,

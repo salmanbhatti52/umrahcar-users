@@ -134,7 +134,7 @@ class _PickUpPageState extends State<PickUpPage> {
         print("Driver Status: ${getBookingOngoingResponse.data![i].driverTripStatus!}");
         String? latt=getBookingOngoingResponse.data![i].vehicles![0].vehiclesDrivers!.lattitude;
         String? longg=getBookingOngoingResponse.data![i].vehicles![0].vehiclesDrivers!.longitude;
-        statuses=getBookingOngoingResponse.data![i].driverTripStatus!.toString();
+        statuses=getBookingOngoingResponse.data![i].driverTripStatus!.status.toString();
         print("statusessss: ${statuses}");
         calculateDistance(longg,latt);
 
