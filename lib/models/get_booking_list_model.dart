@@ -43,7 +43,7 @@ class Datum {
   String? bookingTime;
   String? routesId;
   String? routesDetails;
-  dynamic pickupHotel;
+  DropoffHotel? pickupHotel;
   DropoffHotel? dropoffHotel;
   String? noOfPassengers;
   String? noOfAdults;
@@ -156,8 +156,10 @@ class Datum {
     bookingTime: json["booking_time"],
     routesId: json["routes_id"],
     routesDetails: json["routes_details"],
-    pickupHotel: json["pickup_hotel"],
-    dropoffHotel: json["dropoff_hotel"] == null ? null : DropoffHotel.fromJson(json["dropoff_hotel"]),
+    // pickupHotel: json["pickup_hotel"],
+    // dropoffHotel: json["dropoff_hotel"] == null ? null : DropoffHotel.fromJson(json["dropoff_hotel"]),
+    pickupHotel : json["pickup_hotel"] != null ? DropoffHotel.fromJson(json["pickup_hotel"]) : null,
+    dropoffHotel : json["dropoff_hotel"] != null ? DropoffHotel.fromJson(json["dropoff_hotel"]) : null,
     noOfPassengers: json["no_of_passengers"],
     noOfAdults: json["no_of_adults"],
     noOfChilds: json["no_of_childs"],
@@ -213,8 +215,8 @@ class Datum {
     "booking_time": bookingTime,
     "routes_id": routesId,
     "routes_details": routesDetails,
-    "pickup_hotel": pickupHotel,
-    "dropoff_hotel": dropoffHotel?.toJson(),
+    "pickup_hotel": pickupHotel!.toJson(),
+    "dropoff_hotel": dropoffHotel!.toJson(),
     "no_of_passengers": noOfPassengers,
     "no_of_adults": noOfAdults,
     "no_of_childs": noOfChilds,

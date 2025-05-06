@@ -5,7 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:location/location.dart';
+import 'package:umrahcar_user/screens/homepage_screen.dart';
 import 'package:umrahcar_user/screens/tracking_process/tarcking/chat_screen.dart';
 import 'package:umrahcar_user/utils/colors.dart';
 import 'package:umrahcar_user/widgets/button.dart';
@@ -216,6 +218,128 @@ class _TrackPageState extends State<TrackPage> {
     };
   }
 
+  GetBookingListModel getBookingOngoingResponse=GetBookingListModel();
+  String statuses="Assigned";
+  getBookingListOngoing()async{
+    print("phoneNmbr $phoneNmbr");
+    var mapData={
+      "contact": phoneNmbr.toString()
+    };
+    getBookingOngoingResponse= await DioClient().getBookingOngoing(mapData, context);
+    print("response id: ${getBookingOngoingResponse.data}");
+    for(int i=0;i<getBookingOngoingResponse.data!.length;i++){
+      if(getBookingOngoingResponse.data![i].bookingsId==widget.getBookingData!.bookingsId){
+        statuses=getBookingOngoingResponse.data![i].driverTripStatus!.status.toString();
+        if(statuses=="Reached"){
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => driverReached(),
+          );
+          setState(() {
+
+          });
+        }
+        setState(() {
+
+        });
+      }
+    }
+    setState(() {
+
+    });
+
+  }
+
+  Widget driverReached() {
+    var size = MediaQuery.of(context).size;
+    return Dialog(
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(40),
+      ),
+      insetPadding: const EdgeInsets.only(left: 20, right: 20),
+      child: SizedBox(
+        height: size.height * 0.65,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 250),
+                child: IconButton(onPressed: (){
+                  Navigator.pop(context);
+                  setState(() {
+
+                  });
+                }, icon: Icon(Icons.cancel, size: 30),),
+              ),
+              SizedBox(height: size.height * 0.02),
+              CircleAvatar(
+                radius: 45,
+                backgroundColor: Theme.of(context).colorScheme.surface,
+                child: Image.asset(
+                  'assets/images/profile.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+              SizedBox(height: size.height * 0.02),
+              Text(
+                '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.name}',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: ConstantColor.darkgreyColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: size.height * 0.01),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset('assets/images/green-fast-car-icon.svg' , color: Theme.of(context).colorScheme.onSurface,),
+                  SizedBox(width: size.width * 0.02),
+                  Text(
+                    '${widget.getBookingData!.vehicles![0].vehiclesName!.name}',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: primaryColor,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: size.height * 0.04),
+              Text(
+                'Your Driver has\nReached on your Spot',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                  fontSize: 26,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              SizedBox(height: size.height * 0.08),
+              GestureDetector(
+                  onTap: () async {
+                    Uri phoneno = Uri.parse('tel: ${widget.getBookingData!.vehicles![0].vehiclesDrivers!.contact}');
+                    if (await launchUrl(phoneno)) {
+                      //dialer opened
+                    }else{
+                      //dailer is not opened
+                    }
+                    print(
+                        "iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
+
+                  },
+                  child: dialogButtonTransparent('Contact', context)),
+
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   void dispose() {
     timer?.cancel();
@@ -282,12 +406,22 @@ class _TrackPageState extends State<TrackPage> {
                                     ),
                                   ),
                                   const SizedBox(
-                                    width: 20,
+                                    width: 10,
                                   ),
                                   Text(
                                     '(Booking Id ${widget.getBookingData!.bookingsId})',
                                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                      fontSize: 13,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    statuses,
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -323,6 +457,42 @@ class _TrackPageState extends State<TrackPage> {
                               SizedBox(height: size.height * 0.02),
                               Text(
                                 '${widget.getBookingData!.routes!.dropoff!.name} (${widget.getBookingData!.routes!.dropoff!.type})',
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: ConstantColor.darkgreyColor,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              SizedBox(height: size.height * 0.025),
+                              Text(
+                                'Pickup Hotel',
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: ConstantColor.greyColor,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              SizedBox(height: size.height * 0.02),
+                              Text(
+                                '${widget.getBookingData!.pickupHotel!.name}',
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: ConstantColor.darkgreyColor,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              SizedBox(height: size.height * 0.02),
+                              Text(
+                                'Drop off Hotel',
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: ConstantColor.greyColor,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              SizedBox(height: size.height * 0.02),
+                              Text(
+                                '${widget.getBookingData!.dropoffHotel!.name}',
                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                   color: ConstantColor.darkgreyColor,
                                   fontSize: 12,
@@ -374,7 +544,9 @@ class _TrackPageState extends State<TrackPage> {
                                       ),
                                       SizedBox(width: size.width * 0.032),
                                       Text(
-                                        '${widget.getBookingData!.flightDate}',
+                                        widget.getBookingData?.pickupDate != null
+                                            ? DateFormat('yyyy-MM-dd').format(widget.getBookingData!.pickupDate!)
+                                            : '',
                                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                           color: ConstantColor.darkgreyColor,
                                           fontSize: 12,
@@ -530,92 +702,141 @@ class _TrackPageState extends State<TrackPage> {
                                       ),
                                     ),
                                     SizedBox(width: size.width * 0.14),
-                                    InkWell(
-                                      onTap: () {
-                                        print(
-                                            "nmbr: ${widget.getBookingData!.vehicles![0].vehiclesDrivers!.whatsapp}");
-                                        _launchURL(
-                                            'https://wa.me/${widget.getBookingData!.vehicles![0].vehiclesDrivers!.whatsapp}/?text=hello');
-                                        setState(() {});
-                                      },
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                              color: Theme.of(context).colorScheme.onSurface,
-                                              'assets/images/whatsapp-icon.svg'),
-                                          SizedBox(width: size.width * 0.032),
-                                          SizedBox(
-                                            width: size.width * 0.275,
-                                            child: Text(
-                                              '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.whatsapp}',
-                                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                                color: ConstantColor.darkgreyColor,
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w500,
+                                    // InkWell(
+                                    //   onTap: () {
+                                    //     print(
+                                    //         "nmbr: ${widget.getBookingData!.vehicles![0].vehiclesDrivers!.whatsapp}");
+                                    //     _launchURL(
+                                    //         'https://wa.me/${widget.getBookingData!.vehicles![0].vehiclesDrivers!.whatsapp}/?text=hello');
+                                    //     setState(() {});
+                                    //   },
+                                    //   child: Row(
+                                    //     children: [
+                                    //       SvgPicture.asset(
+                                    //           color: Theme.of(context).colorScheme.onSurface,
+                                    //           'assets/images/whatsapp-icon.svg'),
+                                    //       SizedBox(width: size.width * 0.032),
+                                    //       SizedBox(
+                                    //         width: size.width * 0.275,
+                                    //         child: Text(
+                                    //           '${widget.getBookingData!.vehicles![0].vehiclesDrivers!.whatsapp}',
+                                    //           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    //             color: ConstantColor.darkgreyColor,
+                                    //             fontSize: 12,
+                                    //             fontWeight: FontWeight.w500,
+                                    //           ),
+                                    //         ),
+                                    //       ),
+                                    //     ],
+                                    //   ),
+                                    // ),
+                                    Row(
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            print(
+                                                "iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => ChatPage(
+                                                      bookingId: widget
+                                                          .getBookingData!
+                                                          .bookingsId,
+                                                      usersDriverId: widget
+                                                          .getBookingData!
+                                                          .vehicles![0]
+                                                          .usersDriversId,
+                                                      guestName: widget
+                                                          .getBookingData!.name,
+                                                      driverName: widget
+                                                          .getBookingData!
+                                                          .vehicles![0]
+                                                          .vehiclesDrivers!
+                                                          .name),
+                                                ));
+                                          },
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                'assets/images/chat-icon.svg',
+                                                color: Theme.of(context).colorScheme.onSurface,
                                               ),
-                                            ),
+                                              SizedBox(width: size.width * 0.032),
+                                              SizedBox(
+                                                width: size.width * 0.275,
+                                                child: Text(
+                                                  'Chat',
+                                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                                    color: ConstantColor.darkgreyColor,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
-                              if (widget.getBookingData!.vehicles![0]
-                                      .vehiclesDrivers !=
-                                  null)
-                                SizedBox(height: size.height * 0.02),
-                              if (widget.getBookingData!.vehicles![0]
-                                      .vehiclesDrivers !=
-                                  null)
-                                Row(
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        print(
-                                            "iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => ChatPage(
-                                                  bookingId: widget
-                                                      .getBookingData!
-                                                      .bookingsId,
-                                                  usersDriverId: widget
-                                                      .getBookingData!
-                                                      .vehicles![0]
-                                                      .usersDriversId,
-                                                  guestName: widget
-                                                      .getBookingData!.name,
-                                                  driverName: widget
-                                                      .getBookingData!
-                                                      .vehicles![0]
-                                                      .vehiclesDrivers!
-                                                      .name),
-                                            ));
-                                      },
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            'assets/images/chat-icon.svg',
-                                            color: Theme.of(context).colorScheme.onSurface,
-                                          ),
-                                          SizedBox(width: size.width * 0.032),
-                                          SizedBox(
-                                            width: size.width * 0.275,
-                                            child: Text(
-                                              'Chat',
-                                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                                color: ConstantColor.darkgreyColor,
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                              // if (widget.getBookingData!.vehicles![0]
+                              //         .vehiclesDrivers !=
+                              //     null)
+                              //   SizedBox(height: size.height * 0.02),
+                              // if (widget.getBookingData!.vehicles![0]
+                              //         .vehiclesDrivers !=
+                              //     null)
+                              //   Row(
+                              //     children: [
+                              //       InkWell(
+                              //         onTap: () {
+                              //           print(
+                              //               "iddddd ${widget.getBookingData!.vehicles![0].usersDriversId}");
+                              //           Navigator.push(
+                              //               context,
+                              //               MaterialPageRoute(
+                              //                 builder: (context) => ChatPage(
+                              //                     bookingId: widget
+                              //                         .getBookingData!
+                              //                         .bookingsId,
+                              //                     usersDriverId: widget
+                              //                         .getBookingData!
+                              //                         .vehicles![0]
+                              //                         .usersDriversId,
+                              //                     guestName: widget
+                              //                         .getBookingData!.name,
+                              //                     driverName: widget
+                              //                         .getBookingData!
+                              //                         .vehicles![0]
+                              //                         .vehiclesDrivers!
+                              //                         .name),
+                              //               ));
+                              //         },
+                              //         child: Row(
+                              //           children: [
+                              //             SvgPicture.asset(
+                              //               'assets/images/chat-icon.svg',
+                              //               color: Theme.of(context).colorScheme.onSurface,
+                              //             ),
+                              //             SizedBox(width: size.width * 0.032),
+                              //             SizedBox(
+                              //               width: size.width * 0.275,
+                              //               child: Text(
+                              //                 'Chat',
+                              //                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              //                   color: ConstantColor.darkgreyColor,
+                              //                   fontSize: 12,
+                              //                   fontWeight: FontWeight.w500,
+                              //                 ),
+                              //               ),
+                              //             ),
+                              //           ],
+                              //         ),
+                              //       ),
+                              //     ],
+                              //   ),
                               SizedBox(height: size.height * 0.02),
                               Divider(
                                 color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),

@@ -1,11 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:intl/intl.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 import 'package:umrahcar_user/screens/tracking_process/track_completed_screen.dart';
 import 'package:umrahcar_user/utils/colors.dart';
 
 import '../models/get_booking_list_model.dart';
 import '../utils/const.dart';
+
+Future<void> generateSingleBookingPDF(booking) async {
+  final pdf = pw.Document();
+
+  pdf.addPage(
+    pw.Page(
+      build: (pw.Context context) => pw.Container(
+        padding: const pw.EdgeInsets.all(16),
+        child: pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            pw.Text('Booking Details', style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
+            pw.SizedBox(height: 12),
+            pw.Text("Name: ${booking.name}", style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+            pw.Text("Booking ID: ${booking.bookingsId}"),
+            pw.Text("Pickup: ${booking.routes?.pickup?.name ?? 'N/A'}"),
+            pw.Text("Date & Time: ${_formatDate(booking.pickupDate!.toString())} ${_formatTime(booking.pickupTime!)}"),
+            if (booking.vehicles != null)
+              pw.Text("Vehicles: ${booking.vehicles!.map((v) => v.vehiclesName?.name ?? '').join(', ')}"),
+            if (booking.paymentType == "credit") pw.Text("Payment: Credit"),
+            if (booking.cashReceiveFromCustomer != "0")
+              pw.Text("Cash Received: ${booking.cashReceiveFromCustomer}"),
+          ],
+        ),
+      ),
+    ),
+  );
+
+  await Printing.layoutPdf(
+    onLayout: (PdfPageFormat format) async => pdf.save(),
+  );
+}
+
 
 Widget completedList(BuildContext context,GetBookingListModel getBookingCompletedResponse) {
   var size = MediaQuery.of(context).size;
@@ -142,7 +179,7 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                       ),
                       SizedBox(width: size.width * 0.01),
                       Text(
-                        '${getData.pickupTime} ${getData.pickupDate}',
+                        '${_formatDate(getData.pickupDate!.toString())} ${_formatTime(getData.pickupTime!)}',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: ConstantColor.darkgreyColor,
                         fontSize: 10,
@@ -154,24 +191,41 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
                 ],
               ),
               // SizedBox(width: size.width * 0.10),
-              GestureDetector(
-                onTap: () {
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (context) =>  TrackPage(getBookingData: getData),
-                  //     ));
-                },
-                child: Text(
-                  'Completed',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: ConstantColor.secondaryColor,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
+              Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder: (context) =>  TrackPage(getBookingData: getData),
+                      //     ));
+                    },
+                    child: Text(
+                      'Completed',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: ConstantColor.secondaryColor,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
-                ),
-              ),
+                  SizedBox(height: size.height * 0.03),
+                  GestureDetector(
+                    onTap: () => generateSingleBookingPDF(getData),
+                    child: Text(
+                      'Download PDF',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: ConstantColor.secondaryColor.withOpacity(0.7),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
           SizedBox(height: size.height * 0.02),
@@ -191,6 +245,16 @@ Widget completedList(BuildContext context,GetBookingListModel getBookingComplete
       ),
     ),
   );
+}
+
+String _formatDate(String date) {
+  final DateTime parsedDate = DateFormat('yyyy-MM-dd').parse(date);
+  return DateFormat('d MMM yyyy').format(parsedDate);
+}
+
+String _formatTime(String time) {
+  final DateTime parsedTime = DateFormat('HH:mm:ss').parse(time);
+  return DateFormat('h:mm a').format(parsedTime);
 }
 
 List myList = [

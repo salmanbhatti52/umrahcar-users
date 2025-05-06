@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:intl/intl.dart';
 import 'package:umrahcar_user/screens/tracking_process/track_upcoming_screen.dart';
 import 'package:umrahcar_user/utils/colors.dart';
 
@@ -186,7 +187,7 @@ Widget upComingList(
                                 ),
                                 SizedBox(width: size.width * 0.01),
                                 Text(
-                                  '${getData.pickupTime} ${getData.pickupDate}',
+                                  '${_formatDate(getData.pickupDate!.toString())} ${_formatTime(getData.pickupTime!)}',
                                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     color: ConstantColor.darkgreyColor,
                                     fontSize: 10,
@@ -197,7 +198,7 @@ Widget upComingList(
                             ),
                           ],
                         ),
-                        // SizedBox(width: size.width * 0.1),
+                        SizedBox(width: size.width * 0.1),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -208,7 +209,8 @@ Widget upComingList(
                                 ));
                           },
                           child: Text(
-                            '${getData.status}',
+                            '',
+                            // '${getData.status}',
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: ConstantColor.darkgreyColor,
@@ -238,6 +240,16 @@ Widget upComingList(
             ),
           ),),
         );
+}
+
+String _formatDate(String date) {
+  final DateTime parsedDate = DateFormat('yyyy-MM-dd').parse(date);
+  return DateFormat('d MMM yyyy').format(parsedDate);
+}
+
+String _formatTime(String time) {
+  final DateTime parsedTime = DateFormat('HH:mm:ss').parse(time);
+  return DateFormat('h:mm a').format(parsedTime);
 }
 
 List myList = [

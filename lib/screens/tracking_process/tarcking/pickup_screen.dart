@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:umrahcar_user/utils/colors.dart';
 import 'package:umrahcar_user/widgets/button.dart';
@@ -449,7 +450,9 @@ class _PickUpPageState extends State<PickUpPage> {
                                   ),
                                   SizedBox(width: size.width * 0.032),
                                   Text(
-                                    '${widget.getBookingData!.pickupDate}',
+                                    widget.getBookingData?.pickupDate != null
+                                        ? DateFormat('yyyy-MM-dd').format(widget.getBookingData!.pickupDate!)
+                                        : '',
                                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                       color: ConstantColor.darkgreyColor,
                                       fontSize: 12,
